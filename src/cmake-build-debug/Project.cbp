@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Project"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Project">
+				<Option output="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug/Project.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir=""/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-DGLFW_INCLUDE_NONE"/>
+					<Add option="-DLIBRARY_SUFFIX=&quot;&quot;"/>
+					<Add directory="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 Project"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Project/fast">
+				<Option output="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug/Project.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir=""/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add option="-DGLFW_INCLUDE_NONE"/>
+					<Add option="-DLIBRARY_SUFFIX=&quot;&quot;"/>
+					<Add directory="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 Project/fast"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f &quot;E:\dz\6 sem\kartykonsoli\OpenGLPAG\Build\src\cmake-build-debug\Makefile&quot; VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AABB.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AABB.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AntonKarpetskyi_l1/Camera.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AntonKarpetskyi_l1/SceneGraph.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AntonKarpetskyi_l1/Shader.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AntonKarpetskyi_l1/main.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/AudioManager.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Camera.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Collision.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Collision.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Component.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Component.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Courier.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Courier.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Entity.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Entity.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/GObject.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/GObject.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/InputManager.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/InputManager.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Mesh.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Model.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Model.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Player.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Player.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Scene.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Scene.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/SceneGraph.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/Shader.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/WindowManager.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/WindowManager.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/CMakeCCompilerId.c">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/CMakeCXXCompilerId.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/dr_wav_impl.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/imgui_impl_glfw.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/imgui_impl_glfw.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/imgui_impl_opengl3.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/imgui_impl_opengl3.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/main.cpp">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/train.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/typedefs.h">
+			<Option target="Project"/>
+		</Unit>
+		<Unit filename="E:/dz/6 sem/kartykonsoli/OpenGLPAG/Build/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

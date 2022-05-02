@@ -1,0 +1,437 @@
+#include "Application.h"
+
+namespace GameEngine {
+
+	Application app;
+
+	Application::Application()
+		: m_gameState(GameState::MenuState), m_cursorLocked(false)
+	{
+		if (windowManager.createWindow() == -1)
+		{
+			exit(-1);
+		}
+		windowManager.freeCursor();
+		//windowManager.blockCursor();
+
+		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
+
+		//renderer.init();
+		// Queue a window resize event to properly scale the cameras (according to the window dimensions)
+		Event e;
+		e.type = EventTypes::WindowResize;
+		m_EventQueue.push_back(e);
+
+		m_scene = new Scene("new scene");
+
+		jsonParser = CreateRef<Json>();
+		if (jsonParser->print() == 1)
+		{
+			exit(-1);
+		}
+
+		audioManager = CreateRef<AudioManager>();
+		if (!audioManager->success)
+		{
+			exit(-1);
+		}
+
+		audioManager->readMonoData("TestSound");
+
+		textRenderer = CreateRef<TextRenderer>("res/fonts/PressStart2P.ttf", "res/shaders/GUI.vert", "res/shaders/GUI.frag");
+		if (!textRenderer->success)
+		{
+			exit(-1);
+		}
+
+		colMan = std::make_shared<Collision>();
+		inputManager = std::make_shared<InputManager>(windowManager.window);
+
+	}
+
+	Application::~Application()
+	{
+		windowManager.closeWindow();
+		textRenderer->clean();
+		audioManager->clean();
+		quad->clean();
+	}
+
+	void Application::RunLoop()
+	{
+		// configure global opengl state
+		// -----------------------------
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CCW);
+
+		ourShader = std::make_shared<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
+		shadowMap = std::make_shared<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
+		debugDepth = std::make_shared<Shader>("res/shaders/debugdepth.vert", "res/shaders/debugdepth.frag");
+		masterRenderer = CreateRef<MasterRenderer>();
+		masterRenderer->setQuadShader(ourShader);
+
+		Ref<Model> b = CreateRef<Model>(Model("res/models/cube/cube.obj"));
+		Ref<Model> bu = CreateRef<Model>(Model("res/models/statek/untitled.obj"));
+		//Ref<Model> scene = CreateRef<Model>(Model("res/models/scene/scene.obj"));
+		Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
+
+		model_s = glm::mat4(1.0f);
+		model_s = glm::scale(model_s, { 0.1f, 0.1f, 0.1f });
+
+		// Setup Dear ImGui binding
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		//ortho = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+
+		ourShader->use();
+		ourShader->setInt("shadowMap", 1);
+		ourShader->setInt("ourTexture", 0);
+
+		debugDepth->use();
+		debugDepth->setInt("depthMap", 0);
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(45.0f), (float)WindowManager::SCR_WIDTH / WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
+		ourShader->setMat4("projection", projection);
+
+		float a = 0;
+		bool should_render = false;
+
+		glGenFramebuffers(1, &depthMapFBO);
+
+		glGenTextures(1, &depthMap);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, GameEngine::app.SHADOW_WIDTH, GameEngine::app.SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// attach depth texture as FBO's depth buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		quad = CreateRef<Shape>(Shape(Coords::COORDSTEXT));
+		light = CreateRef<DirectionalLight>(DirectionalLight({ 0.0f, -4.0f, 0.2f }));
+
+		light->activate_lights(ourShader, GameEngine::app.getScene()->m_camera);
+
+		root = std::make_shared<SceneNode>(SceneNode());
+
+		projection = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)WindowManager::SCR_WIDTH / (float)WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
+		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, projection, inputManager));
+		player = std::make_shared<Player>(inputManager, b, ourShader, colMan);
+		courier = std::make_shared<Courier>(mousePicker, bu, ourShader, colMan);
+		courier->set_local_position({ 2, 0, 0 });
+		//courier->set_local_rotation({ 90, 0, 0 });
+		player->set_local_position({ -2, 0, 0 });
+		//player->set_render_AABB(true);
+		courier->set_render_AABB(true);
+		//courier->set_color({ 1, 0.0, 0.0 });
+
+		iisland = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland->set_local_position({ 0, -2, 0 });
+		iisland->set_render_AABB(true);
+
+		root->add_child(player);
+		root->add_child(courier);
+		root->add_child(iisland);
+		player->add_parent(root);
+		courier->add_parent(root);
+		iisland->add_parent(root);
+		root->update(root->get_transform(), true);
+
+		m_scene->m_camera->player = player;
+
+		// load and create a texture 
+		// -------------------------
+		stbi_set_flip_vertically_on_load(true);
+		texture1.loadFromFile(std::string("res/textures/torus.png").c_str());
+
+		lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, near_plane, far_plane);
+		lightView = glm::lookAt(-light->lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightSpaceMatrix = lightProjection * lightView;
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, { 0, 0, 0 });
+		ourShader->setMat4("model", model);
+
+		std::cout << "Starting Game...\n";
+
+		passed_time = 0.0;
+		double current_time = 0.0;
+		should_render = false;
+
+		double last_time = glfwGetTime();
+		double unprocessed_time = 0.0;
+
+		playAudio("TestSound");
+
+		while (!glfwWindowShouldClose(windowManager.window))
+		{
+
+			current_time = glfwGetTime();
+			passed_time = current_time - last_time;
+
+			last_time = current_time;
+			unprocessed_time += passed_time;
+
+			OnInput();
+
+			while (unprocessed_time >= frame_time)
+			{
+				should_render = true;
+				unprocessed_time -= frame_time;
+
+				OnUpdate(frame_time);
+			}
+
+			if (should_render)
+			{
+				should_render = false;
+				OnRender();
+				OnRenderUI();
+
+				windowManager.updateWindow();
+			}
+
+		}
+		std::cout << "Thanks for playing!";
+	}
+
+	void Application::RenderScene(Ref<Shader> shader)
+	{
+		masterRenderer->finishRender();
+		player->render();
+		courier->render();
+		//iisland->render();
+		//glBindTexture(GL_TEXTURE_2D, texture1);
+		texture1.bindTexture();
+
+		shader->setMat4("model", iisland->get_transform().m_world_matrix);
+
+		shader->setInt("texture1", 0);
+		//glActiveTexture(GL_TEXTURE0);
+		// 
+		//shader->setMat4("model", twod->get_transform().m_world_matrix);
+		//glBindTexture(GL_TEXTURE_2D, traincubesTexture);
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//shader->setMat4("model", twod2->get_transform().m_world_matrix);
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//shader->setMat4("model", spunkt->get_transform().m_world_matrix);
+		quad->Render(36);
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
+		m_scene->Render();
+	}
+
+	void Application::OnInput()
+	{
+		PollEvents();
+
+		view = GameEngine::app.getScene()->m_camera->GetViewMatrix();
+		inputManager->getInput();
+	}
+
+	void Application::OnUpdate(float dt)
+	{
+		ourShader->setMat4("view", view);
+
+		//colMan->CollisionCheck();
+
+		player->Update();
+		courier->Update();
+		GameEngine::app.getScene()->m_camera->courier = courier->get_transform().m_position;
+		GameEngine::app.getScene()->m_camera->Move();
+
+		mousePicker->update();
+	}
+
+	void Application::OnRender()
+	{
+		// activate shader
+		glm::mat4 projection = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)WindowManager::SCR_WIDTH / (float)WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
+		m_scene->m_camera->m_projectionMatrix = projection;
+		shadowMap->use();
+		shadowMap->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+		glViewport(0, 0, GameEngine::app.SHADOW_WIDTH, GameEngine::app.SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glActiveTexture(GL_TEXTURE1);
+		RenderScene(shadowMap);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		ourShader->use();
+
+		glViewport(0, 0, WindowManager::SCR_WIDTH, WindowManager::SCR_HEIGHT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glViewport(0, 0, WindowManager::SCR_WIDTH, WindowManager::SCR_HEIGHT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ourShader->setVec3("color", { 1, 1, 1 });
+		ourShader->setMat4("view", view);
+		ourShader->setMat4("projection", projection);
+		light->activate_lights(ourShader, m_scene->m_camera);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		RenderScene(ourShader);
+
+		debugDepth->use();
+		debugDepth->setFloat("near_plane", near_plane);
+		debugDepth->setFloat("far_plane", far_plane);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		renderQuad();
+
+	}
+
+	void Application::OnRenderUI()
+	{
+		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		//textRenderer->RenderText("Position " + std::to_string(inputManager->m_posx) + " " + std::to_string(inputManager->m_posy), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+	}
+
+	void Application::PollEvents()
+	{
+		for (int i = 0; i < m_EventQueue.size(); i++)
+		{
+			OnEvent(m_EventQueue[i]);
+		}
+
+		m_EventQueue.clear();
+	}
+
+	void Application::playAudio(std::string filename)
+	{
+		audioManager->playMonoSound(filename);
+	}
+
+	void Application::renderQuad()
+	{
+		if (quadVAO == 0)
+		{
+			float quadVertices[] = {
+				// positions        // texture Coords
+				 0.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+				 0.0f,  0.0f, 0.0f, 0.0f, 0.0f,
+				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+				 1.0f,  0.0f, 0.0f, 1.0f, 0.0f,
+			};
+			// setup plane VAO
+			glGenVertexArrays(1, &quadVAO);
+			glGenBuffers(1, &quadVBO);
+			glBindVertexArray(quadVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		}
+		glBindVertexArray(quadVAO);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
+	}
+
+	void Application::moveCamera(Event e)
+	{
+		switch (e.key)
+		{
+		case GLFW_KEY_W:
+			m_scene->m_camera->ProcessKeyboard(FORWARD);
+			break;
+		case GLFW_KEY_S:
+			m_scene->m_camera->ProcessKeyboard(BACKWARD);
+			break;
+		case GLFW_KEY_A:
+			m_scene->m_camera->ProcessKeyboard(LEFT);
+			break;
+		case GLFW_KEY_D:
+			m_scene->m_camera->ProcessKeyboard(RIGHT);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void Application::stopCamera(Event e)
+	{
+		switch (e.key)
+		{
+		case GLFW_KEY_W:
+			m_scene->m_camera->ProcessKeyboard(BACKWARD);
+			break;
+		case GLFW_KEY_S:
+			m_scene->m_camera->ProcessKeyboard(FORWARD);
+			break;
+		case GLFW_KEY_A:
+			m_scene->m_camera->ProcessKeyboard(RIGHT);
+			break;
+		case GLFW_KEY_D:
+			m_scene->m_camera->ProcessKeyboard(LEFT);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void Application::rotateCamera(Event e)
+	{
+		if (firstMouse)
+		{
+			lastX = e.mx;
+			lastY = e.my;
+			firstMouse = false;
+		}
+
+		float xoffset = e.mx - lastX;
+		float yoffset = lastY - e.my; // reversed since y-coordinates go from bottom to top
+
+		lastX = e.mx;
+		lastY = e.my;
+		m_scene->m_camera->ProcessMouseMovement(xoffset, yoffset);
+	}
+
+	void Application::OnEvent(Event e)
+	{
+		switch (e.type)
+		{
+		case EventTypes::KeyPress:
+			if (e.key == GLFW_KEY_ESCAPE)
+			{
+				glfwSetWindowShouldClose(windowManager.window, true);
+			}
+
+			moveCamera(e);
+
+			break;
+
+		case EventTypes::KeyRelease:
+			stopCamera(e);
+			break;
+
+		case EventTypes::MouseMove:
+			rotateCamera(e);
+			break;
+		case EventTypes::WindowResize:
+			// make sure the viewport matches the new window dimensions; note that width and 
+			// height will be significantly larger than specified on retina displays.
+			glViewport(0, 0, e.wx, e.wy);
+			break;
+		default:
+			break;
+		}
+	}
+
+	Application* GetApp()
+	{
+		return &app;
+	}
+
+}

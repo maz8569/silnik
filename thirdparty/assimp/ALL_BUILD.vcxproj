@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{553BA43A-C892-39FD-A0C7-B8D5AE86F9EE}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\.;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\contrib\zlib;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\.;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\contrib\zlib;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\.;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\contrib\zlib;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\.;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\contrib\zlib;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/prog/OpenGLPAG/OpenGLPAG/thirdparty/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+E:\prog\CMake\bin\cmake.exe -SE:/prog/OpenGLPAG/OpenGLPAG -BE:/prog/OpenGLPAG/OpenGLPAG/Build --check-stamp-file E:/prog/OpenGLPAG/OpenGLPAG/Build/thirdparty/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\prog\CMake\share\cmake-3.22\Modules\CheckFunctionExists.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFile.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFileCXX.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckTypeSize.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageHandleStandardArgs.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageMessage.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPkgConfig.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config-version.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp.pc.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindDirectX.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindPkgMacros.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindZLIB.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\PrecompiledHeader.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\cmake_uninstall.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include\assimp\config.h.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\revision.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/prog/OpenGLPAG/OpenGLPAG/thirdparty/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+E:\prog\CMake\bin\cmake.exe -SE:/prog/OpenGLPAG/OpenGLPAG -BE:/prog/OpenGLPAG/OpenGLPAG/Build --check-stamp-file E:/prog/OpenGLPAG/OpenGLPAG/Build/thirdparty/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\prog\CMake\share\cmake-3.22\Modules\CheckFunctionExists.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFile.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFileCXX.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckTypeSize.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageHandleStandardArgs.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageMessage.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPkgConfig.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config-version.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp.pc.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindDirectX.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindPkgMacros.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindZLIB.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\PrecompiledHeader.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\cmake_uninstall.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include\assimp\config.h.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\revision.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/prog/OpenGLPAG/OpenGLPAG/thirdparty/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+E:\prog\CMake\bin\cmake.exe -SE:/prog/OpenGLPAG/OpenGLPAG -BE:/prog/OpenGLPAG/OpenGLPAG/Build --check-stamp-file E:/prog/OpenGLPAG/OpenGLPAG/Build/thirdparty/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\prog\CMake\share\cmake-3.22\Modules\CheckFunctionExists.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFile.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFileCXX.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckTypeSize.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageHandleStandardArgs.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageMessage.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPkgConfig.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config-version.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp.pc.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindDirectX.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindPkgMacros.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindZLIB.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\PrecompiledHeader.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\cmake_uninstall.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include\assimp\config.h.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\revision.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/prog/OpenGLPAG/OpenGLPAG/thirdparty/assimp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+E:\prog\CMake\bin\cmake.exe -SE:/prog/OpenGLPAG/OpenGLPAG -BE:/prog/OpenGLPAG/OpenGLPAG/Build --check-stamp-file E:/prog/OpenGLPAG/OpenGLPAG/Build/thirdparty/assimp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\prog\CMake\share\cmake-3.22\Modules\CheckFunctionExists.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFile.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckIncludeFileCXX.cmake;E:\prog\CMake\share\cmake-3.22\Modules\CheckTypeSize.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageHandleStandardArgs.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPackageMessage.cmake;E:\prog\CMake\share\cmake-3.22\Modules\FindPkgConfig.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config-version.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp-config.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\assimp.pc.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindDirectX.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindPkgMacros.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\FindZLIB.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\PrecompiledHeader.cmake;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\cmake-modules\cmake_uninstall.cmake.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include\assimp\config.h.in;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\revision.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\ZERO_CHECK.vcxproj">
+      <Project>{09C350AA-E236-3048-8E25-7B87E337FB9C}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\irrXML\IrrXML.vcxproj">
+      <Project>{85EEC79E-4588-306B-95E3-252C2B82DC2B}</Project>
+      <Name>IrrXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\assimp.vcxproj">
+      <Project>{BE5A65AF-ABD4-3567-A4B3-206100FBE7ED}</Project>
+      <Name>assimp</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib\zlib.vcxproj">
+      <Project>{3B12C5FC-09D7-3844-84ED-DD301AF1E023}</Project>
+      <Name>zlib</Name>
+    </ProjectReference>
+    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{922DC57D-79D3-3939-BB58-656ACE9DC2AF}</Project>
+      <Name>zlibstatic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

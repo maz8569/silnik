@@ -1,5 +1,21 @@
 # Prerequisites
 *.d
+.vs
+CMakeFiles
+*.log
+*.tlog
+*.vcxproj.user
+*.vcxproj.filters
+imgui.dir
+glad.dir
+OpenGLPAG.dir
+assimp.dir
+AntonKarpetskyi_l1
+*.ini
+*.ilk
+*.pdb
+.idea
+normal.png
 
 # Compiled Object files
 *.slo
@@ -14,7 +30,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
