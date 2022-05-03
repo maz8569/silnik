@@ -12,19 +12,19 @@
 
 namespace GameEngine {
 
-	class Layer;
-	typedef std::array<std::array<std::array<Block, CHUNK_SIZE_X>, CHUNK_SIZE_Y>, CHUNK_SIZE_Z>* LayerDataTypePtr;
+	class Chunk;
+	typedef std::array<std::array<std::array<Block, CHUNK_SIZE_X>, CHUNK_SIZE_Y>, CHUNK_SIZE_Z>* ChunkDataTypePtr;
 
-	LayerDataTypePtr m_GetLayerDataForMeshing(int cx, int cz);
+	ChunkDataTypePtr m_GetChunkDataForMeshing(int cx, int cz);
 
-	class LayerMesh
+	class ChunkMesh
 	{
 	public:
 
-		LayerMesh();
-		~LayerMesh();
+		ChunkMesh();
+		~ChunkMesh();
 
-		bool ConstructMesh(Layer* layer, const glm::vec3& chunk_pos);
+		bool ConstructMesh(Chunk* layer, const glm::vec3& chunk_pos);
 
 		std::uint32_t m_VerticesCount;
 		std::uint32_t m_TransparentVerticesCount;
@@ -34,7 +34,7 @@ namespace GameEngine {
 		VertexArray m_ModelVAO;
 	private:
 
-		void AddFace(Layer* layer, BlockFaceType face_type, const glm::vec3& position, BlockType type, uint8_t light_level = 0,
+		void AddFace(Chunk* layer, BlockFaceType face_type, const glm::vec3& position, BlockType type, uint8_t light_level = 0,
 			bool buffer = true);
 
 		std::vector<Vertex> m_Vertices;

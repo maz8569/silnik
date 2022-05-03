@@ -1,9 +1,9 @@
-#include "Blocks/LayerMesh.h"
-#include "Blocks/Layer.h"
+#include "Blocks/ChunkMesh.h"
+#include "Blocks/Chunk.h"
 
 using namespace GameEngine;
 
-GameEngine::LayerMesh::LayerMesh() : m_VBO(GL_ARRAY_BUFFER), m_TransparentVBO(GL_ARRAY_BUFFER), m_ModelVBO(GL_ARRAY_BUFFER)
+GameEngine::ChunkMesh::ChunkMesh() : m_VBO(GL_ARRAY_BUFFER), m_TransparentVBO(GL_ARRAY_BUFFER), m_ModelVBO(GL_ARRAY_BUFFER)
 {
 	static bool IndexBufferInitialized = false;
 
@@ -98,23 +98,23 @@ GameEngine::LayerMesh::LayerMesh() : m_VBO(GL_ARRAY_BUFFER), m_TransparentVBO(GL
 	m_RightFace[3] = glm::vec4(1.0f, 0.0f, 1.0f, 1.0f);
 }
 
-GameEngine::LayerMesh::~LayerMesh()
+GameEngine::ChunkMesh::~ChunkMesh()
 {
 	m_Vertices.clear();
 }
 
-bool GameEngine::LayerMesh::ConstructMesh(Layer* layer, const glm::vec3& chunk_pos)
+bool GameEngine::ChunkMesh::ConstructMesh(Chunk* layer, const glm::vec3& chunk_pos)
 {
-	LayerDataTypePtr ChunkData = &layer->m_LayerContents;
+	ChunkDataTypePtr ChunkData = &layer->m_ChunkContents;
 
 	glm::vec3 world_position;
 	glm::vec3 local_position;
 	m_Vertices.clear();
 
-	LayerDataTypePtr ForwardChunkData = m_GetLayerDataForMeshing(static_cast<int>(chunk_pos.x), static_cast<int>(chunk_pos.z + 1));
-	LayerDataTypePtr BackwardChunkData = m_GetLayerDataForMeshing(static_cast<int>(chunk_pos.x), static_cast<int>(chunk_pos.z - 1));
-	LayerDataTypePtr RightChunkData = m_GetLayerDataForMeshing(static_cast<int>(chunk_pos.x + 1), static_cast<int>(chunk_pos.z));
-	LayerDataTypePtr LeftChunkData = m_GetLayerDataForMeshing(static_cast<int>(chunk_pos.x - 1), static_cast<int>(chunk_pos.z));
+	ChunkDataTypePtr ForwardChunkData = m_GetChunkDataForMeshing(static_cast<int>(chunk_pos.x), static_cast<int>(chunk_pos.z + 1));
+	ChunkDataTypePtr BackwardChunkData = m_GetChunkDataForMeshing(static_cast<int>(chunk_pos.x), static_cast<int>(chunk_pos.z - 1));
+	ChunkDataTypePtr RightChunkData = m_GetChunkDataForMeshing(static_cast<int>(chunk_pos.x + 1), static_cast<int>(chunk_pos.z));
+	ChunkDataTypePtr LeftChunkData = m_GetChunkDataForMeshing(static_cast<int>(chunk_pos.x - 1), static_cast<int>(chunk_pos.z));
 
 	if (ForwardChunkData && BackwardChunkData && RightChunkData && LeftChunkData)
 	{
@@ -426,7 +426,7 @@ bool GameEngine::LayerMesh::ConstructMesh(Layer* layer, const glm::vec3& chunk_p
 	return false;
 }
 
-void GameEngine::LayerMesh::AddFace(Layer* layer, BlockFaceType face_type, const glm::vec3& position, BlockType type, uint8_t light_level, bool buffer)
+void GameEngine::ChunkMesh::AddFace(Chunk* layer, BlockFaceType face_type, const glm::vec3& position, BlockType type, uint8_t light_level, bool buffer)
 {
 	glm::vec4 translation = glm::vec4(position, 0.0f); // No need to create a model matrix. 
 // Adding the position to the translation will do the samething but much much faster

@@ -8,7 +8,7 @@ namespace GameEngine {
 	{
 	private:
 		float speed = 20;
-		float jumpHeight = 20;
+		float jumpHeight = 40;
 		float gravity = -50;
 		bool isGrounded = true;
 

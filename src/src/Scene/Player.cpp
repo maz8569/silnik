@@ -24,13 +24,15 @@ void GameEngine::Player::Update()
     get_transform().m_position.z += currentSpeed.y * 0.005;
 
     jumpPower += gravity / 60;
-    get_transform().m_position.y += jumpPower * 0.005;
-    if (get_transform().m_position.y < 0)
+
+    if (isGrounded)
     {
-        get_transform().m_position.y = 0;
         jumpPower = 0;
         isGrounded = true;
     }
+
+    get_transform().m_position.y += jumpPower * 0.005;
+
 
     if (inputManager->getJump() && isGrounded) {
         jump();
@@ -56,11 +58,11 @@ void GameEngine::Player::reactOnCollision(GObject* other)
     
     auto vec = getAABB()->testDepth(other->getAABB());
     
-    int i = 0;
+    int i = 2;
     
-    if (abs(vec[0]) > abs(vec[1]))
+    if (abs(vec[0]) >= abs(vec[1]))
     {
-        if (vec[1] > vec[2])
+        if (abs(vec[1]) >= abs(vec[2]))
         {
             i = 2;
         }
@@ -71,7 +73,7 @@ void GameEngine::Player::reactOnCollision(GObject* other)
     }
     else
     {
-        if (vec[0] > vec[2])
+        if (abs(vec[0]) >= abs(vec[2]))
         {
             i = 2;
         }
@@ -81,18 +83,20 @@ void GameEngine::Player::reactOnCollision(GObject* other)
         }
     }
     
-    std::cout << vec[i] << " ";
+    std::cout << vec[0] << " " << vec[1] << " " << vec[2] << "\n";
     switch(i) {
     case 0:
-        get_transform().m_position.x += vec[0];
+        get_transform().m_position.x -= vec[0];
         break;
     case 1:
-        get_transform().m_position.y += vec[1];
+        get_transform().m_position.y -= vec[1];
+        isGrounded = true;
         break;
     case 2:
-        get_transform().m_position.z += vec[2];
+        get_transform().m_position.z -= vec[2];
 
         break;
     }
-    MoveColliders();
+
+    //MoveColliders();
 }

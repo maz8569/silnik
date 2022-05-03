@@ -5,7 +5,7 @@
 #include <vector>
 #include <Scene/GObject.h>
 #include "Camera.h"
-#include <Blocks/Layer.h>
+#include <Blocks/Chunk.h>
 #include "Skybox.h"
 
 namespace GameEngine {

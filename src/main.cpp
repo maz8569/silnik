@@ -3,9 +3,9 @@
 extern GameEngine::Application GameEngine::app;
 
 namespace GameEngine {
-    LayerDataTypePtr GameEngine::m_GetLayerDataForMeshing(int cx, int cz)
+    ChunkDataTypePtr GameEngine::m_GetChunkDataForMeshing(int cx, int cz)
     {
-        return LayerDataTypePtr();
+        return ChunkDataTypePtr();
     }
 }
 

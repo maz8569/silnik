@@ -17,6 +17,7 @@
 #include "Physics/Collisions/Collision.h"
 #include "Physics/RayCasting/MousePicker.h"
 #include <Scene/Courier.h>
+#include <Blocks/Block.h>
 
 namespace GameEngine {
 

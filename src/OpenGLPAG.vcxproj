@@ -374,6 +374,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\Blocks\BlockRenderer.cpp" />
     <ClCompile Include="src\Scene\OrthographicCamera.cpp" />
     <ClCompile Include="src\Scene\FPcam.cpp" />
     <ClCompile Include="src\Scene\Light.cpp" />
@@ -381,9 +382,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Scene\Skybox.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
     <ClCompile Include="src\Utils\IndexBuffer.cpp" />
-    <ClCompile Include="src\Blocks\LayerMesh.cpp" />
+    <ClCompile Include="src\Blocks\ChunkMesh.cpp" />
     <ClCompile Include="src\Blocks\Direction.cpp" />
-    <ClCompile Include="src\Blocks\Layer.cpp" />
+    <ClCompile Include="src\Blocks\Chunk.cpp" />
     <ClCompile Include="src\Blocks\Block.cpp" />
     <ClCompile Include="src\Shaders\BasicShader.cpp" />
     <ClCompile Include="src\Rendering\QuadRenderer.cpp" />
@@ -417,7 +418,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Utils\VertexBuffer.cpp" />
     <ClCompile Include="src\Utils\VertexArray.cpp" />
     <ClCompile Include="src\World\TileModel.cpp" />
+    <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="include\Blocks\BlockRenderer.h" />
     <ClInclude Include="include\Scene\FPcam.h" />
     <ClInclude Include="include\Texture\CubemapTexture.h" />
     <ClInclude Include="include\Events\Events.h" />
@@ -425,14 +428,15 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Blocks\Block.h" />
     <ClInclude Include="include\Events\EventStruct.h" />
     <ClInclude Include="include\Shaders\BasicShader.h" />
-    <ClInclude Include="include\Blocks\Layer.h" />
-    <ClInclude Include="include\Blocks\LayerMesh.h" />
+    <ClInclude Include="include\Blocks\Chunk.h" />
+    <ClInclude Include="include\Blocks\ChunkMesh.h" />
     <ClInclude Include="include\Utils\IndexBuffer.h" />
     <ClInclude Include="include\Scene\Skybox.h" />
     <ClInclude Include="include\World\Model\TileMesh.h" />
     <ClInclude Include="include\World\Model\TileModel.h" />
     <ClInclude Include="include\Scene\Light.h" />
     <ClInclude Include="include\Scene\OrthographicCamera.h" />
+    <ClInclude Include="include\Texture\Texture.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

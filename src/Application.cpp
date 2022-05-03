@@ -5,14 +5,14 @@ namespace GameEngine {
 	Application app;
 
 	Application::Application()
-		: m_gameState(GameState::MenuState), m_cursorLocked(false)
+		: m_gameState(GameState::MenuState), m_cursorLocked(true)
 	{
 		if (windowManager.createWindow() == -1)
 		{
 			exit(-1);
 		}
-		windowManager.freeCursor();
-		//windowManager.blockCursor();
+		//windowManager.freeCursor();
+		windowManager.blockCursor();
 
 		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
 
@@ -134,8 +134,9 @@ namespace GameEngine {
 		//courier->set_color({ 1, 0.0, 0.0 });
 
 		iisland = CreateRef<GObject>(GObject(island, ourShader, colMan));
-		iisland->set_local_position({ 0, -2, 0 });
+		iisland->set_local_position({ 0, -10, 0 });
 		iisland->set_render_AABB(true);
+		iisland->Update();
 
 		root->add_child(player);
 		root->add_child(courier);
@@ -208,26 +209,29 @@ namespace GameEngine {
 		masterRenderer->finishRender();
 		player->render();
 		courier->render();
-		//iisland->render();
+		iisland->render();
 		//glBindTexture(GL_TEXTURE_2D, texture1);
 		texture1.bindTexture();
 
-		shader->setMat4("model", iisland->get_transform().m_world_matrix);
+		glm::mat4 modelmatrx = iisland->get_transform().m_world_matrix;
 
 		shader->setInt("texture1", 0);
 		//glActiveTexture(GL_TEXTURE0);
-		// 
-		//shader->setMat4("model", twod->get_transform().m_world_matrix);
-		//glBindTexture(GL_TEXTURE_2D, traincubesTexture);
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		//shader->setMat4("model", twod2->get_transform().m_world_matrix);
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
+		shader->setVec3("color", { 0.63, 0.68, 0.85 });
+		for (int i = 0; i < 16; i++)
+		{
+			for (int j = 0; j < 16; j++)
+			{
+				modelmatrx = glm::translate(iisland->get_transform().m_world_matrix, { i, 4, j });
+				shader->setMat4("model", modelmatrx);
+				quad->Render(36);
+			}
+		}
 
-		//shader->setMat4("model", spunkt->get_transform().m_world_matrix);
-		quad->Render(36);
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		m_scene->Render();
+
+		shader->setVec3("color", { 1, 1, 1 });
 	}
 
 	void Application::OnInput()
@@ -242,12 +246,11 @@ namespace GameEngine {
 	{
 		ourShader->setMat4("view", view);
 
-		//colMan->CollisionCheck();
-
 		player->Update();
 		courier->Update();
 		GameEngine::app.getScene()->m_camera->courier = courier->get_transform().m_position;
 		GameEngine::app.getScene()->m_camera->Move();
+		colMan->CollisionCheck();
 
 		mousePicker->update();
 	}
@@ -343,16 +346,16 @@ namespace GameEngine {
 	{
 		switch (e.key)
 		{
-		case GLFW_KEY_W:
+		case GLFW_KEY_UP:
 			m_scene->m_camera->ProcessKeyboard(FORWARD);
 			break;
-		case GLFW_KEY_S:
+		case GLFW_KEY_DOWN:
 			m_scene->m_camera->ProcessKeyboard(BACKWARD);
 			break;
-		case GLFW_KEY_A:
+		case GLFW_KEY_LEFT:
 			m_scene->m_camera->ProcessKeyboard(LEFT);
 			break;
-		case GLFW_KEY_D:
+		case GLFW_KEY_RIGHT:
 			m_scene->m_camera->ProcessKeyboard(RIGHT);
 			break;
 		default:
@@ -364,16 +367,16 @@ namespace GameEngine {
 	{
 		switch (e.key)
 		{
-		case GLFW_KEY_W:
+		case GLFW_KEY_UP:
 			m_scene->m_camera->ProcessKeyboard(BACKWARD);
 			break;
-		case GLFW_KEY_S:
+		case GLFW_KEY_DOWN:
 			m_scene->m_camera->ProcessKeyboard(FORWARD);
 			break;
-		case GLFW_KEY_A:
+		case GLFW_KEY_LEFT:
 			m_scene->m_camera->ProcessKeyboard(RIGHT);
 			break;
-		case GLFW_KEY_D:
+		case GLFW_KEY_RIGHT:
 			m_scene->m_camera->ProcessKeyboard(LEFT);
 			break;
 		default:
@@ -406,6 +409,11 @@ namespace GameEngine {
 			if (e.key == GLFW_KEY_ESCAPE)
 			{
 				glfwSetWindowShouldClose(windowManager.window, true);
+			}
+
+			if (e.key == GLFW_KEY_M)
+			{
+				playAudio("TestSound");
 			}
 
 			moveCamera(e);
