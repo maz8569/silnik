@@ -74,6 +74,9 @@ namespace GameEngine {
 
 		Ref<Model> b = CreateRef<Model>(Model("res/models/cube/cube.obj"));
 		Ref<Model> bu = CreateRef<Model>(Model("res/models/statek/untitled.obj"));
+		Ref<Model> dom = CreateRef<Model>(Model("res/models/dom/dom_p.obj"));
+		Ref<Model> pacz = CreateRef<Model>(Model("res/models/paczka/paczka.obj"));
+		Ref<Model> mo = CreateRef<Model>(Model("res/models/most/niby_most_p.obj"));
 		//Ref<Model> scene = CreateRef<Model>(Model("res/models/scene/scene.obj"));
 		Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
 
@@ -130,29 +133,120 @@ namespace GameEngine {
 		//courier->set_local_rotation({ 90, 0, 0 });
 		player->set_local_position({ -2, 0, 0 });
 		//player->set_render_AABB(true);
-		courier->set_render_AABB(true);
+		//courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
 
+		gdom = CreateRef<GObject>(GObject(pacz, ourShader, colMan));
+		gdom->set_local_position({ 0, -6, 13 });
+		gdom->getAABB()->setStatic(true);
+		gdom->Update();
+
+		paczka = CreateRef<GObject>(GObject(dom, ourShader, colMan));
+		paczka->set_local_position({ 0, -6, -13 });
+		paczka->getAABB()->setStatic(true);
+		paczka->Update();
+
+		most = CreateRef<GObject>(GObject(mo, ourShader, colMan));
+		most->set_local_position({ 0, -6.1f, -4 });
+		most->set_local_rotation({ 0, -90, 0 });
+		most->getAABB()->setStatic(true);
+		most->Update();
+
+		most2 = CreateRef<GObject>(GObject(mo, ourShader, colMan));
+		most2->set_local_position({ 0, -6.1f, -8 });
+		most2->set_local_rotation({ 0, 90, 0 });
+		most2->getAABB()->setStatic(true);
+		most2->Update();
+
+		most3 = CreateRef<GObject>(GObject(mo, ourShader, colMan));
+		most3->set_local_position({ 0, -6.1f, 8 });
+		most3->set_local_rotation({ 0, -90, 0 });
+		most3->getAABB()->setStatic(true);
+		most3->Update();
+
+		most4 = CreateRef<GObject>(GObject(mo, ourShader, colMan));
+		most4->set_local_position({ 0, -6.1f, 4 });
+		most4->set_local_rotation({ 0, 90, 0 });
+		most4->getAABB()->setStatic(true);
+		most4->Update();
+
 		iisland2 = CreateRef<GObject>(GObject(island, ourShader, colMan));
-		iisland2->set_local_position({ 10, -8, 0 });
-		iisland2->set_render_AABB(true);
+		iisland2->set_local_scale({ 0.6, 0.6, 0.6 });
+		iisland2->scaleAABB({ 0.6, 0.6, 0.6 });
+		iisland2->set_local_position({ 13, -10, 0 });
 		iisland2->set_tag("terrain");
+		iisland2->getAABB()->setStatic(true);
 		iisland2->Update();
 
+		iisland3 = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland3->set_local_scale({ 0.6, 0.6, 0.6 });
+		iisland3->scaleAABB({ 0.6, 0.6, 0.6 });
+		iisland3->set_local_position({ -13, -10, 0 });
+		iisland3->set_tag("terrain");
+		iisland3->getAABB()->setStatic(true);
+		iisland3->Update();
+
+		iisland4 = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland4->set_local_scale({ 0.6, 0.6, 0.6 });
+		iisland4->scaleAABB({ 0.6, 0.6, 0.6 });
+		iisland4->set_local_position({ 0, -10, 13 });
+		iisland4->set_tag("terrain");
+		iisland4->getAABB()->setStatic(true);
+		iisland4->Update();
+
+		iisland5 = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland5->set_local_scale({ 0.6, 0.6, 0.6 });
+		iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
+		iisland5->set_local_position({ 0, -10, -13 });
+		iisland5->set_tag("terrain");
+		iisland5->getAABB()->setStatic(true);
+		iisland5->Update();
+
 		iisland = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland->set_local_scale({ 0.6, 0.6, 0.6 });
+		iisland->scaleAABB({ 0.6, 0.6, 0.6 });
 		iisland->set_local_position({ 0, -10, 0 });
-		iisland->set_render_AABB(true);
 		iisland->set_tag("terrain");
+		iisland->getAABB()->setStatic(true);
 		iisland->Update();
+
+		water = CreateRef<GObject>(GObject(b, ourShader, colMan));
+		water->set_local_scale({ 60, 1, 60 });
+		water->scaleAABB({ 60, 1, 60 });
+		water->set_local_position({ 0, -10, 0 });
+		water->getAABB()->setStatic(true);
+		water->set_color({ 0.63, 0.68, 0.85 });
+		water->Update();
+
 
 		root->add_child(player);
 		root->add_child(courier);
 		root->add_child(iisland);
 		root->add_child(iisland2);
+		root->add_child(iisland3);
+		root->add_child(iisland4);
+		root->add_child(iisland5);
+		root->add_child(water);
+		root->add_child(gdom);
+		root->add_child(paczka);
+		root->add_child(most);
+		root->add_child(most2);
+		root->add_child(most3);
+		root->add_child(most4);
 		player->add_parent(root);
 		courier->add_parent(root);
 		iisland->add_parent(root);
 		iisland2->add_parent(root);
+		iisland3->add_parent(root);
+		iisland4->add_parent(root);
+		iisland5->add_parent(root);
+		water->add_parent(root);
+		gdom->add_parent(root);
+		paczka->add_parent(root);
+		most->add_parent(root);
+		most2->add_parent(root);
+		most3->add_parent(root);
+		most4->add_parent(root);
 		root->update(root->get_transform(), true);
 
 		m_scene->m_camera->player = player;
@@ -216,6 +310,16 @@ namespace GameEngine {
 		courier->render();
 		iisland->render();
 		iisland2->render();
+		iisland3->render();
+		iisland4->render();
+		iisland5->render();
+		water->render();
+		gdom->render();
+		paczka->render();
+		most->render();
+		most2->render();
+		most3->render();
+		most4->render();
 		//glBindTexture(GL_TEXTURE_2D, texture1);
 		texture1.bindTexture();
 
@@ -224,16 +328,19 @@ namespace GameEngine {
 		shader->setInt("texture1", 0);
 		//glActiveTexture(GL_TEXTURE0);
 
-		shader->setVec3("color", { 0.63, 0.68, 0.85 });
+		//shader->setVec3("color", { 0.63, 0.68, 0.85 });
+		/*
 		for (int i = 0; i < 16; i++)
 		{
 			for (int j = 0; j < 16; j++)
 			{
-				modelmatrx = glm::translate(iisland->get_transform().m_world_matrix, { i, 4, j });
-				shader->setMat4("model", modelmatrx);
-				quad->Render(36);
 			}
 		}
+		*/
+		//modelmatrx = glm::translate(iisland->get_transform().m_world_matrix, { 1, 4, 1 });
+		//shader->setMat4("model", modelmatrx);
+		//quad->Render(36);
+
 
 		m_scene->Render();
 
@@ -296,7 +403,7 @@ namespace GameEngine {
 		debugDepth->setFloat("far_plane", far_plane);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		renderQuad();
+		//renderQuad();
 
 	}
 
@@ -431,7 +538,7 @@ namespace GameEngine {
 			break;
 
 		case EventTypes::MouseMove:
-			rotateCamera(e);
+			//rotateCamera(e);
 			break;
 		case EventTypes::WindowResize:
 			// make sure the viewport matches the new window dimensions; note that width and 

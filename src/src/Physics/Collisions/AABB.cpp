@@ -56,6 +56,11 @@ glm::vec3 GameEngine::AABB::getVP(const glm::vec3& normal) const
 	return res;
 }
 
+void GameEngine::AABB::setStatic(bool st)
+{
+	staticAABB = st;
+}
+
 std::array<glm::vec3, 8> GameEngine::AABB::getVertice() const
 {
 	std::array<glm::vec3, 8> vertice;
@@ -92,6 +97,34 @@ glm::vec3 GameEngine::AABB::getMin()
 	}
 
 	return result;
+}
+
+void GameEngine::AABB::setXExtent(float x)
+{
+	extents.x = x;
+}
+
+void GameEngine::AABB::setYExtent(float y)
+{
+	extents.y = y;
+}
+
+void GameEngine::AABB::setZExtent(float z)
+{
+	extents.z = z;
+}
+
+void GameEngine::AABB::setExtents(glm::vec3 newExtents)
+{
+	extents = newExtents;
+}
+
+void GameEngine::AABB::scaleAABB(glm::vec3 scale)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		extents[i] *= scale[i];
+	}
 }
 
 glm::vec3 GameEngine::AABB::testDepth(Ref<AABB> other)

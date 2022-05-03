@@ -25,11 +25,14 @@ void GameEngine::Collision::CollisionCheck()
         {
             for (unsigned int j = i+1; j < collisions.size(); j++)
             {
-                if (collisions[i]->collides(collisions[j]))
+                if (!(collisions[i]->staticAABB) || !(collisions[j]->staticAABB))
                 {
-                    //std::cout << "coll";
-                    collisions[i]->parent->reactOnCollision(collisions[j]->parent);
-                    collisions[j]->parent->reactOnCollision(collisions[i]->parent);
+                    if (collisions[i]->collides(collisions[j]))
+                    {
+                        //std::cout << "coll";
+                        collisions[i]->parent->reactOnCollision(collisions[j]->parent);
+                        collisions[j]->parent->reactOnCollision(collisions[i]->parent);
+                    }
                 }
             }
         }
@@ -57,11 +60,11 @@ bool GameEngine::Collision::IntersectRayAABB(glm::vec3& start, glm::vec3& direct
 bool GameEngine::Collision::IntersectRayTerrain(glm::vec3& p, glm::vec3& d, Ref<AABB> a, float& tmin, glm::vec3& q)
 {
     tmin = 0.0f;
-    float tmax = 40.f;
+    float tmax = 400.f;
     glm::vec3 min = a->getMin();
     glm::vec3 max = a->getMax();
-    std::cout << min[0] << " " << min[1] << " " << min[2] << "\n";
-    std::cout << max[0] << " " << max[1] << " " << max[2] << "\n";
+    //std::cout << min[0] << " " << min[1] << " " << min[2] << "\n";
+    //std::cout << max[0] << " " << max[1] << " " << max[2] << "\n";
     // For all three slabs
     for (int i = 0; i < 3; i++) {
         if (fabsf(d[i]) < EPSILON) {
@@ -84,7 +87,7 @@ bool GameEngine::Collision::IntersectRayTerrain(glm::vec3& p, glm::vec3& d, Ref<
     }
     // Ray intersects all 3 slabs. Return point (q) and intersection t value (tmin)
     q = p + d * tmin;
-    std::cout << q.x << " " << q.y << " " << q.z << " " << std::endl;
-    std::cout << tmin << std::endl;
+    //std::cout << q.x << " " << q.y << " " << q.z << " " << std::endl;
+    //std::cout << tmin << std::endl;
     return true;
 }

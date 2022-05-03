@@ -53,6 +53,21 @@ namespace GameEngine {
 
 		void set_render_AABB(bool set);
 
+		void recalculateAABB();
+		void scaleAABB(glm::vec3 scale);
+
+		void setAABBextentX(float x);
+		void setAABBextentY(float y);
+		void setAABBextentZ(float z);
+
+		void setAABBextents(glm::vec3 newExtents);
+
+		void setAABBoffsetX(float x);
+		void setAABBoffsetY(float y);
+		void setAABBoffsetZ(float z);
+
+		void setAABBoffsets(glm::vec3 newOffset);
+
 		void setName(std::string name);
 		const std::string& getName() const;
 

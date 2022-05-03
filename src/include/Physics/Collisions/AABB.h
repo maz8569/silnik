@@ -12,6 +12,7 @@ namespace GameEngine {
 	{
 	public:
 		std::string tag = "Unknown";
+		bool staticAABB = false;
 		GObject* parent;
 
 		glm::vec3 center{ 0.f, 0.f, 0.f };
@@ -27,11 +28,20 @@ namespace GameEngine {
 		glm::vec3 getVN(const glm::vec3& normal) const;
 		glm::vec3 getVP(const glm::vec3& normal) const;
 
+		void setStatic(bool st);
 
 		std::array<glm::vec3, 8> getVertice() const;
 
 		glm::vec3 getMax();
 		glm::vec3 getMin();
+
+		void setXExtent(float x);
+		void setYExtent(float y);
+		void setZExtent(float z);
+
+		void setExtents(glm::vec3 newExtents);
+
+		void scaleAABB(glm::vec3 scale);
 
 		glm::vec3 testDepth(Ref<AABB> other);
 		float getSmallestDistance(Ref<AABB> other);
