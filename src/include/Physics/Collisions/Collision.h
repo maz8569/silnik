@@ -15,6 +15,8 @@ namespace GameEngine {
 		bool TestAABBAABB(std::shared_ptr<AABB> a, std::shared_ptr<AABB> b);
 		void AddAABB(std::shared_ptr<AABB> a);
 		void CollisionCheck();
+		bool IntersectRayAABB(glm::vec3& start, glm::vec3& direction, float& t, glm::vec3& point);
+		bool IntersectRayTerrain(glm::vec3& p, glm::vec3& d, Ref<AABB> a, float& tmin, glm::vec3& q);
 	};
 	
 	/*

@@ -129,6 +129,7 @@ namespace GameEngine {
 		std::shared_ptr<Player> player;
 		std::shared_ptr<Courier> courier;
 		std::shared_ptr<GObject> iisland;
+		std::shared_ptr<GObject> iisland2;
 
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;

@@ -30,10 +30,13 @@ namespace GameEngine {
 		static unsigned int ms_uiNextID;
 
 	public:
+		Ref<Collision> m_colman;
+
 		GObject();
 		explicit GObject(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
 		~GObject();
 
+		void set_tag(std::string newTag);
 		void set_color(glm::vec3 c);
 
 		glm::vec3 get_color();

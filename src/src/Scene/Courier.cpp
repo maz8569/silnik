@@ -1,4 +1,5 @@
 #include "Scene/Courier.h"
+#include "Physics/Collisions/Collision.h"
 
 GameEngine::Courier::Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan) 
 	: Entity(model, shader, colMan), m_mousePicker(mousePicker)
@@ -24,14 +25,16 @@ void GameEngine::Courier::Update()
 		glm::vec3 dir = m_mousePicker->getCurrentRay();
 		//std::cout << dir.x << " " << dir.y << " " << dir.z << " " << std::endl;
 
-
-		glm::vec3 end = dir *40.f + start;
-
-		get_transform().m_position = end;
+		float time;
+		glm::vec3 end;
+		
+		if (m_colman->IntersectRayAABB(start, dir, time, end))
+		{
+			get_transform().m_position = end;
+		}
 		update(get_parent()->get_transform(), true);
 
 
-		//std::cout << end.x << " " << end.y << " " << end.z << " " << std::endl;
 
 	}
 

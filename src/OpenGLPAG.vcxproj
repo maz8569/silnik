@@ -374,6 +374,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\Physics\Collisions\Sphere.cpp" />
     <ClCompile Include="src\Blocks\BlockRenderer.cpp" />
     <ClCompile Include="src\Scene\OrthographicCamera.cpp" />
     <ClCompile Include="src\Scene\FPcam.cpp" />
@@ -437,6 +438,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\Light.h" />
     <ClInclude Include="include\Scene\OrthographicCamera.h" />
     <ClInclude Include="include\Texture\Texture.h" />
+    <ClInclude Include="include\Physics\Collisions\Sphere.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

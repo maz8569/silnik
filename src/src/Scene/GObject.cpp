@@ -10,7 +10,8 @@ GameEngine::GObject::GObject(): SceneNode(), m_color({1, 1, 1})
 GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan): m_model(model), m_shader(shader), SceneNode(), m_color({ 1, 1, 1 })
 {
 	m_aabb = std::make_shared<AABB>(generateAABB(model));
-	colMan->AddAABB(m_aabb);
+	m_colman = colMan;
+	m_colman->AddAABB(m_aabb);
 	m_aabb->parent = this;
 	std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
 	offset = m_aabb->center;
@@ -58,6 +59,11 @@ GameEngine::GObject::~GObject()
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+}
+
+void GameEngine::GObject::set_tag(std::string newTag)
+{
+	m_aabb->tag = newTag;
 }
 
 void GameEngine::GObject::set_color(glm::vec3 c)
@@ -112,7 +118,7 @@ void GameEngine::GObject::Update()
 void GameEngine::GObject::reactOnCollision(GObject* other)
 {
 	//std::cout << "collide";
-	other->set_color({ 1, 0, 0 });
+	//other->set_color({ 1, 0, 0 });
 }
 
 void GameEngine::GObject::MoveColliders()

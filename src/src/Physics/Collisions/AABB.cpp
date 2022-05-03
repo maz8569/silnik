@@ -72,12 +72,26 @@ std::array<glm::vec3, 8> GameEngine::AABB::getVertice() const
 
 glm::vec3 GameEngine::AABB::getMax()
 {
-	return center - extents[0] - extents[1] - extents[2];
+	glm::vec3 result;
+
+	for (int i = 0; i < 3; i++)
+	{
+		result[i] = center[i] + extents[i];
+	}
+
+	return result;
 }
 
 glm::vec3 GameEngine::AABB::getMin()
 {
-	return center + extents[0] + extents[1] + extents[2];
+	glm::vec3 result;
+
+	for (int i = 0; i < 3; i++)
+	{
+		result[i] = center[i] - extents[i];
+	}
+
+	return result;
 }
 
 glm::vec3 GameEngine::AABB::testDepth(Ref<AABB> other)

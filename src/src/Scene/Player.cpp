@@ -83,14 +83,15 @@ void GameEngine::Player::reactOnCollision(GObject* other)
         }
     }
     
-    std::cout << vec[0] << " " << vec[1] << " " << vec[2] << "\n";
+    //std::cout << vec[0] << " " << vec[1] << " " << vec[2] << "\n";
     switch(i) {
     case 0:
         get_transform().m_position.x -= vec[0];
         break;
     case 1:
         get_transform().m_position.y -= vec[1];
-        isGrounded = true;
+        if(vec[1] < 0)
+            isGrounded = true;
         break;
     case 2:
         get_transform().m_position.z -= vec[2];

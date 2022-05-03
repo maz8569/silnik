@@ -3,6 +3,7 @@
 #include <array>
 #include "typedefs.h"
 #include <Rendering/Model.h>
+#include <string>
 
 namespace GameEngine {
 	class GObject;
@@ -10,6 +11,7 @@ namespace GameEngine {
 	class AABB
 	{
 	public:
+		std::string tag = "Unknown";
 		GObject* parent;
 
 		glm::vec3 center{ 0.f, 0.f, 0.f };

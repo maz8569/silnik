@@ -5,14 +5,14 @@ namespace GameEngine {
 	Application app;
 
 	Application::Application()
-		: m_gameState(GameState::MenuState), m_cursorLocked(true)
+		: m_gameState(GameState::MenuState), m_cursorLocked(false)
 	{
 		if (windowManager.createWindow() == -1)
 		{
 			exit(-1);
 		}
-		//windowManager.freeCursor();
-		windowManager.blockCursor();
+		windowManager.freeCursor();
+		//windowManager.blockCursor();
 
 		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
 
@@ -133,17 +133,26 @@ namespace GameEngine {
 		courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
 
+		iisland2 = CreateRef<GObject>(GObject(island, ourShader, colMan));
+		iisland2->set_local_position({ 10, -8, 0 });
+		iisland2->set_render_AABB(true);
+		iisland2->set_tag("terrain");
+		iisland2->Update();
+
 		iisland = CreateRef<GObject>(GObject(island, ourShader, colMan));
 		iisland->set_local_position({ 0, -10, 0 });
 		iisland->set_render_AABB(true);
+		iisland->set_tag("terrain");
 		iisland->Update();
 
 		root->add_child(player);
 		root->add_child(courier);
 		root->add_child(iisland);
+		root->add_child(iisland2);
 		player->add_parent(root);
 		courier->add_parent(root);
 		iisland->add_parent(root);
+		iisland2->add_parent(root);
 		root->update(root->get_transform(), true);
 
 		m_scene->m_camera->player = player;
@@ -156,10 +165,6 @@ namespace GameEngine {
 		lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, near_plane, far_plane);
 		lightView = glm::lookAt(-light->lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
-
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, { 0, 0, 0 });
-		ourShader->setMat4("model", model);
 
 		std::cout << "Starting Game...\n";
 
@@ -210,6 +215,7 @@ namespace GameEngine {
 		player->render();
 		courier->render();
 		iisland->render();
+		iisland2->render();
 		//glBindTexture(GL_TEXTURE_2D, texture1);
 		texture1.bindTexture();
 
