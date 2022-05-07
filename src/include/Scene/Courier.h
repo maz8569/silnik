@@ -12,8 +12,8 @@ namespace GameEngine {
 		Ref<InputManager> m_inputManager;
 
 	public:
-		Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
-		virtual void render();
+		Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Collision> colMan);
+		virtual void render(Ref<Shader> shader);
 		virtual void Update();
 		virtual void reactOnCollision(GObject* other);
 	};

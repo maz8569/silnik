@@ -1,15 +1,15 @@
 #include "Scene/Player.h"
 
-GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan) : inputManager(inputManager), Entity(model, shader, colMan) {}
+GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) : inputManager(inputManager), Entity(model, colMan) {}
 
-GameEngine::Player::Player(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan)
-    : Entity(model, shader, colMan)
+GameEngine::Player::Player(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan)
+    : Entity(model, colMan)
 {
 }
 
-void GameEngine::Player::render()
+void GameEngine::Player::render(Ref<Shader> shader)
 {
-    Entity::render();
+    Entity::render(shader);
 }
 
 void GameEngine::Player::Update()

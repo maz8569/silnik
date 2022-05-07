@@ -7,7 +7,7 @@ GameEngine::GObject::GObject(): SceneNode(), m_color({1, 1, 1})
 {
 }
 
-GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan): m_model(model), m_shader(shader), SceneNode(), m_color({ 1, 1, 1 })
+GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan): m_model(model),  SceneNode(), m_color({ 1, 1, 1 })
 {
 	m_aabb = std::make_shared<AABB>(generateAABB(model));
 	m_colman = colMan;
@@ -56,17 +56,17 @@ Ref<AABB> GameEngine::GObject::getAABB() const
 	return m_aabb;
 }
 
-void GameEngine::GObject::render()
+void GameEngine::GObject::render(Ref<Shader> shader)
 {
-	m_shader->use();
-	m_shader->setMat4("model", get_transform().m_world_matrix);
+	shader->use();
+	shader->setMat4("model", get_transform().m_world_matrix);
 	if (m_model != nullptr)
 	{
-		m_shader->setVec3("color", m_color);
-		m_model->Draw(m_shader);
+		shader->setVec3("color", m_color);
+		m_model->Draw(shader);
 		if (m_aabb != nullptr && render_AABB)
 		{
-			m_shader->setVec3("color", { 1, 1, 1 });
+			shader->setVec3("color", { 1, 1, 1 });
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_LINE_STRIP, 0, 20);
 		}

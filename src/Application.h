@@ -110,17 +110,13 @@ namespace GameEngine {
 		glm::mat4 punktLightpos;
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 0.0f, far_plane = 7.5f;
+		float near_plane = 1.0f, far_plane = 20.f;
 		BasicTexture texture1;
 		Ref<DirectionalLight> light;
 
 		int fps = 0;
 
-		glm::vec3 p_pos = { 1, 0, 1 };
-		glm::mat4 model_s;
 		glm::mat4 ortho;
-
-		int score = 1000;
 
 		std::shared_ptr<SceneNode> root = nullptr;
 

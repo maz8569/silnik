@@ -18,10 +18,10 @@ namespace GameEngine {
 		std::shared_ptr<InputManager> inputManager;
 		
 	public:
-		Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
-		Player( std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
+		Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
+		Player( std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
 
-		virtual void render();
+		virtual void render(Ref<Shader> shader);
 		virtual void Update();
 		void jump();
 		virtual void reactOnCollision(GObject* other);

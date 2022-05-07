@@ -374,6 +374,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\ECS\MovingEntity.cpp" />
     <ClCompile Include="src\Physics\Collisions\Sphere.cpp" />
     <ClCompile Include="src\Blocks\BlockRenderer.cpp" />
     <ClCompile Include="src\Scene\OrthographicCamera.cpp" />
@@ -420,6 +421,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Utils\VertexArray.cpp" />
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
+    <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="include\Blocks\BlockRenderer.h" />
     <ClInclude Include="include\Scene\FPcam.h" />
@@ -439,6 +441,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\OrthographicCamera.h" />
     <ClInclude Include="include\Texture\Texture.h" />
     <ClInclude Include="include\Physics\Collisions\Sphere.h" />
+    <ClInclude Include="include\ECS\MovingEntity.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />
@@ -485,6 +488,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="train.h" />
     <ClInclude Include="include\Utils\VertexBuffer.h" />
     <ClInclude Include="include\Utils\VertexArray.h" />
+    <ClInclude Include="include\ECS\Vehicle.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\ZERO_CHECK.vcxproj">

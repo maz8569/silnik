@@ -20,7 +20,7 @@ namespace GameEngine {
 		Ref<Model> m_model;
 		Ref<AABB> m_aabb;
 		glm::vec3 m_color;
-		Ref<Shader> m_shader;
+		//Ref<Shader> m_shader;
 		bool render_AABB = false;
 		unsigned int VBO, VAO;
 		glm::vec3 offset;
@@ -33,7 +33,7 @@ namespace GameEngine {
 		Ref<Collision> m_colman;
 
 		GObject();
-		explicit GObject(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
+		explicit GObject(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
 		~GObject();
 
 		void set_tag(std::string newTag);
@@ -44,7 +44,7 @@ namespace GameEngine {
 		void setModel(std::shared_ptr<Model> model);
 		Ref<AABB> getAABB() const;
 
-		virtual void render();
+		virtual void render(Ref<Shader> shader);
 		virtual void Update();
 
 		virtual void reactOnCollision(GObject* other);

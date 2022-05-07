@@ -59,15 +59,13 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 float ShadowCalculation(vec4 fragPosLightSpace);
-float shadow = 0;
+//float shadow = 0;
 
 void main()
 {
 
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
-    shadow = ShadowCalculation(FragPosLightSpace);
-
 
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
     //if(pointLight.ambient != vec3(0, 0, 0))
@@ -92,6 +90,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 diffuse = light.diffuse * diff * vec3(texture(ourTexture, TexCoord));
     vec3 specular = light.specular * spec*0.5;
     //return (ambient + (diffuse + specular));
+    float shadow = ShadowCalculation(FragPosLightSpace);
     return (ambient + (1.0 - shadow) * (diffuse + specular));
 }
 
@@ -115,7 +114,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
+    //return (ambient + (1.0 - shadow) * (diffuse + specular));
+    return (ambient + diffuse + specular);
 }
 
 // calculates the color when using a spot light.
@@ -142,7 +142,8 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     ambient *= attenuation * intensity;
     diffuse *= attenuation * intensity;
     specular *= attenuation * intensity;
-    return (ambient + (1.0 - shadow) * (diffuse + specular));
+    //return (ambient + (1.0 - shadow) * (diffuse + specular));
+    return (ambient + diffuse + specular);
 }
 
 float ShadowCalculation(vec4 fragPosLightSpace)
@@ -156,7 +157,9 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
     // check whether current frag pos is in shadow
-    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+    
+    float bias = 0.005;
+    float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;  
 
     return shadow;
 }

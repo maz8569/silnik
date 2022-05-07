@@ -13,6 +13,4 @@ namespace GameEngine {
 		bool testSphereSphere(Ref<Sphere> other);
 	};
 
-
-
 }

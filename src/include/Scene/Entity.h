@@ -7,8 +7,8 @@ namespace GameEngine {
 	private:
 
 	public:
-		Entity(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Collision> colMan);
-		virtual void render();
+		Entity(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
+		virtual void render(Ref<Shader> shader);
 		virtual void Update();
 		virtual void reactOnCollision(GObject* other);
 	};

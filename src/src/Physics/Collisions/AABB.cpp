@@ -135,12 +135,14 @@ glm::vec3 GameEngine::AABB::testDepth(Ref<AABB> other)
 	{
 		if (center[i] < other->center[i])
 		{
-			result[i] = extents[i] + other->extents[i] + center[i] - other->center[i] + 0.01;
+			//result[i] = extents[i] + other->extents[i] + center[i] - other->center[i] + 0.01;
+			result[i] = extents[i] + other->extents[i] + center[i] - other->center[i];
 
 		}
 		else
 		{
-			result[i] = -(extents[i] + other->extents[i] - center[i] + other->center[i] + 0.01);
+			//result[i] = -(extents[i] + other->extents[i] - center[i] + other->center[i] + 0.01);
+			result[i] = -(extents[i] + other->extents[i] - center[i] + other->center[i]);
 		}
 	}
 	return result;
