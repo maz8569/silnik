@@ -15,7 +15,9 @@ namespace GameEngine {
         FORWARD,
         BACKWARD,
         LEFT,
-        RIGHT
+        RIGHT,
+        UP, 
+        DOWN
     };
 
     // Default camera values
@@ -36,7 +38,7 @@ namespace GameEngine {
         glm::vec3 Up;
         glm::vec3 Right;
         glm::vec3 WorldUp;
-        glm::vec2 acceleration;
+        glm::vec3 acceleration;
         // euler Angles
         float Yaw;
         float Pitch;

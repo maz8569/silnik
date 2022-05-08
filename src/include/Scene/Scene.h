@@ -20,6 +20,7 @@ namespace GameEngine {
 		Skybox m_skybox;
 
 	public:
+
 		Ref<Camera> m_camera;
 		glm::mat4 m_lightSpace;
 

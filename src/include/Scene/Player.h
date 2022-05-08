@@ -10,8 +10,7 @@ namespace GameEngine {
 		float speed = 20;
 		float jumpHeight = 40;
 		float gravity = -50;
-		bool isGrounded = true;
-
+		bool isGrounded = false;
 		glm::vec2 currentSpeed = { 0, 0 };
 		float jumpPower = 0;
 

@@ -61,6 +61,9 @@ namespace GameEngine {
 		void stopCamera(Event e);
 		void rotateCamera(Event e);
 
+		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& proj, const glm::mat4& view);
+		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& projview);
+
 	private:
 		void OnEvent(Event e);
 		void PollEvents();
