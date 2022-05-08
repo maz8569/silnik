@@ -11,11 +11,10 @@ namespace GameEngine {
 	private:
 		glm::vec3 m_currentRay;
 
-		glm::mat4 m_projectionMatrix;
 		glm::mat4 m_viewMatrix;
 		Ref<Camera> m_camera;
 		Ref<InputManager> m_inputManager;
-
+		
 		glm::vec3 calculateRay();
 		glm::vec2 getNormalizedDeviceCoords(float mouseX, float mouseY);
 		glm::vec4 toEyeCoords(glm::vec4 clipCoords);
@@ -23,7 +22,7 @@ namespace GameEngine {
 
 	public:
 
-		MousePicker(Ref<Camera> camera, glm::mat4 projectionMatrix, Ref<InputManager> inputManager);
+		MousePicker(Ref<Camera> camera, Ref<InputManager> inputManager);
 
 		void update();
 

@@ -56,6 +56,9 @@ namespace GameEngine {
         glm::mat4 m_viewMatrix;
         glm::mat4 m_projViewMatrix;
 
+        float scr_width;
+        float scr_height;
+
         ViewFrustum m_frustum;
 
         // constructor with vectors
@@ -66,6 +69,8 @@ namespace GameEngine {
             Yaw = yaw;
             Pitch = pitch;
             updateCameraVectors();
+            updateFrustum();
+
         }
         // constructor with scalar values
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -75,6 +80,8 @@ namespace GameEngine {
             Yaw = yaw;
             Pitch = pitch;
             updateCameraVectors();
+            updateFrustum();
+
         }
 
         // returns the view matrix calculated using Euler Angles and the LookAt Matrix
@@ -88,6 +95,7 @@ namespace GameEngine {
         void ProcessKeyboard(Camera_Movement direction)
         {
             float velocity = MovementSpeed;
+
             if (direction == FORWARD)
                 acceleration.x +=  velocity;
             if (direction == BACKWARD)
@@ -124,6 +132,7 @@ namespace GameEngine {
 
             // update Front, Right and Up Vectors using the updated Euler angles
             updateCameraVectors();
+            updateFrustum();
         }
 
         // processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
@@ -157,6 +166,7 @@ namespace GameEngine {
 
         void updateFrustum()
         {
+            m_projViewMatrix = m_projectionMatrix * m_viewMatrix;
             m_frustum.Update(m_projViewMatrix);
         }
 
@@ -181,12 +191,14 @@ namespace GameEngine {
             //Position -= Front * distance;
 
             //std::cout << Position.x << " " << Position.y << " " << Position.z << "\n";
-
+            if (acceleration.x != 0 || acceleration.y != 0)
+            {
+                updateFrustum();
+            }
             Position += Front * acceleration.x;
             Position += Right * acceleration.y;
 
             updateCameraVectors();
-            m_projViewMatrix = m_projectionMatrix * m_viewMatrix;
 
         }
 

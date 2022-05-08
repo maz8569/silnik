@@ -33,6 +33,7 @@ namespace GameEngine {
 		void FixedUpdate();
 		void LateUpdate();
 		void Render(Ref<Shader> shader);
+		void RenderAll(Ref<Shader> shader);
 
 		void checkFrustum();
 

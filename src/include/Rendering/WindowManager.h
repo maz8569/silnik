@@ -10,8 +10,8 @@ namespace GameEngine {
 	{
 	public:
 
-		static const unsigned int SCR_WIDTH = 1920;
-		static const unsigned int SCR_HEIGHT = 1080;
+		unsigned int SCR_WIDTH = 1920;
+		unsigned int SCR_HEIGHT = 1080;
 		GLFWwindow* window = nullptr;
 
 		//name of the game

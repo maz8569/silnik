@@ -11,18 +11,24 @@ namespace GameEngine {
 		{
 			exit(-1);
 		}
-		//windowManager.freeCursor();
-		windowManager.blockCursor();
+		windowManager.freeCursor();
+		//windowManager.blockCursor();
+
+		lastX = (float)windowManager.SCR_WIDTH / 2.0;
+		lastY = (float)windowManager.SCR_HEIGHT / 2.0;
 
 		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
 
 		//renderer.init();
 		// Queue a window resize event to properly scale the cameras (according to the window dimensions)
-		Event e;
-		e.type = EventTypes::WindowResize;
-		m_EventQueue.push_back(e);
+
 
 		m_scene = new Scene("new scene");
+		Event e;
+		e.type = EventTypes::WindowResize;
+		e.wx = windowManager.SCR_WIDTH;
+		e.wy = windowManager.SCR_HEIGHT;
+		m_EventQueue.push_back(e);
 
 		jsonParser = CreateRef<Json>();
 		if (jsonParser->print() == 1)
@@ -89,9 +95,6 @@ namespace GameEngine {
 
 		debugDepth->use();
 		debugDepth->setInt("depthMap", 0);
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), (float)WindowManager::SCR_WIDTH / WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
-		ourShader->setMat4("projection", projection);
 
 		float a = 0;
 		bool should_render = false;
@@ -117,18 +120,17 @@ namespace GameEngine {
 		quad = CreateRef<Shape>(Shape(Coords::COORDSTEXT));
 		light = CreateRef<DirectionalLight>(DirectionalLight({ -1.5f, -3.0f, 1.5f }));
 
-		light->activate_lights(ourShader, GameEngine::app.getScene()->m_camera);
+		light->activate_lights(ourShader, m_scene->m_camera);
 
 		root = std::make_shared<SceneNode>(SceneNode());
 
-		projection = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)WindowManager::SCR_WIDTH / (float)WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
-		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, projection, inputManager));
+		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
 		player = std::make_shared<Player>(inputManager, b, colMan);
 		courier = std::make_shared<Courier>(mousePicker, bu, colMan);
 		courier->set_local_position({ 2, 0, 0 });
 		//courier->set_local_rotation({ 90, 0, 0 });
 		player->set_local_position({ -2, 0, 0 });
-		player->set_render_AABB(true);
+		//player->set_render_AABB(true);
 		courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
 
@@ -206,12 +208,14 @@ namespace GameEngine {
 			iisland->set_tag("terrain");
 			iisland->getAABB()->setStatic(true);
 
-			Ref<GObject> water = CreateRef<GObject>(GObject(b, colMan));
+			Ref<GObject> water = CreateRef<GObject>(b, colMan);
 			water->set_local_scale({ 60, 1, 60 });
 			water->scaleAABB({ 60, 1, 60 });
+			//water->setAABBextentY(0.9f);
 			water->set_local_position({ 0, -10, 0 });
 			water->getAABB()->setStatic(true);
 			water->set_color({ 0.63, 0.68, 0.85 });
+			water->set_render_AABB(true);
 
 
 			m_scene->addObjectToScene(player);
@@ -284,7 +288,6 @@ namespace GameEngine {
 
 	void Application::RenderScene(Ref<Shader> shader)
 	{
-		masterRenderer->finishRender();
 		/*
 		player->render(shader);
 		courier->render(shader);
@@ -323,7 +326,6 @@ namespace GameEngine {
 		//quad->Render(36);
 
 
-		m_scene->Render(shader);
 
 		//shader->setVec3("color", { 1, 1, 1 });
 	}
@@ -332,7 +334,7 @@ namespace GameEngine {
 	{
 		PollEvents();
 
-		view = GameEngine::app.getScene()->m_camera->GetViewMatrix();
+		view = m_scene->m_camera->GetViewMatrix();
 		inputManager->getInput();
 	}
 
@@ -352,9 +354,10 @@ namespace GameEngine {
 
 	void Application::OnRender()
 	{
+		masterRenderer->finishRender();
+
 		// activate shader
-		glm::mat4 projection = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)WindowManager::SCR_WIDTH / (float)WindowManager::SCR_HEIGHT, 0.1f, 100.0f);
-		m_scene->m_camera->m_projectionMatrix = projection;
+		m_scene->m_camera->m_projectionMatrix = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)windowManager.SCR_WIDTH / (float)windowManager.SCR_HEIGHT, 0.1f, 100.0f);
 		lightView = glm::lookAt(-light->lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
 		shadowMap->use();
@@ -366,26 +369,23 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		RenderScene(shadowMap);
+		m_scene->RenderAll(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
 
 		ourShader->use();
 
-		glViewport(0, 0, WindowManager::SCR_WIDTH, WindowManager::SCR_HEIGHT);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glViewport(0, 0, WindowManager::SCR_WIDTH, WindowManager::SCR_HEIGHT);
+		glViewport(0, 0, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		ourShader->setVec3("color", { 1, 1, 1 });
 		ourShader->setMat4("view", view);
-		ourShader->setMat4("projection", projection);
+		ourShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
 		ourShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		RenderScene(ourShader);
+		m_scene->Render(ourShader);
 
 		debugDepth->use();
 		debugDepth->setFloat("near_plane", near_plane);
@@ -552,12 +552,17 @@ namespace GameEngine {
 			break;
 
 		case EventTypes::MouseMove:
-			rotateCamera(e);
+			//rotateCamera(e);
 			break;
 		case EventTypes::WindowResize:
 			// make sure the viewport matches the new window dimensions; note that width and 
 			// height will be significantly larger than specified on retina displays.
 			glViewport(0, 0, e.wx, e.wy);
+			windowManager.SCR_HEIGHT = e.wy;
+			windowManager.SCR_WIDTH = e.wx;
+
+			m_scene->m_camera->scr_width = e.wx;
+			m_scene->m_camera->scr_height = e.wy;
 			break;
 		default:
 			break;

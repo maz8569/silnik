@@ -47,9 +47,18 @@ void GameEngine::Scene::Render(Ref<Shader> shader)
 	m_skybox.RenderSkybox(m_camera);
 }
 
+void GameEngine::Scene::RenderAll(Ref<Shader> shader)
+{
+	for (auto& obj : m_GObjects)
+	{
+		obj->render(shader);
+	}
+
+	m_skybox.RenderSkybox(m_camera);
+}
+
 void GameEngine::Scene::checkFrustum()
 {
-	m_camera->updateFrustum();
 	m_seenGObjects.clear();
 	for (auto& obj : m_GObjects)
 	{

@@ -96,8 +96,8 @@ namespace GameEngine {
 		Ref<MousePicker> mousePicker = nullptr;
 		Ref<Block> block = nullptr;
 
-		float lastX = (float)WindowManager::SCR_WIDTH / 2.0;
-		float lastY = (float)WindowManager::SCR_HEIGHT / 2.0;
+		float lastX = 0.0f;
+		float lastY = 0.0f;
 		bool firstMouse = true;
 
 		// timing

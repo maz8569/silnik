@@ -3,8 +3,8 @@
 
 using namespace GameEngine;
 
-GameEngine::MousePicker::MousePicker(Ref<Camera> camera, glm::mat4 projectionMatrix, Ref<InputManager> inputManager)
-	: m_camera(camera), m_projectionMatrix(projectionMatrix), m_inputManager(inputManager)
+GameEngine::MousePicker::MousePicker(Ref<Camera> camera, Ref<InputManager> inputManager)
+	: m_camera(camera), m_inputManager(inputManager)
 {
 	m_viewMatrix = camera->GetViewMatrix();
 }
@@ -44,14 +44,14 @@ glm::vec3 GameEngine::MousePicker::calculateRay()
 
 glm::vec2 GameEngine::MousePicker::getNormalizedDeviceCoords(float mouseX, float mouseY)
 {
-	float x = (2.0f * mouseX) / WindowManager::SCR_WIDTH - 1;
-	float y = (2.0f * mouseY) / WindowManager::SCR_HEIGHT - 1;
+	float x = (2.0f * mouseX) / m_camera->scr_width - 1;
+	float y = (2.0f * mouseY) / m_camera->scr_height - 1;
 	return glm::vec2(x, -y);
 }
 
 glm::vec4 GameEngine::MousePicker::toEyeCoords(glm::vec4 clipCoords)
 {
-	glm::mat4 invertedProjection = glm::inverse(m_projectionMatrix);
+	glm::mat4 invertedProjection = glm::inverse(m_camera->m_projectionMatrix);
 	glm::vec4 eyeCoords = invertedProjection * clipCoords;
 	return glm::vec4(eyeCoords.x, eyeCoords.y, -1, 0);
 }
