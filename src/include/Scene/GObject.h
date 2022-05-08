@@ -66,6 +66,8 @@ namespace GameEngine {
 		void setAABBoffsetY(float y);
 		void setAABBoffsetZ(float z);
 
+		void rotateAABB(float deg);
+
 		void setAABBoffsets(glm::vec3 newOffset);
 
 		void setName(std::string name);

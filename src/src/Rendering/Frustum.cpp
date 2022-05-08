@@ -1,4 +1,5 @@
 #include "Rendering/Frustum.h"
+#include <Physics/Collisions/AABB.h>
 
 enum Planes
 {
@@ -104,18 +105,18 @@ void GameEngine::ViewFrustum::Update(const glm::mat4& VP_Matrix)
 }
 
 
-bool GameEngine::ViewFrustum::BoxInFrustum(const FrustumAABB& box) const
+bool GameEngine::ViewFrustum::BoxInFrustum(Ref<AABB> box) const
 {
     bool result = true;
 
     for (auto& plane : m_Planes)
     {
-        if (plane.distanceToPoint(box.GetVP(plane.normal)) < 0)
+        if (plane.distanceToPoint(box->getVP(plane.normal)) < 0)
         {
             return false;
         }
 
-        else if (plane.distanceToPoint(box.GetVN(plane.normal)) < 0)
+        else if (plane.distanceToPoint(box->getVN(plane.normal)) < 0)
         {
             result = true;
         }

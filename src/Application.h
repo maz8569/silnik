@@ -113,7 +113,7 @@ namespace GameEngine {
 		glm::mat4 punktLightpos;
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 1.0f, far_plane = 20.f;
+		float near_plane = 0.5f, far_plane = 40.f;
 		BasicTexture texture1;
 		Ref<DirectionalLight> light;
 
@@ -125,20 +125,9 @@ namespace GameEngine {
 
 		std::shared_ptr<InputManager> inputManager = nullptr;
 
-		std::shared_ptr<Player> player;
-		std::shared_ptr<Courier> courier;
-		Ref<GObject> iisland;
-		Ref<GObject> iisland2;
-		Ref<GObject> iisland3;
-		Ref<GObject> iisland4;
-		Ref<GObject> iisland5;
-		Ref<GObject> water;
-		Ref<GObject> gdom;
-		Ref<GObject> paczka;
-		Ref<GObject> most;
-		Ref<GObject> most2;
-		Ref<GObject> most3;
-		Ref<GObject> most4;
+		Ref<Player> player;
+		Ref<Courier> courier;
+
 
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;

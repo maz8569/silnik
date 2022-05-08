@@ -14,8 +14,9 @@ namespace GameEngine {
 	private:
 
 		std::string m_name;
-		Ref<GObject> m_root;
+		Ref<GObject> m_root = nullptr;
 		std::vector<Ref<GObject>> m_GObjects;
+		std::vector<Ref<GObject>> m_seenGObjects;
 
 		Skybox m_skybox;
 
@@ -31,8 +32,11 @@ namespace GameEngine {
 		void Update();
 		void FixedUpdate();
 		void LateUpdate();
-		void Render();
+		void Render(Ref<Shader> shader);
 
+		void checkFrustum();
+
+		void addObjectToScene(Ref<GObject> obj);
 		virtual Ref<GObject> getObjectByName(const std::string& name);
 		virtual std::vector<Ref<GObject>> getAllObjects();
 		virtual std::vector<Ref<GObject>> getAllObjectsByName(const std::string& name);

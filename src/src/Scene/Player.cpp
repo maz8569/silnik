@@ -41,6 +41,7 @@ void GameEngine::Player::Update()
     update(get_parent()->get_transform(), true);
 
     Entity::Update();
+    isGrounded = false;
 }
 
 void GameEngine::Player::jump()

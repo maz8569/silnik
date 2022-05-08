@@ -17,6 +17,13 @@ void GameEngine::Scene::Start()
 
 void GameEngine::Scene::Update()
 {
+	m_root->update(m_root->get_transform(), true);
+	for (auto& obj : m_GObjects)
+	{
+		obj->Update();
+	}
+	m_camera->Move();
+
 }
 
 void GameEngine::Scene::FixedUpdate()
@@ -27,9 +34,44 @@ void GameEngine::Scene::LateUpdate()
 {
 }
 
-void GameEngine::Scene::Render()
+void GameEngine::Scene::Render(Ref<Shader> shader)
 {
+	checkFrustum();
+
+
+	for (auto& obj : m_seenGObjects)
+	{
+		obj->render(shader);
+	}
+
 	m_skybox.RenderSkybox(m_camera);
+}
+
+void GameEngine::Scene::checkFrustum()
+{
+	m_camera->updateFrustum();
+	m_seenGObjects.clear();
+	for (auto& obj : m_GObjects)
+	{
+		if (obj->getAABB() != nullptr)
+		{
+			if (m_camera->m_frustum.BoxInFrustum(obj->getAABB()))
+			{
+				m_seenGObjects.push_back(obj);
+			}
+		}
+	}
+}
+
+void GameEngine::Scene::addObjectToScene(Ref<GObject> obj)
+{
+	if (obj != nullptr)
+	{
+		m_root->add_child(obj);
+		obj->add_parent(m_root);
+
+		m_GObjects.push_back(obj);
+	}
 }
 
 Ref<GObject> GameEngine::Scene::getObjectByName(const std::string& name)

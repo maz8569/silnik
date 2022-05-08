@@ -155,6 +155,11 @@ namespace GameEngine {
             return Yaw;
         }
 
+        void updateFrustum()
+        {
+            m_frustum.Update(m_projViewMatrix);
+        }
+
         virtual void Move()
         {
             //glm::vec3 second;

@@ -66,6 +66,7 @@ void GameEngine::GObject::render(Ref<Shader> shader)
 		m_model->Draw(shader);
 		if (m_aabb != nullptr && render_AABB)
 		{
+			shader->setMat4("model", glm::translate(glm::mat4(1.0f), get_transform().m_position));
 			shader->setVec3("color", { 1, 1, 1 });
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_LINE_STRIP, 0, 20);
@@ -184,6 +185,13 @@ void GameEngine::GObject::setAABBoffsetY(float y)
 void GameEngine::GObject::setAABBoffsetZ(float z)
 {
 	offset.z = z;
+}
+
+void GameEngine::GObject::rotateAABB(float deg)
+{
+	m_aabb->rotateAABB(deg);
+
+	recalculateAABB();
 }
 
 void GameEngine::GObject::setAABBoffsets(glm::vec3 newOffset)

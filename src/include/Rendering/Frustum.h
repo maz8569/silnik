@@ -1,8 +1,11 @@
 #pragma once
+#include <typedefs.h>
 #include <array>
 #include <glm/glm.hpp>
 
 namespace GameEngine {
+    
+    class AABB;
 
     struct FrustumAABB
     {
@@ -27,7 +30,7 @@ namespace GameEngine {
     {
     public:
         void Update(const glm::mat4& VP_Matrix);
-        bool BoxInFrustum(const FrustumAABB& box) const;
+        bool BoxInFrustum(Ref<AABB> box) const;
 
     private:
         std::array<Plane, 6> m_Planes;
