@@ -11,8 +11,8 @@ namespace GameEngine {
 		{
 			exit(-1);
 		}
-		windowManager.freeCursor();
-		//windowManager.blockCursor();
+		//windowManager.freeCursor();
+		windowManager.blockCursor();
 
 		lastX = (float)windowManager.SCR_WIDTH / 2.0;
 		lastY = (float)windowManager.SCR_HEIGHT / 2.0;
@@ -44,15 +44,14 @@ namespace GameEngine {
 
 		audioManager->readMonoData("TestSound");
 
-		textRenderer = CreateRef<TextRenderer>("res/fonts/PressStart2P.ttf", "res/shaders/GUI.vert", "res/shaders/GUI.frag");
+		textRenderer = CreateRef<TextRenderer>(m_scene->m_camera, "res/fonts/PressStart2P.ttf", "res/shaders/GUIText.vert", "res/shaders/GUIText.frag");
 		if (!textRenderer->success)
 		{
 			exit(-1);
 		}
-
 		colMan = std::make_shared<Collision>();
 		inputManager = std::make_shared<InputManager>(windowManager.window);
-
+		guiRenderer = CreateRef<GUIRenderer>(m_scene->m_camera);
 	}
 
 	Application::~Application()
@@ -212,7 +211,7 @@ namespace GameEngine {
 			water->set_local_scale({ 60, 1, 60 });
 			water->scaleAABB({ 60, 1, 60 });
 			//water->setAABBextentY(0.9f);
-			water->set_local_position({ 0, -10, 0 });
+			water->set_local_position({ 0, -8.2, 0 });
 			water->getAABB()->setStatic(true);
 			water->set_color({ 0.63, 0.68, 0.85 });
 			water->set_render_AABB(true);
@@ -253,6 +252,10 @@ namespace GameEngine {
 		double unprocessed_time = 0.0;
 
 		playAudio("TestSound");
+
+		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { 0, 0 }, { 1, 1 }));
+
+		guiRenderer->addComponent(comp);
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -343,9 +346,6 @@ namespace GameEngine {
 		ourShader->setMat4("view", view);
 
 		m_scene->Update();
-
-		//player->Update();
-		//courier->Update();
 		m_scene->m_camera->courier = courier->get_transform().m_position;
 		colMan->CollisionCheck();
 
@@ -369,7 +369,7 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		m_scene->RenderAll(shadowMap);
+		m_scene->Render(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -387,18 +387,21 @@ namespace GameEngine {
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		m_scene->Render(ourShader);
 
+		/*
 		debugDepth->use();
 		debugDepth->setFloat("near_plane", near_plane);
 		debugDepth->setFloat("far_plane", far_plane);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		renderQuad();
-
+		*/
 	}
 
 	void Application::OnRenderUI()
 	{
-		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		guiRenderer->Render();
+
+		textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		//textRenderer->RenderText("Position " + std::to_string(inputManager->m_posx) + " " + std::to_string(inputManager->m_posy), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 	}
 
@@ -552,7 +555,7 @@ namespace GameEngine {
 			break;
 
 		case EventTypes::MouseMove:
-			//rotateCamera(e);
+			rotateCamera(e);
 			break;
 		case EventTypes::WindowResize:
 			// make sure the viewport matches the new window dimensions; note that width and 

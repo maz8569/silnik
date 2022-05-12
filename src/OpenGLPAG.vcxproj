@@ -374,6 +374,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\GUI\Canvas.cpp" />
+    <ClCompile Include="src\GUI\GUIRenderer.cpp" />
+    <ClCompile Include="src\GUI\GuiComponent.cpp" />
     <ClCompile Include="src\ECS\MovingEntity.cpp" />
     <ClCompile Include="src\Physics\Collisions\Sphere.cpp" />
     <ClCompile Include="src\Blocks\BlockRenderer.cpp" />
@@ -423,6 +426,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="include\GUI\Canvas.h" />
+    <ClInclude Include="include\GUI\GUIRenderer.h" />
+    <ClInclude Include="include\GUI\GuiComponent.h" />
     <ClInclude Include="include\Blocks\BlockRenderer.h" />
     <ClInclude Include="include\Scene\FPcam.h" />
     <ClInclude Include="include\Texture\CubemapTexture.h" />

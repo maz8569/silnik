@@ -18,6 +18,7 @@
 #include "Physics/RayCasting/MousePicker.h"
 #include <Scene/Courier.h>
 #include <Blocks/Block.h>
+#include <GUI/GUIRenderer.h>
 
 namespace GameEngine {
 
@@ -85,6 +86,8 @@ namespace GameEngine {
 		Ref<Json> jsonParser = nullptr;
 		Ref<TextRenderer> textRenderer = nullptr;
 		Ref<Collision> colMan = nullptr;
+
+		Ref<GUIRenderer> guiRenderer = nullptr;
 
 		unsigned int quadVAO = 0;
 		unsigned int quadVBO;

@@ -70,7 +70,7 @@ void GameEngine::Skybox::RenderSkybox(Ref<Camera> camera)
 
     glm::mat4 view = glm::mat4(glm::mat3(camera->GetViewMatrix()));
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), camera->scr_width / camera->scr_height, 0.1f, 100.0f);
 
     m_skyboxShader.setMat4("view", view);
     m_skyboxShader.setMat4("projection", projection);

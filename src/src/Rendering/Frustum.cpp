@@ -1,16 +1,6 @@
 #include "Rendering/Frustum.h"
 #include <Physics/Collisions/AABB.h>
 
-enum Planes
-{
-    Near,
-    Far,
-    Left,
-    Right,
-    Top,
-    Bottom,
-};
-
 GameEngine::FrustumAABB::FrustumAABB(const glm::vec3& dimensions, const glm::vec3& position) : m_Dimensions(dimensions), m_Position(position)
 {
 

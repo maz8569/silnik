@@ -5,6 +5,7 @@
 #include "typedefs.h"
 #include <map>
 #include <Shaders/Shader.h>
+#include <Scene/Camera.h>
 #include FT_FREETYPE_H
 
 namespace GameEngine {
@@ -20,13 +21,14 @@ namespace GameEngine {
 	public:
 		std::map<char, Character> Characters;
 		Ref<Shader> GUIShader = nullptr;
+		Ref<Camera> m_camera;
 		unsigned int GUI_VBO, GUI_VAO;
 		FT_Library ft;
 		FT_Face face;
 		int m_size = 48;
 		bool success = false;
 
-		TextRenderer(std::string fontPath,const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
+		TextRenderer(Ref<Camera> camera, std::string fontPath,const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
 		~TextRenderer();
 		void RenderText(std::string text, float x, float y, float scale, glm::vec3 color);
 		void setSize(int size);

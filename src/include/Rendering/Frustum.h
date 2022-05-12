@@ -7,6 +7,16 @@ namespace GameEngine {
     
     class AABB;
 
+    enum Planes
+    {
+        Near,
+        Far,
+        Left,
+        Right,
+        Top,
+        Bottom,
+    };
+
     struct FrustumAABB
     {
         FrustumAABB(const glm::vec3& dimensions, const glm::vec3& position);
@@ -29,6 +39,9 @@ namespace GameEngine {
     class ViewFrustum
     {
     public:
+
+        static enum {OUTSIDE, INTERSECT, INSIDE};
+
         void Update(const glm::mat4& VP_Matrix);
         bool BoxInFrustum(Ref<AABB> box) const;
 

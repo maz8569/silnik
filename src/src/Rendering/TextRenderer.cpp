@@ -1,6 +1,7 @@
 #include "Rendering/TextRenderer.h"
 
-GameEngine::TextRenderer::TextRenderer(std::string fontPath, const char* vertexPath, const char* fragmentPath, const char* geometryPath)
+GameEngine::TextRenderer::TextRenderer(Ref<Camera> camera, std::string fontPath, const char* vertexPath, const char* fragmentPath, const char* geometryPath)
+    : m_camera(camera)
 {
     if (FT_Init_FreeType(&ft))
     {
