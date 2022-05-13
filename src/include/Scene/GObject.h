@@ -6,13 +6,12 @@
 #include <vector>
 //#include <Collision.h>
 #include "Scene/SceneGraph.h"
-#include <Scene/Component.h>
 #include <Physics/Collisions/AABB.h>
 
 namespace GameEngine {
 	class Collision;
 
-	class GObject: public SceneNode
+	class GObject : public SceneNode
 	{
 	private:
 		//std::vector<std::shared_ptr<Collision>> collisions;

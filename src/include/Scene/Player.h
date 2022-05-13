@@ -14,6 +14,8 @@ namespace GameEngine {
 		glm::vec2 currentSpeed = { 0, 0 };
 		float jumpPower = 0;
 
+		glm::vec3 lastPosition;
+
 		std::shared_ptr<InputManager> inputManager;
 		
 	public:

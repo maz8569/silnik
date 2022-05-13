@@ -374,6 +374,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\ECS\GEntityManager.cpp" />
+    <ClCompile Include="src\ECS\GEntity.cpp" />
     <ClCompile Include="src\GUI\Canvas.cpp" />
     <ClCompile Include="src\GUI\GUIRenderer.cpp" />
     <ClCompile Include="src\GUI\GuiComponent.cpp" />
@@ -404,7 +406,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Physics\Collisions\Collider.cpp" />
     <ClCompile Include="src\Physics\Collisions\Collision.cpp" />
-    <ClCompile Include="src\Scene\Component.cpp" />
+    <ClCompile Include="src\ECS\GComponent.cpp" />
     <ClCompile Include="src\Scene\Courier.cpp" />
     <ClCompile Include="src\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\Utils\Json.cpp" />
@@ -426,6 +428,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="include\ECS\GEntityManager.h" />
+    <ClInclude Include="include\ECS\GEntity.h" />
     <ClInclude Include="include\GUI\Canvas.h" />
     <ClInclude Include="include\GUI\GUIRenderer.h" />
     <ClInclude Include="include\GUI\GuiComponent.h" />
@@ -461,7 +465,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\Camera.h" />
     <ClInclude Include="include\Physics\Collisions\Collider.h" />
     <ClInclude Include="include\Physics\Collisions\Collision.h" />
-    <ClInclude Include="include\Scene\Component.h" />
+    <ClInclude Include="include\ECS\GComponent.h" />
     <ClInclude Include="include\Scene\Courier.h" />
     <ClInclude Include="include\Rendering\FrameBuffer.h" />
     <ClInclude Include="include\Utils\Json.h" />

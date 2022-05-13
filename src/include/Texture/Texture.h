@@ -15,17 +15,17 @@ namespace GameEngine {
 		int channels;
 	};
 
-	class Texture
+	class GTexture
 	{
 	public:
 
-		Texture(std::string path, bool flip = true, GLenum type = GL_TEXTURE_2D,
+		GTexture(std::string path, bool flip = true, GLenum type = GL_TEXTURE_2D,
 			GLenum min_filter = GL_NEAREST, GLenum mag_filter = GL_NEAREST,
 			GLenum texwrap_s = GL_REPEAT, GLenum texwrap_t = GL_REPEAT,
 			std::array<GLfloat, 8> TextureCoords = { 1.0f, 1.0f,  1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f }
 		, bool clean_up = true);
 
-		Texture()
+		GTexture()
 		{
 			m_Texture = new GLuint;
 			m_TextureCoords = { 1.0f, 1.0f,  1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
@@ -39,7 +39,7 @@ namespace GameEngine {
 			m_delete_texture = true;
 		}
 
-		~Texture()
+		~GTexture()
 		{
 			if (this->m_delete_texture == 1 && this->m_Texture != nullptr)
 			{

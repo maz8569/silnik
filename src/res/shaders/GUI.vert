@@ -2,10 +2,12 @@
 layout (location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>
 out vec2 TexCoords;
 
-uniform mat4 projection;
+uniform mat4 transfomationMatrix;
+uniform mat4 projectionMatrix;
 
 void main()
 {
-    gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
+   // gl_Position = projectionMatrix * transfomationMatrix * vec4(vertex.xy, 0.0, 1.0);
+    gl_Position = transfomationMatrix * vec4(vertex.xy, 0.0, 1.0);
     TexCoords = vertex.zw;
 }  

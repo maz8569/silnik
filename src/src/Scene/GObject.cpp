@@ -15,14 +15,15 @@ GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Colli
 	m_aabb->parent = this;
 	std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
 	offset = m_aabb->center;
+	std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
 	std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	MoveColliders();
 
 	recalculateAABB();
 
-	MoveColliders();
 }
 
 GameEngine::GObject::~GObject()
@@ -104,6 +105,7 @@ void GameEngine::GObject::set_render_AABB(bool set)
 
 void GameEngine::GObject::recalculateAABB()
 {
+	m_aabb->center = offset;
 
 	float vertices[] = {
 		m_aabb->center.x + m_aabb->extents.x, m_aabb->center.y + m_aabb->extents.y, m_aabb->center.z + m_aabb->extents.z,
@@ -139,6 +141,8 @@ void GameEngine::GObject::recalculateAABB()
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	MoveColliders();
 }
 
 void GameEngine::GObject::scaleAABB(glm::vec3 scale)
@@ -190,6 +194,17 @@ void GameEngine::GObject::setAABBoffsetZ(float z)
 void GameEngine::GObject::rotateAABB(float deg)
 {
 	m_aabb->rotateAABB(deg);
+
+	float x = offset.x;
+	offset.x = offset.z;
+	offset.z = -x;
+	
+	MoveColliders();
+
+
+	std::cout <<"\n\n" << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
+	std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
+
 
 	recalculateAABB();
 }

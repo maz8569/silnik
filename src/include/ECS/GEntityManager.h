@@ -2,7 +2,7 @@
 
 namespace GameEngine {
 
-	class Canvas
+	class GEntityManager
 	{
 
 	};

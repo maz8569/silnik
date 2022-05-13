@@ -24,13 +24,13 @@ namespace GameEngine {
 		void RenderChunkModels(Chunk* chunk);
 		void EndChunkModelRendering();
 
-		Texture* GetAtlasTexture() { return &m_BlockAtlas; }
+		GTexture* GetAtlasTexture() { return &m_BlockAtlas; }
 
 	private:
 		VertexBuffer m_VBO;
 		VertexArray m_VAO;
 		Shader m_DefaultChunkShader;
-		Texture m_BlockAtlas;
+		GTexture m_BlockAtlas;
 	};
 
 }

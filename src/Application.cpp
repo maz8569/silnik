@@ -149,6 +149,8 @@ namespace GameEngine {
 			most->set_local_position({ 0, -7.2, -4 });
 			most->set_local_rotation({ 0, -90, 0 });
 			most->getAABB()->setStatic(true);
+			most->rotateAABB(90);
+
 			most->set_render_AABB(true);
 
 			Ref<GObject> most2 = CreateRef<GObject>(GObject(mo, colMan));
@@ -198,7 +200,7 @@ namespace GameEngine {
 			iisland5->set_local_position({ 0, -10, -13 });
 			iisland5->set_tag("terrain");
 			iisland5->getAABB()->setStatic(true);
-
+			
 			Ref<GObject> iisland = CreateRef<GObject>(GObject(island, colMan));
 			iisland->set_local_scale({ 0.6, 0.6, 0.6 });
 			iisland->scaleAABB({ 0.6, 0.6, 0.6 });
@@ -206,13 +208,14 @@ namespace GameEngine {
 			iisland->set_local_position({ 0, -10, 0 });
 			iisland->set_tag("terrain");
 			iisland->getAABB()->setStatic(true);
-
+			
 			Ref<GObject> water = CreateRef<GObject>(b, colMan);
 			water->set_local_scale({ 60, 1, 60 });
 			water->scaleAABB({ 60, 1, 60 });
 			//water->setAABBextentY(0.9f);
 			water->set_local_position({ 0, -8.2, 0 });
 			water->getAABB()->setStatic(true);
+			water->set_tag("water");
 			water->set_color({ 0.63, 0.68, 0.85 });
 			water->set_render_AABB(true);
 
@@ -253,7 +256,7 @@ namespace GameEngine {
 
 		playAudio("TestSound");
 
-		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { 0, 0 }, { 1, 1 }));
+		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { -150, 0 }, { 24, 24 }));
 
 		guiRenderer->addComponent(comp);
 
@@ -401,8 +404,8 @@ namespace GameEngine {
 	{
 		guiRenderer->Render();
 
-		textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		//textRenderer->RenderText("Position " + std::to_string(inputManager->m_posx) + " " + std::to_string(inputManager->m_posy), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		textRenderer->RenderText("Position " + std::to_string(lastX - windowManager.SCR_WIDTH/2) + " " + std::to_string(windowManager.SCR_HEIGHT / 2 - lastY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 	}
 
 	void Application::PollEvents()
@@ -566,6 +569,10 @@ namespace GameEngine {
 
 			m_scene->m_camera->scr_width = e.wx;
 			m_scene->m_camera->scr_height = e.wy;
+
+			GuiComponent::setScrWidth(e.wx);
+			GuiComponent::setScrHeight(e.wy);
+
 			break;
 		default:
 			break;

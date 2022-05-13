@@ -1,6 +1,8 @@
 #include "Scene/Player.h"
 
-GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) : inputManager(inputManager), Entity(model, colMan) {}
+GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) : inputManager(inputManager), Entity(model, colMan) {
+    lastPosition = get_transform().m_position;
+}
 
 GameEngine::Player::Player(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan)
     : Entity(model, colMan)
@@ -57,6 +59,17 @@ void GameEngine::Player::reactOnCollision(GObject* other)
     //get_transform().m_position.y -= currentSpeed.y * 0.005;
     
     
+    if (other->getAABB()->tag == "water")
+    {
+        std::cout << "water";
+        get_transform().m_position = lastPosition;
+    }
+
+    if (other->getAABB()->tag == "terrain")
+    {
+        lastPosition = get_transform().m_position;
+    }
+
     auto vec = getAABB()->testDepth(other->getAABB());
     
     int i = 2;

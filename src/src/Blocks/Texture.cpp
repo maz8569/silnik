@@ -2,13 +2,13 @@
 
 namespace GameEngine {
 
-	Texture::Texture(std::string path, bool flip, GLenum type, GLenum min_filter, GLenum mag_filter, GLenum texwrap_s, GLenum texwrap_t, std::array<GLfloat, 8> TextureCoords, bool clean_up)
+	GTexture::GTexture(std::string path, bool flip, GLenum type, GLenum min_filter, GLenum mag_filter, GLenum texwrap_s, GLenum texwrap_t, std::array<GLfloat, 8> TextureCoords, bool clean_up)
 	{
 		m_Texture = new GLuint;
 		this->CreateTexture(path, flip, type, min_filter, mag_filter, texwrap_s, texwrap_t, TextureCoords, clean_up);
 	}
 
-	void Texture::CreateTexture(std::string path, bool flip, GLenum type, GLenum min_filter, GLenum mag_filter, GLenum texwrap_s, GLenum texwrap_t, std::array<GLfloat, 8> TextureCoords, bool clean_up)
+	void GTexture::CreateTexture(std::string path, bool flip, GLenum type, GLenum min_filter, GLenum mag_filter, GLenum texwrap_s, GLenum texwrap_t, std::array<GLfloat, 8> TextureCoords, bool clean_up)
 	{
 		if (flip)
 			stbi_set_flip_vertically_on_load(true);
@@ -58,7 +58,7 @@ namespace GameEngine {
 		}
 	}
 
-	void Texture::IntCreateTexture(GLuint id, std::array<GLfloat, 8> tex_coords, int w, int h, bool delete_texture) // To use for Texture Atlases
+	void GTexture::IntCreateTexture(GLuint id, std::array<GLfloat, 8> tex_coords, int w, int h, bool delete_texture) // To use for Texture Atlases
 	{
 		m_Texture = new GLuint;
 		*m_Texture = id;
