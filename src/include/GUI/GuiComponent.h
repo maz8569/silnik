@@ -17,7 +17,7 @@ namespace GameEngine {
 		glm::vec2 m_scale;
 		glm::mat4 m_transfrom_matrix;
 		bool isDirty = true;
-
+		float m_rotation = 0;
 
 
 	public:
@@ -26,7 +26,7 @@ namespace GameEngine {
 
 		static unsigned int m_scr_width, m_src_height;
 
-		GuiComponent(std::string texture, glm::vec2 position, glm::vec2 scale);
+		GuiComponent(std::string texture, glm::vec2 position, glm::vec2 scale, float rotation = 0);
 		~GuiComponent();
 
 		glm::mat4 getTransformatiomMatrix();

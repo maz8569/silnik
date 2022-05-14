@@ -11,11 +11,14 @@ namespace GameEngine {
 		{
 			exit(-1);
 		}
-		//windowManager.freeCursor();
-		windowManager.blockCursor();
+		windowManager.freeCursor();
+		//windowManager.blockCursor();
 
 		lastX = (float)windowManager.SCR_WIDTH / 2.0;
 		lastY = (float)windowManager.SCR_HEIGHT / 2.0;
+
+		mouseX = (float)windowManager.SCR_WIDTH / 2.0;
+		mouseY = (float)windowManager.SCR_HEIGHT / 2.0;
 
 		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
 
@@ -293,7 +296,7 @@ namespace GameEngine {
 
 		playAudio("TestSound");
 
-		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { -150, 0 }, { 24, 24 }));
+		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { -150, 20 }, { 48, 48 }));
 
 		guiRenderer->addComponent(comp);
 
@@ -442,7 +445,7 @@ namespace GameEngine {
 		guiRenderer->Render();
 
 		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		textRenderer->RenderText("Position " + std::to_string(lastX - windowManager.SCR_WIDTH/2) + " " + std::to_string(windowManager.SCR_HEIGHT / 2 - lastY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		textRenderer->RenderText("Position " + std::to_string(mouseX - windowManager.SCR_WIDTH/2) + " " + std::to_string(windowManager.SCR_HEIGHT / 2 - mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 	}
 
 	void Application::PollEvents()
@@ -533,8 +536,8 @@ namespace GameEngine {
 	{
 		if (firstMouse)
 		{
-			lastX = e.mx;
-			lastY = e.my;
+			lastX = mouseX;
+			lastY = mouseY;
 			firstMouse = false;
 		}
 
@@ -586,16 +589,41 @@ namespace GameEngine {
 				playAudio("TestSound");
 			}
 
-			moveCamera(e);
+			if (e.key == GLFW_KEY_TAB)
+			{
+				if (m_gameState != GameState::MenuState)
+				{
+					m_gameState = GameState::MenuState;
+					windowManager.freeCursor();
+				}
+				else
+				{
+					m_gameState = GameState::PlayingState;
+					windowManager.blockCursor();
+				}
+			}
+
+			if (m_gameState == GameState::PlayingState)
+			{
+				moveCamera(e);
+			}
 
 			break;
 
 		case EventTypes::KeyRelease:
-			stopCamera(e);
+			if (m_gameState == GameState::PlayingState)
+			{
+				stopCamera(e);
+			}
 			break;
 
 		case EventTypes::MouseMove:
-			rotateCamera(e);
+			mouseX = e.mx;
+			mouseY = e.my;
+			if (m_gameState == GameState::PlayingState)
+			{
+				rotateCamera(e);
+			}
 			break;
 		case EventTypes::WindowResize:
 			// make sure the viewport matches the new window dimensions; note that width and 

@@ -24,7 +24,9 @@ namespace GameEngine {
 
 	enum GameState : uint8_t {
 		MenuState = 0,
-		PlayingState
+		PlayingState,
+		Win,
+		Lose
 	};
 
 	class Application
@@ -101,6 +103,10 @@ namespace GameEngine {
 
 		float lastX = 0.0f;
 		float lastY = 0.0f;
+
+		float mouseX = 0.0f;
+		float mouseY = 0.0f;
+
 		bool firstMouse = true;
 
 		// timing
