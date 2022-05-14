@@ -17,6 +17,8 @@ namespace GameEngine {
 		glm::vec3 lastPosition;
 
 		std::shared_ptr<InputManager> inputManager;
+
+		GObject* package = nullptr;
 		
 	public:
 		Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);

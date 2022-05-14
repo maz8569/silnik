@@ -127,7 +127,7 @@ void GameEngine::AABB::scaleAABB(glm::vec3 scale)
 	}
 }
 
-void GameEngine::AABB::rotateAABB(float deg)
+void GameEngine::AABB::rotateAABBZ()
 {
 	float ext = extents.x;
 	extents.x = extents.z;

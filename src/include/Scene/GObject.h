@@ -11,6 +11,20 @@
 namespace GameEngine {
 	class Collision;
 
+	enum class Degrees
+	{
+		D90,
+		D180,
+		D270
+	};
+
+	enum class Axis
+	{
+		X,
+		Y,
+		Z
+	};
+
 	class GObject : public SceneNode
 	{
 	private:
@@ -27,6 +41,8 @@ namespace GameEngine {
 		std::string m_tag;
 		unsigned int ID;
 		static unsigned int ms_uiNextID;
+
+		void rotateAABBZ(Degrees deg);
 
 	public:
 		Ref<Collision> m_colman;
@@ -65,7 +81,7 @@ namespace GameEngine {
 		void setAABBoffsetY(float y);
 		void setAABBoffsetZ(float z);
 
-		void rotateAABB(float deg);
+		void rotateAABB(Degrees deg, Axis axis);
 
 		void setAABBoffsets(glm::vec3 newOffset);
 

@@ -3,6 +3,35 @@
 
 using namespace GameEngine;
 
+void GameEngine::GObject::rotateAABBZ(Degrees deg)
+{
+	if (deg != Degrees::D180)
+	{
+		m_aabb->rotateAABBZ();
+	}
+	float x = offset.x;
+
+	switch (deg)
+	{
+	case GameEngine::Degrees::D90:
+		offset.x = offset.z;
+		offset.z = -x;
+		break;
+	case GameEngine::Degrees::D180:
+		offset.x = -x;
+		offset.z = -offset.z;
+		break;
+	case GameEngine::Degrees::D270:
+		offset.x = offset.z;
+		offset.z = x;
+		break;
+	default:
+		break;
+	}
+
+
+}
+
 GameEngine::GObject::GObject(): SceneNode(), m_color({1, 1, 1})
 {
 }
@@ -65,13 +94,14 @@ void GameEngine::GObject::render(Ref<Shader> shader)
 	{
 		shader->setVec3("color", m_color);
 		m_model->Draw(shader);
-		if (m_aabb != nullptr && render_AABB)
-		{
-			shader->setMat4("model", glm::translate(glm::mat4(1.0f), get_transform().m_position));
-			shader->setVec3("color", { 1, 1, 1 });
-			glBindVertexArray(VAO);
-			glDrawArrays(GL_LINE_STRIP, 0, 20);
-		}
+	}
+
+	if (m_aabb != nullptr && render_AABB)
+	{
+		shader->setMat4("model", glm::translate(glm::mat4(1.0f), get_transform().m_position));
+		shader->setVec3("color", { 1, 1, 1 });
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_LINE_STRIP, 0, 20);
 	}
 
 	auto children = get_children();
@@ -191,16 +221,22 @@ void GameEngine::GObject::setAABBoffsetZ(float z)
 	offset.z = z;
 }
 
-void GameEngine::GObject::rotateAABB(float deg)
+void GameEngine::GObject::rotateAABB(Degrees deg, Axis axis)
 {
-	m_aabb->rotateAABB(deg);
+	switch (axis)
+	{
+	case GameEngine::Axis::X:
+		break;
+	case GameEngine::Axis::Y:
+		break;
+	case GameEngine::Axis::Z:
+		rotateAABBZ(deg);
+		break;
+	default:
+		break;
+	}
 
-	float x = offset.x;
-	offset.x = offset.z;
-	offset.z = -x;
-	
 	MoveColliders();
-
 
 	std::cout <<"\n\n" << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
 	std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;

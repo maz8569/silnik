@@ -42,6 +42,11 @@ void GameEngine::Player::Update()
 
     update(get_parent()->get_transform(), true);
 
+    if (package != nullptr)
+    {
+        package->get_transform().m_position = get_transform().m_position + glm::vec3(0, 2, 0);
+    }
+
     Entity::Update();
     isGrounded = false;
 }
@@ -58,19 +63,41 @@ void GameEngine::Player::reactOnCollision(GObject* other)
     //get_transform().m_position.x -= currentSpeed.x * 0.005;
     //get_transform().m_position.y -= currentSpeed.y * 0.005;
     
+    auto otherAABB = other->getAABB();
     
-    if (other->getAABB()->tag == "water")
+    if (otherAABB->tag == "water")
     {
-        std::cout << "water";
+        //std::cout << "water";
         get_transform().m_position = lastPosition;
     }
 
-    if (other->getAABB()->tag == "terrain")
+    if (otherAABB->tag == "terrain")
     {
         lastPosition = get_transform().m_position;
     }
 
-    auto vec = getAABB()->testDepth(other->getAABB());
+    if (otherAABB->tag == "package")
+    {
+        //std::cout << "package";
+        package = other;
+        package->get_transform().m_scale = { 0.5, 0.5, 0.5 };
+    }
+
+    if (otherAABB->tag == "house")
+    {
+        //std::cout << "house";
+
+        //
+        if (package != nullptr)
+        {
+            package->get_transform().m_position += glm::vec3({ 0, -20, 0 });
+            package = nullptr;
+        }
+
+
+    }
+
+    auto vec = getAABB()->testDepth(otherAABB);
     
     int i = 2;
     

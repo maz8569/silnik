@@ -374,6 +374,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\Scene\GameManager.cpp" />
     <ClCompile Include="src\ECS\GEntityManager.cpp" />
     <ClCompile Include="src\ECS\GEntity.cpp" />
     <ClCompile Include="src\GUI\Canvas.cpp" />
@@ -428,6 +429,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="include\Scene\GameManager.h" />
     <ClInclude Include="include\ECS\GEntityManager.h" />
     <ClInclude Include="include\ECS\GEntity.h" />
     <ClInclude Include="include\GUI\Canvas.h" />

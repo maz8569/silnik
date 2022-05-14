@@ -43,7 +43,7 @@ namespace GameEngine {
 
 		void scaleAABB(glm::vec3 scale);
 
-		void rotateAABB(float deg);
+		void rotateAABBZ();
 
 		glm::vec3 testDepth(Ref<AABB> other);
 		float getSmallestDistance(Ref<AABB> other);

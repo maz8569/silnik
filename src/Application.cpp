@@ -139,34 +139,67 @@ namespace GameEngine {
 			gdom->set_local_position({ 0, -7, -13 });
 			gdom->getAABB()->setStatic(true);
 			gdom->set_render_AABB(true);
+			gdom->set_tag("house");
 
 			Ref<GObject> paczka = CreateRef<GObject>(pacz, colMan);
 			paczka->set_local_position({ 0, -7, 13 });
 			paczka->getAABB()->setStatic(true);
-			paczka->set_render_AABB(true);
+			//paczka->set_render_AABB(true);
+			paczka->set_tag("package");
 
 			Ref<GObject> most = CreateRef<GObject>(mo, colMan);
 			most->set_local_position({ 0, -7.2, -4 });
 			most->set_local_rotation({ 0, -90, 0 });
 			most->getAABB()->setStatic(true);
-			most->rotateAABB(90);
-
+			most->rotateAABB(Degrees::D90, Axis::Z);
 			most->set_render_AABB(true);
 
-			Ref<GObject> most2 = CreateRef<GObject>(GObject(mo, colMan));
+			Ref<GObject> most2 = CreateRef<GObject>(mo, colMan);
 			most2->set_local_position({ 0, -7.2, -8.5f });
 			most2->set_local_rotation({ 0, 90, 0 });
 			most2->getAABB()->setStatic(true);
+			most2->rotateAABB(Degrees::D270, Axis::Z);
+			most2->set_render_AABB(true);
 
-			Ref<GObject> most3 = CreateRef<GObject>(GObject(mo, colMan));
+			Ref<GObject> most3 = CreateRef<GObject>(mo, colMan);
 			most3->set_local_position({ 0, -7.2, 8.5f });
 			most3->set_local_rotation({ 0, -90, 0 });
 			most3->getAABB()->setStatic(true);
+			most3->rotateAABB(Degrees::D90, Axis::Z);
+			most3->set_render_AABB(true);
 
-			Ref<GObject> most4 = CreateRef<GObject>(GObject(mo, colMan));
+			Ref<GObject> most4 = CreateRef<GObject>(mo, colMan);
 			most4->set_local_position({ 0, -7.2, 4 });
 			most4->set_local_rotation({ 0, 90, 0 });
 			most4->getAABB()->setStatic(true);
+			most4->rotateAABB(Degrees::D270, Axis::Z);
+			most4->set_render_AABB(true);
+
+			Ref<GObject> most5 = CreateRef<GObject>(mo, colMan);
+			most5->set_local_position({4, -7.2, 0 });
+			most5->set_local_rotation({ 0, 0, 0 });
+			most5->getAABB()->setStatic(true);
+			most5->set_render_AABB(true);
+
+			Ref<GObject> most6 = CreateRef<GObject>(mo, colMan);
+			most6->set_local_position({ 8.5f, -7.2, 0 });
+			most6->set_local_rotation({ 0, 180, 0 });
+			most6->getAABB()->setStatic(true);
+			most6->rotateAABB(Degrees::D180, Axis::Z);
+			most6->set_render_AABB(true);
+
+			Ref<GObject> most7 = CreateRef<GObject>(mo, colMan);
+			most7->set_local_position({ -8.5f, -7.2, 0 });
+			most7->set_local_rotation({ 0, 0, 0 });
+			most7->getAABB()->setStatic(true);
+			most7->set_render_AABB(true);
+
+			Ref<GObject> most8 = CreateRef<GObject>(mo, colMan);
+			most8->set_local_position({ -4, -7.2, 0 });
+			most8->set_local_rotation({ 0, 180, 0 });
+			most8->getAABB()->setStatic(true);
+			most8->rotateAABB(Degrees::D180, Axis::Z);
+			most8->set_render_AABB(true);
 
 			Ref<GObject> iisland2 = CreateRef<GObject>(island, colMan);
 			iisland2->set_local_scale({ 0.6, 0.6, 0.6 });
@@ -234,6 +267,10 @@ namespace GameEngine {
 			m_scene->addObjectToScene(most2);
 			m_scene->addObjectToScene(most3);
 			m_scene->addObjectToScene(most4);
+			m_scene->addObjectToScene(most5);
+			m_scene->addObjectToScene(most6);
+			m_scene->addObjectToScene(most7);
+			m_scene->addObjectToScene(most8);
 			//root->update(root->get_transform(), true);
 		}
 		m_scene->m_camera->player = player;
@@ -372,7 +409,7 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		m_scene->Render(shadowMap);
+		m_scene->RenderAll(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -388,7 +425,7 @@ namespace GameEngine {
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		m_scene->Render(ourShader);
+		m_scene->RenderAll(ourShader);
 
 		/*
 		debugDepth->use();
