@@ -21,17 +21,24 @@ namespace GameEngine {
 	{
 		if (GuiComponent::windowCh || isDirty) {
 
-			float sx = m_scale.x / GuiComponent::m_scr_width;
-			float sy = m_scale.y / GuiComponent::m_src_height;
+			float sx = m_scale.x * 2 / GuiComponent::m_scr_width;
+			//float sx = m_scale.x;
+			float sy = m_scale.y * 2 / GuiComponent::m_src_height;
+			//float sy = m_scale.y;
 
 			float x = m_position.x * 2 / GuiComponent::m_scr_width;
+			//float x = m_position.x;
 			float y = m_position.y * 2 / GuiComponent::m_src_height;
-			y -= sy;
+			//float y = GuiComponent::m_src_height - m_position.y;
+			//y -= sy/2;
+			
 
 			//m_transfrom_matrix = glm::translate(glm::mat4(1.0f), { m_position.x / GuiComponent::m_scr_width, m_position.y / GuiComponent::m_src_height, 0 }) *
 			m_transfrom_matrix = glm::translate(glm::mat4(1.0f), { x, y, 0 }) *
 								 glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation), glm::vec3(0, 0, -1)) *
 								 glm::scale(glm::mat4(1.0f), { sx, sy, 1 });
+
+			isDirty = false;
 		}
 
 		return m_transfrom_matrix;
@@ -52,6 +59,55 @@ namespace GameEngine {
 	{
 		GuiComponent::m_src_height = scr_height;
 		GuiComponent::windowCh = true;
+	}
+
+	glm::vec3& GuiComponent::getColor()
+	{
+		return color;
+	}
+
+	glm::vec3& GuiComponent::getHighLightColor()
+	{
+		return highlightColor;
+	}
+
+	float& GuiComponent::getOpacity()
+	{
+		return opacity;
+	}
+
+	glm::vec2 GuiComponent::getPosition()
+	{
+		return m_position;
+	}
+
+	glm::vec2 GuiComponent::getScale()
+	{
+		return m_scale;
+	}
+
+	void GuiComponent::onCollisionEnter(glm::vec2 pos)
+	{
+		color = highlightColor;
+		isHovered = true;
+	}
+
+	void GuiComponent::onCollisionStay(glm::vec2 pos)
+	{
+	}
+
+	void GuiComponent::onCollisionExit(glm::vec2 pos)
+	{
+		color = { 1, 1, 1 };
+		isHovered = false;
+	}
+
+	void GuiComponent::onClick()
+	{
+		if (isHovered)
+		{
+			std::cout << "click";
+		}
 	}
 
 	Ref<GTexture> GuiComponent::getTexture()

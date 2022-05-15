@@ -5,6 +5,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <Texture/Texture.h>
 #include <string>
+#include <iostream>
 
 namespace GameEngine {
 
@@ -19,6 +20,11 @@ namespace GameEngine {
 		bool isDirty = true;
 		float m_rotation = 0;
 
+		bool isHovered = false;
+
+		glm::vec3 color = { 1, 1, 1 };
+		glm::vec3 highlightColor = { 1, 0, 0 };
+		float opacity = 0;
 
 	public:
 
@@ -34,6 +40,19 @@ namespace GameEngine {
 
 		static void setScrWidth(unsigned int scr_width);
 		static void setScrHeight(unsigned int scr_height);
+
+		glm::vec3& getColor();
+		glm::vec3& getHighLightColor();
+		float& getOpacity();
+
+		glm::vec2 getPosition();
+		glm::vec2 getScale();
+
+		void onCollisionEnter(glm::vec2 pos);
+		void onCollisionStay(glm::vec2 pos);
+		void onCollisionExit(glm::vec2 pos);
+
+		void onClick();
 
 		Ref<GTexture> getTexture();
 	};

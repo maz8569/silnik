@@ -23,15 +23,10 @@ namespace GameEngine {
 
 	public:
 
-		std::vector<Ref<GuiComponent>> toDraw;
-
 		GUIRenderer(Ref<Camera> camera);
 		~GUIRenderer();
 
-		void Render();
-
-		void addComponent(Ref <GuiComponent> comp);
-		void removeComponent(Ref <GuiComponent> comp);
+		void Render(std::vector<Ref<GuiComponent>> toDraw);
 
 	};
 

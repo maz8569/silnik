@@ -80,7 +80,7 @@ GameEngine::TextRenderer::TextRenderer(Ref<Camera> camera, std::string fontPath,
 
                 GUIShader = CreateRef<Shader>(vertexPath, fragmentPath, geometryPath);
                 GUIShader->use();
-                glm::mat4 ortho = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+                glm::mat4 ortho = glm::ortho(0.0f, (float)GuiComponent::m_scr_width, 0.0f, (float)GuiComponent::m_src_height);
                 GUIShader->setMat4("projection", ortho);
 
                 success = true;

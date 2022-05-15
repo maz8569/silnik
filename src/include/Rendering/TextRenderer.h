@@ -6,6 +6,7 @@
 #include <map>
 #include <Shaders/Shader.h>
 #include <Scene/Camera.h>
+#include <GUI/GuiComponent.h>
 #include FT_FREETYPE_H
 
 namespace GameEngine {

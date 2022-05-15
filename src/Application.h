@@ -18,7 +18,7 @@
 #include "Physics/RayCasting/MousePicker.h"
 #include <Scene/Courier.h>
 #include <Blocks/Block.h>
-#include <GUI/GUIRenderer.h>
+#include <GUI/GuiManager.h>
 
 namespace GameEngine {
 
@@ -89,7 +89,7 @@ namespace GameEngine {
 		Ref<TextRenderer> textRenderer = nullptr;
 		Ref<Collision> colMan = nullptr;
 
-		Ref<GUIRenderer> guiRenderer = nullptr;
+		Ref<GuiManager> guiManager = nullptr;
 
 		unsigned int quadVAO = 0;
 		unsigned int quadVBO;
@@ -104,8 +104,7 @@ namespace GameEngine {
 		float lastX = 0.0f;
 		float lastY = 0.0f;
 
-		float mouseX = 0.0f;
-		float mouseY = 0.0f;
+		Ref<MouseCursor> mouseCursor;
 
 		bool firstMouse = true;
 

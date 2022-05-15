@@ -16,7 +16,7 @@ GameEngine::GUIRenderer::GUIRenderer(Ref<Camera> camera) : m_vbo(GL_ARRAY_BUFFER
     m_guiShader = CreateRef<Shader>("res/shaders/GUI.vert", "res/shaders/GUI.frag");
     m_guiShader->use();
     m_guiShader->setInt("ourTexture", 0);
-    glm::mat4 ortho = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+    glm::mat4 ortho = glm::ortho(0.0f, (float)GuiComponent::m_scr_width, 0.0f, (float)GuiComponent::m_src_height);
     m_guiShader->setMat4("projectionMatrix", ortho);
     std::cout << "GUI Renderer created\n";
     m_vao.Bind();
@@ -29,7 +29,7 @@ GameEngine::GUIRenderer::~GUIRenderer()
 {
 }
 
-void GameEngine::GUIRenderer::Render()
+void GameEngine::GUIRenderer::Render(std::vector<Ref<GuiComponent>> toDraw)
 {
     m_vao.Bind();
     //glEnable(GL_BLEND);
@@ -43,19 +43,12 @@ void GameEngine::GUIRenderer::Render()
     {
         c->getTexture()->Bind();
         m_guiShader->setMat4("transfomationMatrix", c->getTransformatiomMatrix());
+        m_guiShader->setVec3("aColor", c->getColor());
+        m_guiShader->setFloat("alpha", c->getOpacity());
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
     m_vao.Unbind();
     glEnable(GL_DEPTH_TEST);
 
 
-}
-
-void GameEngine::GUIRenderer::addComponent(Ref<GuiComponent> comp)
-{
-    toDraw.push_back(comp);
-}
-
-void GameEngine::GUIRenderer::removeComponent(Ref<GuiComponent> comp)
-{
 }

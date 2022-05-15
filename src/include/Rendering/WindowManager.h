@@ -11,7 +11,7 @@ namespace GameEngine {
 	public:
 
 		unsigned int SCR_WIDTH = 1920;
-		unsigned int SCR_HEIGHT = 1080;
+		unsigned int SCR_HEIGHT = 980;
 		GLFWwindow* window = nullptr;
 
 		//name of the game

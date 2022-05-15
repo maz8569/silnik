@@ -373,7 +373,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\GuiManager.cpp" />
+    <ClCompile Include="src\GUI\MouseCursor.cpp" />
+    <ClCompile Include="src\Physics\Collisions\AABB2D.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="src\Physics\Collisions\Collision2D.cpp" />
     <ClCompile Include="src\Scene\GameManager.cpp" />
     <ClCompile Include="src\ECS\GEntityManager.cpp" />
     <ClCompile Include="src\ECS\GEntity.cpp" />
@@ -428,7 +432,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
+    <ClInclude Include="include\GUI\GuiManager.h" />
+    <ClInclude Include="include\Physics\Collisions\AABB2D.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="include\Physics\Collisions\Collision2D.h" />
     <ClInclude Include="include\Scene\GameManager.h" />
     <ClInclude Include="include\ECS\GEntityManager.h" />
     <ClInclude Include="include\ECS\GEntity.h" />
@@ -454,6 +461,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Texture\Texture.h" />
     <ClInclude Include="include\Physics\Collisions\Sphere.h" />
     <ClInclude Include="include\ECS\MovingEntity.h" />
+    <ClInclude Include="include\GUI\MouseCursor.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

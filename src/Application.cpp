@@ -17,8 +17,10 @@ namespace GameEngine {
 		lastX = (float)windowManager.SCR_WIDTH / 2.0;
 		lastY = (float)windowManager.SCR_HEIGHT / 2.0;
 
-		mouseX = (float)windowManager.SCR_WIDTH / 2.0;
-		mouseY = (float)windowManager.SCR_HEIGHT / 2.0;
+		mouseCursor = CreateRef<MouseCursor>();
+
+		mouseCursor->mousePos.x = (float)windowManager.SCR_WIDTH / 2.0;
+		mouseCursor->mousePos.y = (float)windowManager.SCR_HEIGHT / 2.0;
 
 		EventSystem::InitEventSystem(windowManager.window, &m_EventQueue);
 
@@ -54,7 +56,8 @@ namespace GameEngine {
 		}
 		colMan = std::make_shared<Collision>();
 		inputManager = std::make_shared<InputManager>(windowManager.window);
-		guiRenderer = CreateRef<GUIRenderer>(m_scene->m_camera);
+
+		guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
 	}
 
 	Application::~Application()
@@ -296,9 +299,8 @@ namespace GameEngine {
 
 		playAudio("TestSound");
 
-		Ref<GuiComponent> comp = CreateRef<GuiComponent>(GuiComponent("res/textures/fullheart.png", { -150, 20 }, { 48, 48 }));
-
-		guiRenderer->addComponent(comp);
+		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(0, 0), glm::vec2(48, 48), 0);
+		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( 0, 64 ), glm::vec2( 48, 48 ), 0);
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -392,6 +394,8 @@ namespace GameEngine {
 		m_scene->m_camera->courier = courier->get_transform().m_position;
 		colMan->CollisionCheck();
 
+		guiManager->Update();
+
 		mousePicker->update();
 	}
 
@@ -442,10 +446,13 @@ namespace GameEngine {
 
 	void Application::OnRenderUI()
 	{
-		guiRenderer->Render();
+		guiManager->Render();
 
 		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		textRenderer->RenderText("Position " + std::to_string(mouseX - windowManager.SCR_WIDTH/2) + " " + std::to_string(windowManager.SCR_HEIGHT / 2 - mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		textRenderer->RenderText("Position " + std::to_string(mouseCursor->mousePos.x) + " " + std::to_string(mouseCursor->mousePos.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		//textRenderer->RenderText("Position " + std::to_string(mouseX) + " " + std::to_string( mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+
+		GuiComponent::windowCh = false;
 	}
 
 	void Application::PollEvents()
@@ -534,13 +541,6 @@ namespace GameEngine {
 
 	void Application::rotateCamera(Event e)
 	{
-		if (firstMouse)
-		{
-			lastX = mouseX;
-			lastY = mouseY;
-			firstMouse = false;
-		}
-
 		float xoffset = e.mx - lastX;
 		float yoffset = lastY - e.my; // reversed since y-coordinates go from bottom to top
 
@@ -610,6 +610,13 @@ namespace GameEngine {
 
 			break;
 
+		case EventTypes::MousePress:
+			if (e.button == 0)
+			{
+				guiManager->Click();
+			}
+			break;
+
 		case EventTypes::KeyRelease:
 			if (m_gameState == GameState::PlayingState)
 			{
@@ -618,10 +625,18 @@ namespace GameEngine {
 			break;
 
 		case EventTypes::MouseMove:
-			mouseX = e.mx;
-			mouseY = e.my;
+			mouseCursor->mousePos.x = e.mx - windowManager.SCR_WIDTH / 2;
+			mouseCursor->mousePos.y = windowManager.SCR_HEIGHT / 2 - e.my;
+
 			if (m_gameState == GameState::PlayingState)
 			{
+				if (firstMouse)
+				{
+					lastX = e.mx;
+					lastY = e.my;
+					firstMouse = false;
+				}
+
 				rotateCamera(e);
 			}
 			break;
@@ -629,14 +644,21 @@ namespace GameEngine {
 			// make sure the viewport matches the new window dimensions; note that width and 
 			// height will be significantly larger than specified on retina displays.
 			glViewport(0, 0, e.wx, e.wy);
-			windowManager.SCR_HEIGHT = e.wy;
+			if (e.wy == 0)
+			{
+				windowManager.SCR_HEIGHT = 1;
+			}
+			else
+			{
+				windowManager.SCR_HEIGHT = e.wy;
+			}
 			windowManager.SCR_WIDTH = e.wx;
 
 			m_scene->m_camera->scr_width = e.wx;
-			m_scene->m_camera->scr_height = e.wy;
+			m_scene->m_camera->scr_height = windowManager.SCR_HEIGHT;
 
 			GuiComponent::setScrWidth(e.wx);
-			GuiComponent::setScrHeight(e.wy);
+			GuiComponent::setScrHeight(windowManager.SCR_HEIGHT);
 
 			break;
 		default:
