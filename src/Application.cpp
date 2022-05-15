@@ -299,8 +299,8 @@ namespace GameEngine {
 
 		playAudio("TestSound");
 
-		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(0, 0), glm::vec2(48, 48), 0);
-		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( 0, 64 ), glm::vec2( 48, 48 ), 0);
+		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
+		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( -850, -310 ), glm::vec2( 48, 48 ), 0);
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -416,7 +416,7 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		m_scene->RenderAll(shadowMap);
+		m_scene->Render(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -432,7 +432,7 @@ namespace GameEngine {
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		m_scene->RenderAll(ourShader);
+		m_scene->Render(ourShader);
 
 		/*
 		debugDepth->use();

@@ -12,7 +12,14 @@ namespace GameEngine {
 	void Collision2D::removeCollision(Ref<GuiComponent> c)
 	{
 		c->onCollisionExit(m_mouseCursor->mousePos);
-		std::remove(m_collisions.begin(), m_collisions.end(), c);
+		if (m_collisions.size() > 1)
+		{
+			std::remove(m_collisions.begin(), m_collisions.end(), c);
+		}
+		else
+		{
+			m_collisions.clear();
+		}
 	}
 
 	Collision2D::Collision2D(Ref<MouseCursor> mouseCursor)
@@ -38,16 +45,13 @@ namespace GameEngine {
 		if (m_collisions.size() > 0)
 		{
 			for (auto c : m_collisions) {
-				if (c != nullptr)
+				if (testPointAABB(c, m_mouseCursor->mousePos))
 				{
-					if (testPointAABB(c, m_mouseCursor->mousePos))
-					{
-						c->onCollisionStay(m_mouseCursor->mousePos);
-					}
-					else
-					{
-						removeCollision(c);
-					}
+					c->onCollisionStay(m_mouseCursor->mousePos);
+				}
+				else
+				{
+					removeCollision(c);
 				}
 
 			}
@@ -55,7 +59,9 @@ namespace GameEngine {
 
 		if (m_2DAABB.size() > 0) {
 			for (auto c : m_2DAABB) {
-				if (!std::count(m_collisions.begin(), m_collisions.end(), c))
+				if (std::count(m_collisions.begin(), m_collisions.end(), c))
+				{}
+				else
 				{
 					if (testPointAABB(c, m_mouseCursor->mousePos))
 					{

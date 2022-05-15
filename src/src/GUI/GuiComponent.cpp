@@ -94,6 +94,7 @@ namespace GameEngine {
 
 	void GuiComponent::onCollisionStay(glm::vec2 pos)
 	{
+		std::cout << "stay";
 	}
 
 	void GuiComponent::onCollisionExit(glm::vec2 pos)
@@ -107,6 +108,12 @@ namespace GameEngine {
 		if (isHovered)
 		{
 			std::cout << "click";
+			opacity += 0.1f;
+			if (opacity >= 1)
+			{
+				opacity = 0;
+			}
+			std::cout << opacity;
 		}
 	}
 
