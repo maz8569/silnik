@@ -61,6 +61,10 @@ namespace GameEngine {
 		GuiComponent::windowCh = true;
 	}
 
+	void GuiComponent::Update()
+	{
+	}
+
 	glm::vec3& GuiComponent::getColor()
 	{
 		return color;
@@ -86,18 +90,35 @@ namespace GameEngine {
 		return m_scale;
 	}
 
-	void GuiComponent::onCollisionEnter(glm::vec2 pos)
+	void GuiComponent::setPosition(glm::vec2 newPos)
+	{
+		m_position = newPos;
+		isDirty = true;
+	}
+
+	void GuiComponent::setScale(glm::vec2 newScale)
+	{
+		m_scale = newScale;
+		isDirty = true;
+	}
+
+	void GuiComponent::setHighlightColor(glm::vec3 newColor)
+	{
+		highlightColor = newColor;
+	}
+
+	void GuiComponent::onCollisionEnter(Ref<MouseCursor> cursor)
 	{
 		color = highlightColor;
 		isHovered = true;
 	}
 
-	void GuiComponent::onCollisionStay(glm::vec2 pos)
+	void GuiComponent::onCollisionStay(Ref<MouseCursor> cursor)
 	{
-		std::cout << "stay";
+		
 	}
 
-	void GuiComponent::onCollisionExit(glm::vec2 pos)
+	void GuiComponent::onCollisionExit(Ref<MouseCursor> cursor)
 	{
 		color = { 1, 1, 1 };
 		isHovered = false;
@@ -115,6 +136,15 @@ namespace GameEngine {
 			}
 			std::cout << opacity;
 		}
+	}
+
+	void GuiComponent::stopClick()
+	{
+	}
+
+	bool GuiComponent::getIsHovered()
+	{
+		return isHovered;
 	}
 
 	Ref<GTexture> GuiComponent::getTexture()

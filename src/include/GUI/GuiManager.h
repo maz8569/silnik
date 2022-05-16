@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GUIRenderer.h"
+#include "Slider.h"
 #include <Physics/Collisions/Collision2D.h>
 
 namespace GameEngine {
@@ -19,11 +20,13 @@ namespace GameEngine {
 		GuiManager(Ref<MouseCursor> mouseCursor, Ref<Camera> camera);
 
 		Ref <GuiComponent> addComponent(std::string texture, glm::vec2 pos, glm::vec2 scale, float rotation = 0);
+		Ref <GuiComponent> addSlider(float minValue, float maxValue, float* defaultValue, std::string texture, glm::vec2 pos, glm::vec2 scale, float rotation = 0);
 		void removeComponent(Ref <GuiComponent> comp);
 
 		void Update();
 
 		void Click();
+		void stopClick();
 
 		void Render();
 	};

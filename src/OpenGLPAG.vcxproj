@@ -373,6 +373,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Slider.cpp" />
     <ClCompile Include="src\GUI\GuiManager.cpp" />
     <ClCompile Include="src\GUI\MouseCursor.cpp" />
     <ClCompile Include="src\Physics\Collisions\AABB2D.cpp" />
@@ -462,6 +463,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Physics\Collisions\Sphere.h" />
     <ClInclude Include="include\ECS\MovingEntity.h" />
     <ClInclude Include="include\GUI\MouseCursor.h" />
+    <ClInclude Include="include\GUI\Slider.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

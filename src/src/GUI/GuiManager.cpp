@@ -19,6 +19,16 @@ namespace GameEngine {
 		return comp;
 	}
 
+	Ref<GuiComponent> GuiManager::addSlider(float minValue, float maxValue, float* defaultValue, std::string texture, glm::vec2 pos, glm::vec2 scale, float rotation)
+	{
+		Ref<GuiComponent> comp = CreateRef<Slider>(minValue, maxValue, defaultValue, texture, pos, scale);
+
+		toDraw.push_back(comp);
+		colMan2D->addGuiComponent(comp);
+
+		return comp;
+	}
+
 	void GuiManager::removeComponent(Ref<GuiComponent> comp)
 	{
 
@@ -27,6 +37,13 @@ namespace GameEngine {
 	void GuiManager::Update()
 	{
 		colMan2D->CollisionCheck();
+		if (toDraw.size() > 0)
+		{
+			for (auto c : toDraw)
+			{
+				c->Update();
+			}
+		}
 	}
 
 	void GuiManager::Click()
@@ -36,6 +53,17 @@ namespace GameEngine {
 			for (auto c : toDraw)
 			{
 				c->onClick();
+			}
+		}
+	}
+
+	void GuiManager::stopClick()
+	{
+		if (toDraw.size() > 0)
+		{
+			for (auto c : toDraw)
+			{
+				c->stopClick();
 			}
 		}
 	}

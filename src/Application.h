@@ -126,6 +126,7 @@ namespace GameEngine {
 		Ref<DirectionalLight> light;
 
 		int fps = 0;
+		float defV = 0.1f;
 
 		glm::mat4 ortho;
 

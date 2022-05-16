@@ -301,6 +301,7 @@ namespace GameEngine {
 
 		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
 		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( -850, -310 ), glm::vec2( 48, 48 ), 0);
+		guiManager->addSlider(0, 1, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -449,7 +450,8 @@ namespace GameEngine {
 		guiManager->Render();
 
 		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		textRenderer->RenderText("Position " + std::to_string(mouseCursor->mousePos.x) + " " + std::to_string(mouseCursor->mousePos.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		//textRenderer->RenderText("Position " + std::to_string(mouseCursor->mousePos.x) + " " + std::to_string(mouseCursor->mousePos.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		//textRenderer->RenderText("Position " + std::to_string(mouseX) + " " + std::to_string( mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 
 		GuiComponent::windowCh = false;
@@ -616,7 +618,12 @@ namespace GameEngine {
 				guiManager->Click();
 			}
 			break;
-
+		case EventTypes::MouseRelease:
+			if (e.button == 0)
+			{
+				guiManager->stopClick();
+			}
+			break;
 		case EventTypes::KeyRelease:
 			if (m_gameState == GameState::PlayingState)
 			{

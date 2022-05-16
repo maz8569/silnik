@@ -6,6 +6,7 @@
 #include <Texture/Texture.h>
 #include <string>
 #include <iostream>
+#include "MouseCursor.h"
 
 namespace GameEngine {
 
@@ -41,6 +42,8 @@ namespace GameEngine {
 		static void setScrWidth(unsigned int scr_width);
 		static void setScrHeight(unsigned int scr_height);
 
+		virtual void Update();
+
 		glm::vec3& getColor();
 		glm::vec3& getHighLightColor();
 		float& getOpacity();
@@ -48,11 +51,19 @@ namespace GameEngine {
 		glm::vec2 getPosition();
 		glm::vec2 getScale();
 
-		void onCollisionEnter(glm::vec2 pos);
-		void onCollisionStay(glm::vec2 pos);
-		void onCollisionExit(glm::vec2 pos);
+		void setPosition(glm::vec2 newPos);
+		void setScale(glm::vec2 newScale);
 
-		void onClick();
+		void setHighlightColor(glm::vec3 newColor);
+
+		virtual void onCollisionEnter(Ref<MouseCursor> cursor);
+		virtual void onCollisionStay(Ref<MouseCursor> cursor);
+		virtual void onCollisionExit(Ref<MouseCursor> cursor);
+
+		virtual void onClick();
+		virtual void stopClick();
+
+		bool getIsHovered();
 
 		Ref<GTexture> getTexture();
 	};
