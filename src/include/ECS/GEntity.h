@@ -11,7 +11,7 @@ namespace GameEngine {
 		std::uint32_t ID;
 		std::string name;
 
-		std::vector<Ref<Component>> components;
+		std::vector<Ref<GComponent>> components;
 
 
 	};

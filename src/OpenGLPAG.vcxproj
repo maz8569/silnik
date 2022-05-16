@@ -373,7 +373,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GObjectManager.cpp" />
+    <ClCompile Include="src\Scene\GComponentManager.cpp" />
+    <ClCompile Include="src\Scene\GObjectManager.cpp" />
     <ClCompile Include="src\GUI\Constraints.cpp" />
     <ClCompile Include="src\GUI\Slider.cpp" />
     <ClCompile Include="src\GUI\GuiManager.cpp" />
@@ -435,7 +436,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
-    <ClInclude Include="GObjectManager.h" />
+    <ClInclude Include="include\Scene\GComponentManager.h" />
+    <ClInclude Include="include\Scene\GObjectManager.h" />
     <ClInclude Include="include\GUI\Constraints.h" />
     <ClInclude Include="include\GUI\GuiManager.h" />
     <ClInclude Include="include\Physics\Collisions\AABB2D.h" />

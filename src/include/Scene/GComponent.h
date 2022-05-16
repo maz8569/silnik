@@ -3,10 +3,10 @@
 
 namespace GameEngine {
 
-	class Component
+	class GComponent
 	{
+	private:
 		std::uint32_t ID;
-
 	};
 
 }
