@@ -128,10 +128,6 @@ namespace GameEngine {
 		int fps = 0;
 		float defV = 0.1f;
 
-		glm::mat4 ortho;
-
-		std::shared_ptr<SceneNode> root = nullptr;
-
 		std::shared_ptr<InputManager> inputManager = nullptr;
 
 		Ref<Player> player;

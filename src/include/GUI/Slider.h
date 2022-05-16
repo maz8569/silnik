@@ -11,7 +11,7 @@ namespace GameEngine {
 
 		float m_minValue;
 		float m_maxValue;
-
+		
 		Ref<MouseCursor> m_mouseCursor;
 
 		bool isDragged = false;

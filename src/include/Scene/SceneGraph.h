@@ -2,6 +2,7 @@
 #ifndef SCENEGRAPH_H
 #define SCENEGRAPH_H
 #include "Rendering/Model.h"
+#include "GComponent.h"
 #include <list>
 
 namespace GameEngine {

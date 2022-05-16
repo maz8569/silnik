@@ -127,8 +127,6 @@ namespace GameEngine {
 
 		light->activate_lights(ourShader, m_scene->m_camera);
 
-		root = std::make_shared<SceneNode>(SceneNode());
-
 		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
 		player = std::make_shared<Player>(inputManager, b, colMan);
 		courier = std::make_shared<Courier>(mousePicker, bu, colMan);

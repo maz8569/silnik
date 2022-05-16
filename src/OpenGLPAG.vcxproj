@@ -373,6 +373,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GObjectManager.cpp" />
+    <ClCompile Include="src\GUI\Constraints.cpp" />
     <ClCompile Include="src\GUI\Slider.cpp" />
     <ClCompile Include="src\GUI\GuiManager.cpp" />
     <ClCompile Include="src\GUI\MouseCursor.cpp" />
@@ -412,7 +414,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Audio\AudioManager.cpp" />
     <ClCompile Include="src\Physics\Collisions\Collider.cpp" />
     <ClCompile Include="src\Physics\Collisions\Collision.cpp" />
-    <ClCompile Include="src\ECS\GComponent.cpp" />
+    <ClCompile Include="src\Scene\GComponent.cpp" />
     <ClCompile Include="src\Scene\Courier.cpp" />
     <ClCompile Include="src\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\Utils\Json.cpp" />
@@ -433,6 +435,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
+    <ClInclude Include="GObjectManager.h" />
+    <ClInclude Include="include\GUI\Constraints.h" />
     <ClInclude Include="include\GUI\GuiManager.h" />
     <ClInclude Include="include\Physics\Collisions\AABB2D.h" />
     <ClInclude Include="Application.h" />
@@ -477,7 +481,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\Camera.h" />
     <ClInclude Include="include\Physics\Collisions\Collider.h" />
     <ClInclude Include="include\Physics\Collisions\Collision.h" />
-    <ClInclude Include="include\ECS\GComponent.h" />
+    <ClInclude Include="include\Scene\GComponent.h" />
     <ClInclude Include="include\Scene\Courier.h" />
     <ClInclude Include="include\Rendering\FrameBuffer.h" />
     <ClInclude Include="include\Utils\Json.h" />

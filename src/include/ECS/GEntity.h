@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GComponent.h"
+#include "Scene/GComponent.h"
 #include <string>
 #include <vector>
 
