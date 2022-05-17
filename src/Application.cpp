@@ -127,10 +127,30 @@ namespace GameEngine {
 
 		light->activate_lights(ourShader, m_scene->m_camera);
 
+		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(-720, 370), glm::vec2(300, 150));
+		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(720, 370), glm::vec2(-300, 150));
+		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100));
+		Ref<GuiComponent> numbComponent = guiManager->addComponent(std::string("res/textures/numb1.png"), glm::vec2(-700, 350), glm::vec2(60, 60));
+
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(580, 390), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(660, 390), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(820, 390), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(900, 390), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numbdoublep.png"), glm::vec2(740, 390), glm::vec2(60, 60));
+
+		gameManager = CreateRef<GameManager>(1, numbComponent);
+
+		Ref<GTexture> texture0 = CreateRef<GTexture>("res/textures/numb0.png");;
+
+		gameManager->addTexture(texture0);
+		gameManager->addTexture(numbComponent->getTexture());
+
+		gameManager->init();
+
 		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
-		player = std::make_shared<Player>(inputManager, b, colMan);
+		player = std::make_shared<Player>(inputManager, gameManager, b, colMan);
 		courier = std::make_shared<Courier>(mousePicker, bu, colMan);
-		courier->set_local_position({ 2, 0, 0 });
+		courier->set_local_position({ 20, -20, 0 });
 		//courier->set_local_rotation({ 90, 0, 0 });
 		player->set_local_position({ -2, 0, 0 });
 		//player->set_render_AABB(true);
@@ -139,13 +159,13 @@ namespace GameEngine {
 
 		// TODO: move to scene
 		{
-			Ref<GObject> gdom = CreateRef<GObject>(dom, colMan);
+			Ref<GObject> gdom = CreateRef<Box>(DeliveryColor::Blue, dom, colMan);
 			gdom->set_local_position({ 0, -7, -13 });
 			gdom->getAABB()->setStatic(true);
 			gdom->set_render_AABB(true);
 			gdom->set_tag("house");
 
-			Ref<GObject> paczka = CreateRef<GObject>(pacz, colMan);
+			Ref<GObject> paczka = CreateRef<Box>(DeliveryColor::Blue, pacz, colMan);
 			paczka->set_local_position({ 0, -7, 13 });
 			paczka->getAABB()->setStatic(true);
 			//paczka->set_render_AABB(true);
@@ -256,7 +276,7 @@ namespace GameEngine {
 			water->set_color({ 0.63, 0.68, 0.85 });
 			water->set_render_AABB(true);
 
-
+			m_scene->addObjectToScene(gameManager);
 			m_scene->addObjectToScene(player);
 			m_scene->addObjectToScene(courier);
 			m_scene->addObjectToScene(iisland);
@@ -297,9 +317,11 @@ namespace GameEngine {
 
 		playAudio("TestSound");
 
-		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
-		guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( -850, -310 ), glm::vec2( 48, 48 ), 0);
-		guiManager->addSlider(0, 1, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
+		
+		
+		//guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
+		//guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( -850, -310 ), glm::vec2( 48, 48 ), 0);
+		//guiManager->addSlider(0, 1, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -330,7 +352,7 @@ namespace GameEngine {
 			}
 
 		}
-		std::cout << "Thanks for playing!";
+		std::cout << "\nThanks for playing!";
 	}
 
 	void Application::RenderScene(Ref<Shader> shader)
@@ -449,7 +471,14 @@ namespace GameEngine {
 
 		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		//textRenderer->RenderText("Position " + std::to_string(mouseCursor->mousePos.x) + " " + std::to_string(mouseCursor->mousePos.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		if (gameManager->isWin())
+		{
+			textRenderer->RenderText("win", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		}
+		else
+		{
+			textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+		}
 		//textRenderer->RenderText("Position " + std::to_string(mouseX) + " " + std::to_string( mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 
 		GuiComponent::windowCh = false;

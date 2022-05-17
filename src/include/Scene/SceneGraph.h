@@ -7,7 +7,7 @@
 
 namespace GameEngine {
 
-	struct Transform : public GComponent
+	struct Transform
 	{
 		Transform() : m_world_matrix(1.0f) {}
 	

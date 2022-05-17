@@ -152,4 +152,9 @@ namespace GameEngine {
 		return m_texture;
 	}
 
+	void GuiComponent::setTexture(Ref<GTexture> texture)
+	{
+		m_texture = texture;
+	}
+
 }

@@ -42,6 +42,8 @@ namespace GameEngine {
 		unsigned int ID;
 		static unsigned int ms_uiNextID;
 
+		std::vector<Ref<GComponent>> components;
+
 		void rotateAABBZ(Degrees deg);
 
 	public:

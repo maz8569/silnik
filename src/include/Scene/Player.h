@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/glm.hpp>
 #include<Scene/Entity.h>
+#include<Scene/Box.h>
+#include<Scene/GameManager.h>
 #include "Utils/InputManager.h"
 
 namespace GameEngine {
@@ -14,14 +16,16 @@ namespace GameEngine {
 		glm::vec2 currentSpeed = { 0, 0 };
 		float jumpPower = 0;
 
+		Ref<GameManager> m_gameManager;
+
 		glm::vec3 lastPosition;
 
 		std::shared_ptr<InputManager> inputManager;
 
-		GObject* package = nullptr;
+		Box* package = nullptr;
 		
 	public:
-		Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
+		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
 		Player( std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
 
 		virtual void render(Ref<Shader> shader);

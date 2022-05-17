@@ -38,27 +38,35 @@ GameEngine::GObject::GObject(): SceneNode(), m_color({1, 1, 1})
 
 GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan): m_model(model),  SceneNode(), m_color({ 1, 1, 1 })
 {
-	m_aabb = std::make_shared<AABB>(generateAABB(model));
-	m_colman = colMan;
-	m_colman->AddAABB(m_aabb);
-	m_aabb->parent = this;
-	std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
-	offset = m_aabb->center;
-	std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
-	std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
+	if (model != nullptr)
+	{
+		m_aabb = std::make_shared<AABB>(generateAABB(model));
+		m_colman = colMan;
+		m_colman->AddAABB(m_aabb);
+		m_aabb->parent = this;
+		std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
+		offset = m_aabb->center;
+		std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
+		std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	MoveColliders();
+		glGenVertexArrays(1, &VAO);
+		glGenBuffers(1, &VBO);
+		MoveColliders();
 
-	recalculateAABB();
+		recalculateAABB();
+
+	}
 
 }
 
 GameEngine::GObject::~GObject()
 {
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	if (m_model != nullptr)
+	{
+		glDeleteVertexArrays(1, &VAO);
+		glDeleteBuffers(1, &VBO);
+	}
+
 }
 
 void GameEngine::GObject::set_tag(std::string newTag)

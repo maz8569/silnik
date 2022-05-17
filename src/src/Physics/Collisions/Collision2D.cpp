@@ -12,13 +12,15 @@ namespace GameEngine {
 	void Collision2D::removeCollision(Ref<GuiComponent> c)
 	{
 		c->onCollisionExit(m_mouseCursor);
-		//if (m_collisions.size() > 1)
-		//{
-		//	std::remove(m_collisions.begin(), m_collisions.end(), c);
-		//}
-		//else
-		//{
-			m_collisions.clear();
+		/*
+		if (m_collisions.size() > 1)
+		{
+			m_collisions.erase(std::remove(m_collisions.begin(), m_collisions.end(), c));
+		}
+		else
+		{
+		*/
+		m_collisions.clear();
 		//}
 	}
 
@@ -29,8 +31,13 @@ namespace GameEngine {
 
 	bool Collision2D::testPointAABB(Ref<GuiComponent> c, glm::vec2 pos)
 	{
-		glm::vec2 min = c->getPosition() - c->getScale();
-		glm::vec2 max = c->getPosition() + c->getScale();
+		glm::vec2 scale = c->getScale();
+
+		scale.x = abs(scale.x);
+		scale.y = abs(scale.y);
+
+		glm::vec2 min = c->getPosition() - scale;
+		glm::vec2 max = c->getPosition() + scale;
 
 		if (pos.x < max.x && pos.y < max.y && pos.x > min.x && pos.y > min.y)
 		{

@@ -66,6 +66,7 @@ namespace GameEngine {
 		bool getIsHovered();
 
 		Ref<GTexture> getTexture();
+		void setTexture(Ref<GTexture> texture);
 	};
 
 }

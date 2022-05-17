@@ -17,6 +17,8 @@
 #include "Physics/Collisions/Collision.h"
 #include "Physics/RayCasting/MousePicker.h"
 #include <Scene/Courier.h>
+#include <Scene/Box.h>
+#include <Scene/GameManager.h>
 #include <Blocks/Block.h>
 #include <GUI/GuiManager.h>
 
@@ -132,7 +134,7 @@ namespace GameEngine {
 
 		Ref<Player> player;
 		Ref<Courier> courier;
-
+		Ref<GameManager> gameManager;
 
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;

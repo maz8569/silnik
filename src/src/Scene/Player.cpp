@@ -1,6 +1,8 @@
 #include "Scene/Player.h"
 
-GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) : inputManager(inputManager), Entity(model, colMan) {
+GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) 
+    : inputManager(inputManager), m_gameManager(gameManager), Entity(model, colMan) 
+{
     lastPosition = get_transform().m_position;
 }
 
@@ -75,20 +77,32 @@ void GameEngine::Player::reactOnCollision(GObject* other)
 
     if (otherAABB->tag == "package")
     {
-        //std::cout << "package";
-        package = other;
+        package = (Box*) other;
+        if(package->getDeliveryColor() == DeliveryColor::Blue)
+            std::cout << "package";
         package->get_transform().m_scale = { 0.5, 0.5, 0.5 };
     }
 
     if (otherAABB->tag == "house")
     {
-        //std::cout << "house";
-
+        Box* house = (Box*)other;
         //
         if (package != nullptr)
         {
-            package->get_transform().m_position += glm::vec3({ 0, -20, 0 });
-            package = nullptr;
+            if (house->getDeliveryColor() == package->getDeliveryColor())
+            {
+                package->get_transform().m_position += glm::vec3({ 0, -20, 0 });
+                package = nullptr;
+                 
+                if (m_gameManager != nullptr)
+                {
+                    m_gameManager->givePackage();
+                }
+            }
+            else
+            {
+                std::cout << "house";
+            }
         }
 
 
