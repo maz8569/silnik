@@ -83,9 +83,12 @@ namespace GameEngine {
 		{
 			value = getPosition().x - m_constraints->Xrange.x;
 			value = value / m_constraints->Xdist;
-			value *= m_maxValue;
+			value *= (m_maxValue - m_minValue);
 			value += m_minValue;
 		}
+
+		//value = std::clamp(value, m_minValue, m_maxValue);
+
 		*m_value = value;
 	}
 
