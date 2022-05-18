@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include "MouseCursor.h"
+#include "Constraints.h"
 
 namespace GameEngine {
 
@@ -52,6 +53,8 @@ namespace GameEngine {
 		glm::vec2 getScale();
 
 		void setPosition(glm::vec2 newPos);
+		void setXpos(float x);
+		void setYpos(float y);
 		void setScale(glm::vec2 newScale);
 
 		void setHighlightColor(glm::vec3 newColor);

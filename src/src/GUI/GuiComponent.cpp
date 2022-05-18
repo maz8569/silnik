@@ -96,6 +96,18 @@ namespace GameEngine {
 		isDirty = true;
 	}
 
+	void GuiComponent::setXpos(float x)
+	{
+		m_position.x = x;
+		isDirty = true;
+	}
+
+	void GuiComponent::setYpos(float y)
+	{
+		m_position.y = y;
+		isDirty = true;
+	}
+
 	void GuiComponent::setScale(glm::vec2 newScale)
 	{
 		m_scale = newScale;
@@ -156,5 +168,4 @@ namespace GameEngine {
 	{
 		m_texture = texture;
 	}
-
 }

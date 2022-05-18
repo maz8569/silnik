@@ -19,14 +19,16 @@ namespace GameEngine {
 		return comp;
 	}
 
-	Ref<GuiComponent> GuiManager::addSlider(float minValue, float maxValue, float* defaultValue, std::string texture, glm::vec2 pos, glm::vec2 scale, float rotation)
+	Ref<Slider> GuiManager::addSlider(float minValue, float maxValue, float* defaultValue, std::string texture, glm::vec2 pos, glm::vec2 scale, float rotation)
 	{
 		Ref<GuiComponent> comp = CreateRef<Slider>(minValue, maxValue, defaultValue, texture, pos, scale);
 
 		toDraw.push_back(comp);
 		colMan2D->addGuiComponent(comp);
 
-		return comp;
+		Ref<Slider> slider = Cast<Slider>(comp);
+
+		return slider;
 	}
 
 	void GuiManager::removeComponent(Ref<GuiComponent> comp)

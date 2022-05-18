@@ -320,8 +320,11 @@ namespace GameEngine {
 		
 		
 		//guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
-		//guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2( -850, -310 ), glm::vec2( 48, 48 ), 0);
-		//guiManager->addSlider(0, 1, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
+		guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 12 ), 0);
+		Ref<Slider> slider = guiManager->addSlider(0, 2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
+
+		Ref<Constraints> constraints = CreateRef<Constraints>(glm::vec2(500, 600), glm::vec2(0, 0), false, true);
+		slider->setConstraints(constraints);
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GuiComponent.h"
+#include <algorithm>
 
 namespace GameEngine {
 
@@ -13,6 +14,9 @@ namespace GameEngine {
 		float m_maxValue;
 		
 		Ref<MouseCursor> m_mouseCursor;
+		Ref<Constraints> m_constraints;
+
+		float m_valuePerPixel = 0;
 
 		bool isDragged = false;
 
@@ -28,6 +32,12 @@ namespace GameEngine {
 		virtual void onClick();
 		virtual void stopClick();
 		
+		void UpdatePosition(glm::vec2& pos);
+		void UpdateValue();
+
+		void setConstraints(Ref<Constraints> constraints);
+		Ref<Constraints> getConstraints();
+
 	};
 
 }
