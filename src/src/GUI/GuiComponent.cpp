@@ -61,6 +61,11 @@ namespace GameEngine {
 		GuiComponent::windowCh = true;
 	}
 
+	void GuiComponent::setOnClickFunction(void(*onCl)())
+	{
+		onClickFunc = onCl;
+	}
+
 	void GuiComponent::Update()
 	{
 	}
@@ -147,6 +152,11 @@ namespace GameEngine {
 				opacity = 0;
 			}
 			std::cout << opacity;
+
+			if (onClickFunc != nullptr)
+			{
+				onClickFunc();
+			}
 		}
 	}
 

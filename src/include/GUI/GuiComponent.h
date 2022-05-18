@@ -28,6 +28,8 @@ namespace GameEngine {
 		glm::vec3 highlightColor = { 1, 0, 0 };
 		float opacity = 0;
 
+		void (*onClickFunc)();
+
 	public:
 
 		static bool windowCh;
@@ -42,6 +44,8 @@ namespace GameEngine {
 
 		static void setScrWidth(unsigned int scr_width);
 		static void setScrHeight(unsigned int scr_height);
+
+		void setOnClickFunction(void (*onCl)());
 
 		virtual void Update();
 
