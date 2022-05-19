@@ -208,7 +208,7 @@ public:
     void update_cabin_matr();
     void update_wheels_matr();
     void update_matrices();
-    void update(std::shared_ptr<SceneNode> parent);
+    void update_transform(std::shared_ptr<SceneNode> parent);
 };
 
 void Locomotive::draw_wheels(std::shared_ptr<Shader> ourShader) {
@@ -284,7 +284,7 @@ void Locomotive::update_matrices()
     change_wheels_buf();
 }
 
-void Locomotive::update(std::shared_ptr<SceneNode> parent)
+void Locomotive::update_transform(std::shared_ptr<SceneNode> parent)
 {
     if (smoke1_x < 0.5f) {
         smoke1_x += 0.02f;
@@ -332,7 +332,7 @@ void Locomotive::update(std::shared_ptr<SceneNode> parent)
     piston2orbit->set_local_rotation({0.0f, 0.0f, -y_rot});
     piston2->set_local_rotation({0.0f, 0.0f, y_rot});
 
-    locomotive->update(parent->get_transform(), true);
+    locomotive->update_transform(parent->get_transform(), true);
     move_smoke();
     update_matrices();
 }
@@ -363,7 +363,7 @@ Locomotive::Locomotive(std::shared_ptr<SceneNode> parent) : locomotive(parent) {
     initiate_walls();
     initiate_wheels();
     initiate_smoke();
-    locomotive->update(locomotive->get_transform(), true);
+    locomotive->update_transform(locomotive->get_transform(), true);
     add_cabin();
     add_wheels();
 };

@@ -134,7 +134,7 @@ namespace GameEngine {
 
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(-720, 370), glm::vec2(300, 150));
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(720, 370), glm::vec2(-300, 150));
-		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100));
+		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100), -30);
 		Ref<GuiComponent> numbComponent = guiManager->addComponent(std::string("res/textures/numb1.png"), glm::vec2(-700, 350), glm::vec2(60, 60));
 
 		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(580, 390), glm::vec2(60, 60));
@@ -300,7 +300,7 @@ namespace GameEngine {
 			m_scene->addObjectToScene(most6);
 			m_scene->addObjectToScene(most7);
 			m_scene->addObjectToScene(most8);
-			//root->update(root->get_transform(), true);
+			//root->update_transform(root->get_transform(), true);
 		}
 		m_scene->m_camera->player = player;
 
@@ -427,7 +427,7 @@ namespace GameEngine {
 
 		guiManager->Update();
 
-		mousePicker->update();
+		mousePicker->update_transform();
 	}
 
 	void Application::OnRender()

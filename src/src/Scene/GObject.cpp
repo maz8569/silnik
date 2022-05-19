@@ -32,11 +32,11 @@ void GameEngine::GObject::rotateAABBZ(Degrees deg)
 
 }
 
-GameEngine::GObject::GObject(): SceneNode(), m_color({1, 1, 1})
+GameEngine::GObject::GObject(): m_dirty(true), m_transform(Transform()), m_color({1, 1, 1})
 {
 }
 
-GameEngine::GObject::GObject(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan): m_model(model),  SceneNode(), m_color({ 1, 1, 1 })
+GameEngine::GObject::GObject(Ref<Model> model, std::shared_ptr<Collision> colMan): m_model(model), m_dirty(true), m_transform(Transform()), m_color({ 1, 1, 1 })
 {
 	if (model != nullptr)
 	{
@@ -111,13 +111,6 @@ void GameEngine::GObject::render(Ref<Shader> shader)
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_LINE_STRIP, 0, 20);
 	}
-
-	auto children = get_children();
-
-	for (uint32_t i = 0; i < children.size(); ++i)
-	{
-		children[i]->render();
-	}
 }
 
 void GameEngine::GObject::Update()
@@ -127,8 +120,7 @@ void GameEngine::GObject::Update()
 
 void GameEngine::GObject::reactOnCollision(GObject* other)
 {
-	//std::cout << "collide";
-	//other->set_color({ 1, 0, 0 });
+
 }
 
 void GameEngine::GObject::MoveColliders()

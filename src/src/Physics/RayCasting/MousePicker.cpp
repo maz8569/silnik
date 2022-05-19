@@ -9,7 +9,7 @@ GameEngine::MousePicker::MousePicker(Ref<Camera> camera, Ref<InputManager> input
 	m_viewMatrix = camera->GetViewMatrix();
 }
 
-void GameEngine::MousePicker::update()
+void GameEngine::MousePicker::update_transform()
 {
 	m_viewMatrix = m_camera->GetViewMatrix();
 	m_currentRay = calculateRay();

@@ -18,7 +18,7 @@ void GameEngine::Courier::Update()
 	//if (get_transform().m_position.y > 10 || get_transform().m_position.y < -10)
 		//speed *= -1;
 	//get_transform().m_position.y += 0.01 * speed;
-	//update(get_parent()->get_transform(), true);
+	//update_transform(get_parent()->get_transform(), true);
 	if (m_inputManager->m_isRclicked)
 	{
 		glm::vec3 start = m_mousePicker->getCameraPos();
@@ -32,7 +32,7 @@ void GameEngine::Courier::Update()
 		{
 			get_transform().m_position = end;
 		}
-		update(get_parent()->get_transform(), true);
+		update_transform(get_parent()->get_transform(), true);
 
 
 

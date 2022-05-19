@@ -34,9 +34,10 @@ namespace GameEngine {
 			
 
 			//m_transfrom_matrix = glm::translate(glm::mat4(1.0f), { m_position.x / GuiComponent::m_scr_width, m_position.y / GuiComponent::m_src_height, 0 }) *
-			m_transfrom_matrix = glm::translate(glm::mat4(1.0f), { x, y, 0 }) *
-								 glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation), glm::vec3(0, 0, -1)) *
-								 glm::scale(glm::mat4(1.0f), { sx, sy, 1 });
+			m_transfrom_matrix = glm::translate(glm::mat4(1.0f), { x, y, 0 }); 
+			m_transfrom_matrix = glm::scale(m_transfrom_matrix, { sx, sy, 1 });
+
+			m_transfrom_matrix = glm::rotate(m_transfrom_matrix, glm::radians(m_rotation), glm::vec3(0, 0, -1));
 
 			isDirty = false;
 		}

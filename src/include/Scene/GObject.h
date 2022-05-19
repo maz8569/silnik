@@ -4,7 +4,7 @@
 
 #include <memory>
 #include <vector>
-//#include <Collision.h>
+#include "Rendering/Model.h"
 #include "Scene/SceneGraph.h"
 #include <Physics/Collisions/AABB.h>
 
@@ -25,15 +25,82 @@ namespace GameEngine {
 		Z
 	};
 
-	class GObject : public SceneNode
+	class GObject
 	{
+	public:
+
+		void add_child(Ref<GObject> child)
+		{
+			m_children.push_back(child);
+		}
+
+		void add_parent(Ref<GObject> parent)
+		{
+			m_parent = parent;
+		}
+
+		Ref<GObject> get_parent()
+		{
+			return m_parent;
+		}
+
+		void update_transform(const Transform& parent_transform, bool dirty)
+		{
+			dirty |= m_dirty;
+
+			if (dirty)
+			{
+				m_transform.m_world_matrix = m_transform.get_combined_matrix();
+				m_transform.m_world_matrix = parent_transform.m_world_matrix * m_transform.m_world_matrix;
+				m_dirty = false;
+			}
+
+			for (uint32_t i = 0; i < m_children.size(); ++i)
+			{
+				m_children[i]->update_transform(m_transform, dirty);
+			}
+		}
+
+		Transform& get_transform()
+		{
+			return m_transform;
+		}
+
+		void set_local_position(const glm::vec3& newPosition)
+		{
+			m_transform.m_position = newPosition;
+			m_dirty = true;
+		}
+
+		void set_local_rotation(const glm::vec3& newRotation)
+		{
+			m_transform.m_rotation = newRotation;
+			m_dirty = true;
+		}
+
+		void set_local_scale(glm::vec3 newScale)
+		{
+			m_transform.m_scale = newScale;
+			m_dirty = true;
+		}
+
+		std::vector<Ref<GObject>> get_children()
+		{
+			return m_children;
+		}
+
 	private:
-		//std::vector<std::shared_ptr<Collision>> collisions;
-		//std::shared_ptr<Plan> boundingVolume;
+		std::vector<Ref<GObject>> m_children;
+		Ref<GObject> m_parent;
+		Transform m_transform;
+		bool m_dirty;
+
+	private:
+
 		Ref<Model> m_model;
 		Ref<AABB> m_aabb;
 		glm::vec3 m_color;
-		//Ref<Shader> m_shader;
+
 		bool render_AABB = false;
 		unsigned int VBO, VAO;
 		glm::vec3 offset;
@@ -42,15 +109,13 @@ namespace GameEngine {
 		unsigned int ID;
 		static unsigned int ms_uiNextID;
 
-		std::vector<Ref<GComponent>> components;
-
 		void rotateAABBZ(Degrees deg);
 
 	public:
 		Ref<Collision> m_colman;
 
 		GObject();
-		explicit GObject(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
+		explicit GObject(Ref<Model> model, std::shared_ptr<Collision> colMan);
 		~GObject();
 
 		void set_tag(std::string newTag);

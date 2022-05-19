@@ -4,16 +4,18 @@
 
 namespace GameEngine {
 
+	class GObject;
+
 	struct GComponent
 	{
 	private:
-		std::uint32_t m_ID;
 
-		//static std::string m_type;
+		std::uint32_t m_ID;
+		GObject* m_parent;
+
 	public:
 
-		//static std::string getType();
-		//void setType(std::string newType);
+		GComponent(GObject* parent);
 
 	};
 

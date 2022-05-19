@@ -17,7 +17,7 @@ void GameEngine::Scene::Start()
 
 void GameEngine::Scene::Update()
 {
-	m_root->update(m_root->get_transform(), true);
+	m_root->update_transform(m_root->get_transform(), true);
 	for (auto& obj : m_GObjects)
 	{
 		obj->Update();

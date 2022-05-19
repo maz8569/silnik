@@ -42,7 +42,7 @@ void GameEngine::Player::Update()
         jump();
     }
 
-    update(get_parent()->get_transform(), true);
+    //update_transform(get_parent()->get_transform(), true);
 
     if (package != nullptr)
     {

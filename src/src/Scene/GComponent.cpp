@@ -11,5 +11,10 @@ namespace GameEngine {
         m_type = newType;
     }
     */
+    GComponent::GComponent(GObject* parent)
+        : m_parent(parent)
+    {
+
+    }
 }
 
