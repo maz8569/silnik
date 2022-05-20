@@ -17,6 +17,8 @@ namespace GameEngine {
 
 		bool m_win;
 
+		float time = 60.0f;
+
 	public:
 
 		GameManager(int packageCount, Ref<GuiComponent> GuiNumber);
@@ -24,6 +26,9 @@ namespace GameEngine {
 		void init();
 
 		virtual void Update();
+
+		float getTime();
+		void setTime(float t);
 
 		void addTexture(Ref<GTexture> texture);
 		void givePackage();

@@ -5,8 +5,8 @@ using namespace GameEngine;
 GameEngine::Scene::Scene(std::string name): m_name(name)
 {
 	m_camera = CreateRef<Camera>(Camera(glm::vec3(0.0f, 10.0f, 0.0f)));
-	m_camera->Pitch = -90;
-	m_camera->Yaw = 90;
+	m_camera->Pitch = -45;
+	m_camera->Yaw = -90;
 
 	m_root = CreateRef<GObject>();
 }

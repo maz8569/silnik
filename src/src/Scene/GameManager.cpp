@@ -19,6 +19,16 @@ namespace GameEngine {
 
 	}
 
+	float GameManager::getTime()
+	{
+		return time;
+	}
+
+	void GameManager::setTime(float t)
+	{
+		time = t;
+	}
+
 	void GameManager::addTexture(Ref<GTexture> texture)
 	{
 		m_textures.push_back(texture);

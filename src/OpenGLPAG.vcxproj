@@ -385,7 +385,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Physics\Collisions\Collision2D.cpp" />
     <ClCompile Include="src\Scene\GameManager.cpp" />
     <ClCompile Include="src\ECS\GEntityManager.cpp" />
-    <ClCompile Include="src\ECS\GEntity.cpp" />
     <ClCompile Include="src\GUI\Canvas.cpp" />
     <ClCompile Include="src\GUI\GUIRenderer.cpp" />
     <ClCompile Include="src\GUI\GuiComponent.cpp" />
@@ -395,6 +394,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Scene\OrthographicCamera.cpp" />
     <ClCompile Include="src\Scene\FPcam.cpp" />
     <ClCompile Include="src\Scene\Light.cpp" />
+    <ClCompile Include="src\Scene\SceneGraph.cpp" />
     <ClCompile Include="src\Texture\CubemapTexture.cpp" />
     <ClCompile Include="src\Scene\Skybox.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
@@ -432,6 +432,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scene\Terrain.cpp" />
     <ClCompile Include="src\Texture\TextureAtlas.cpp" />
+    <ClCompile Include="src\Utils\ResourceManager.cpp" />
     <ClCompile Include="src\Utils\VertexBuffer.cpp" />
     <ClCompile Include="src\Utils\VertexArray.cpp" />
     <ClCompile Include="src\World\TileModel.cpp" />
@@ -447,7 +448,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Physics\Collisions\Collision2D.h" />
     <ClInclude Include="include\Scene\GameManager.h" />
     <ClInclude Include="include\ECS\GEntityManager.h" />
-    <ClInclude Include="include\ECS\GEntity.h" />
     <ClInclude Include="include\GUI\Canvas.h" />
     <ClInclude Include="include\GUI\GUIRenderer.h" />
     <ClInclude Include="include\GUI\GuiComponent.h" />
@@ -463,6 +463,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Blocks\ChunkMesh.h" />
     <ClInclude Include="include\Utils\IndexBuffer.h" />
     <ClInclude Include="include\Scene\Skybox.h" />
+    <ClInclude Include="include\Utils\ResourceManager.h" />
     <ClInclude Include="include\World\Model\TileMesh.h" />
     <ClInclude Include="include\World\Model\TileModel.h" />
     <ClInclude Include="include\Scene\Light.h" />
@@ -515,7 +516,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\Scene.h" />
     <ClInclude Include="include\Scene\SceneGraph.h" />
     <ClInclude Include="include\Shaders\Shader.h" />
-    <ClInclude Include="train.h" />
     <ClInclude Include="include\Utils\VertexBuffer.h" />
     <ClInclude Include="include\Utils\VertexArray.h" />
     <ClInclude Include="include\ECS\Vehicle.h" />

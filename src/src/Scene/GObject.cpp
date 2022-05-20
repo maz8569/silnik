@@ -3,6 +3,68 @@
 
 using namespace GameEngine;
 
+void GameEngine::GObject::add_child(Ref<GObject> child)
+{
+	m_children.push_back(child);
+}
+
+void GameEngine::GObject::add_parent(Ref<GObject> parent)
+{
+	m_parent = parent;
+}
+
+Ref<GObject> GameEngine::GObject::get_parent()
+{
+	return m_parent;
+}
+
+void GameEngine::GObject::update_transform(const Transform& parent_transform, bool dirty)
+{
+	dirty |= m_dirty;
+
+	if (dirty)
+	{
+		m_transform.m_world_matrix = m_transform.get_combined_matrix();
+		m_transform.m_world_matrix = parent_transform.m_world_matrix * m_transform.m_world_matrix;
+		m_dirty = false;
+	}
+
+	for (uint32_t i = 0; i < m_children.size(); ++i)
+	{
+		m_children[i]->update_transform(m_transform, dirty);
+	}
+}
+
+Transform& GameEngine::GObject::get_transform()
+{
+	return m_transform;
+}
+
+void GameEngine::GObject::set_local_position(const glm::vec3& newPosition)
+{
+	m_transform.m_position = newPosition;
+	m_dirty = true;
+}
+
+void GameEngine::GObject::set_local_rotation(const glm::vec3& newRotation)
+{
+	m_transform.m_rotation = newRotation;
+	m_dirty = true;
+}
+
+void GameEngine::GObject::set_local_scale(glm::vec3 newScale)
+{
+	m_transform.m_scale = newScale;
+	m_dirty = true;
+
+	scaleAABB(newScale);
+}
+
+std::vector<Ref<GObject>> GameEngine::GObject::get_children()
+{
+	return m_children;
+}
+
 void GameEngine::GObject::rotateAABBZ(Degrees deg)
 {
 	if (deg != Degrees::D180)
@@ -104,12 +166,15 @@ void GameEngine::GObject::render(Ref<Shader> shader)
 		m_model->Draw(shader);
 	}
 
-	if (m_aabb != nullptr && render_AABB)
+	if (m_aabb != nullptr)
 	{
-		shader->setMat4("model", glm::translate(glm::mat4(1.0f), get_transform().m_position));
-		shader->setVec3("color", { 1, 1, 1 });
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_LINE_STRIP, 0, 20);
+		if (m_aabb->render_AABB)
+		{
+			shader->setMat4("model", glm::translate(glm::mat4(1.0f), get_transform().m_position));
+			shader->setVec3("color", { 1, 1, 1 });
+			glBindVertexArray(VAO);
+			glDrawArrays(GL_LINE_STRIP, 0, 20);
+		}
 	}
 }
 
@@ -130,7 +195,8 @@ void GameEngine::GObject::MoveColliders()
 
 void GameEngine::GObject::set_render_AABB(bool set)
 {
-	render_AABB = set;
+	if(m_aabb != nullptr)
+		m_aabb->render_AABB = set;
 }
 
 void GameEngine::GObject::recalculateAABB()

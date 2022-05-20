@@ -4,16 +4,18 @@
 #include "typedefs.h"
 #include <Rendering/Model.h>
 #include <string>
+#include<Scene/GComponent.h>
 
 namespace GameEngine {
 	class GObject;
 
-	class AABB
+	class AABB : public GComponent
 	{
 	public:
 		std::string tag = "Unknown";
 		bool staticAABB = false;
-		GObject* parent;
+
+		bool render_AABB = false;
 
 		glm::vec3 center{ 0.f, 0.f, 0.f };
 		glm::vec3 extents{ 0.f, 0.f, 0.f };

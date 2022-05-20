@@ -65,6 +65,7 @@ namespace GameEngine {
 	void GuiComponent::setOnClickFunction(void(*onCl)())
 	{
 		onClickFunc = onCl;
+		hasFunk = true;
 	}
 
 	void GuiComponent::Update()
@@ -154,7 +155,7 @@ namespace GameEngine {
 			}
 			std::cout << opacity;
 
-			if (onClickFunc != nullptr)
+			if (hasFunk)
 			{
 				onClickFunc();
 			}

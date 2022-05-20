@@ -134,15 +134,15 @@ namespace GameEngine {
 
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(-720, 370), glm::vec2(300, 150));
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(720, 370), glm::vec2(-300, 150));
-		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100), -30);
-		Ref<GuiComponent> numbComponent = guiManager->addComponent(std::string("res/textures/numb1.png"), glm::vec2(-700, 350), glm::vec2(60, 60));
-
-		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(580, 390), glm::vec2(60, 60));
-		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(660, 390), glm::vec2(60, 60));
-		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(820, 390), glm::vec2(60, 60));
-		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(900, 390), glm::vec2(60, 60));
-		guiManager->addComponent(std::string("res/textures/numbdoublep.png"), glm::vec2(740, 390), glm::vec2(60, 60));
-
+		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100));
+		Ref<GuiComponent> numbComponent = guiManager->addComponent(std::string("res/textures/numb1.png"), glm::vec2(-690, 360), glm::vec2(60, 60));
+		/*
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(580, 360), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(660, 360), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(800, 360), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numb0.png"), glm::vec2(880, 360), glm::vec2(60, 60));
+		guiManager->addComponent(std::string("res/textures/numbdoublep.png"), glm::vec2(720, 360), glm::vec2(60, 60));
+		*/
 		gameManager = CreateRef<GameManager>(1, numbComponent);
 
 		Ref<GTexture> texture0 = CreateRef<GTexture>("res/textures/numb0.png");;
@@ -171,7 +171,7 @@ namespace GameEngine {
 			gdom->set_tag("house");
 
 			Ref<GObject> paczka = CreateRef<Box>(DeliveryColor::Blue, pacz, colMan);
-			paczka->set_local_position({ 0, -7, 13 });
+			paczka->set_local_position({ 0, -7.2, 13 });
 			paczka->getAABB()->setStatic(true);
 			//paczka->set_render_AABB(true);
 			paczka->set_tag("package");
@@ -232,7 +232,7 @@ namespace GameEngine {
 
 			Ref<GObject> iisland2 = CreateRef<GObject>(island, colMan);
 			iisland2->set_local_scale({ 0.6, 0.6, 0.6 });
-			iisland2->scaleAABB({ 0.6, 0.6, 0.6 });
+			//iisland2->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland2->setAABBextentY(0.9f);
 			iisland2->set_local_position({ 13, -10, 0 });
 			iisland2->set_tag("terrain");
@@ -241,7 +241,7 @@ namespace GameEngine {
 
 			Ref<GObject> iisland3 = CreateRef<GObject>(GObject(island, colMan));
 			iisland3->set_local_scale({ 0.6, 0.6, 0.6 });
-			iisland3->scaleAABB({ 0.6, 0.6, 0.6 });
+			//iisland3->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland3->setAABBextentY(0.9f);
 			iisland3->set_local_position({ -13, -10, 0 });
 			iisland3->set_tag("terrain");
@@ -249,7 +249,7 @@ namespace GameEngine {
 
 			Ref<GObject> iisland4 = CreateRef<GObject>(GObject(island, colMan));
 			iisland4->set_local_scale({ 0.6, 0.6, 0.6 });
-			iisland4->scaleAABB({ 0.6, 0.6, 0.6 });
+			//iisland4->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland4->setAABBextentY(0.9f);
 			iisland4->set_local_position({ 0, -10, 13 });
 			iisland4->set_tag("terrain");
@@ -257,7 +257,7 @@ namespace GameEngine {
 
 			Ref<GObject> iisland5 = CreateRef<GObject>(GObject(island, colMan));
 			iisland5->set_local_scale({ 0.6, 0.6, 0.6 });
-			iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
+			//iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland5->setAABBextentY(0.9f);
 			iisland5->set_local_position({ 0, -10, -13 });
 			iisland5->set_tag("terrain");
@@ -265,7 +265,7 @@ namespace GameEngine {
 			
 			Ref<GObject> iisland = CreateRef<GObject>(GObject(island, colMan));
 			iisland->set_local_scale({ 0.6, 0.6, 0.6 });
-			iisland->scaleAABB({ 0.6, 0.6, 0.6 });
+			//iisland->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland->setAABBextentY(0.9f);
 			iisland->set_local_position({ 0, -10, 0 });
 			iisland->set_tag("terrain");
@@ -273,7 +273,6 @@ namespace GameEngine {
 			
 			Ref<GObject> water = CreateRef<GObject>(b, colMan);
 			water->set_local_scale({ 60, 1, 60 });
-			water->scaleAABB({ 60, 1, 60 });
 			//water->setAABBextentY(0.9f);
 			water->set_local_position({ 0, -8.2, 0 });
 			water->getAABB()->setStatic(true);
@@ -310,6 +309,7 @@ namespace GameEngine {
 		texture1.loadFromFile(std::string("res/textures/torus.png").c_str());
 
 		lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, near_plane, far_plane);
+		jsonParser->print();
 
 		std::cout << "Starting Game...\n";
 
@@ -321,9 +321,7 @@ namespace GameEngine {
 		double unprocessed_time = 0.0;
 
 		playAudio("TestSound");
-
-		
-		
+		/*
 		Ref<GuiComponent> but = guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
 		guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
 		Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
@@ -332,6 +330,7 @@ namespace GameEngine {
 
 		Ref<Constraints> constraints = CreateRef<Constraints>(glm::vec2(500, 600), glm::vec2(0, 0), false, true);
 		slider->setConstraints(constraints);
+		*/
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -427,7 +426,10 @@ namespace GameEngine {
 
 		guiManager->Update();
 
-		mousePicker->update_transform();
+		mousePicker->Update();
+
+		if(!gameManager->isWin())
+			gameManager->setTime(gameManager->getTime() - dt);
 	}
 
 	void Application::OnRender()
@@ -447,7 +449,7 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		m_scene->Render(shadowMap);
+		m_scene->RenderAll(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -463,7 +465,7 @@ namespace GameEngine {
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		m_scene->Render(ourShader);
+		m_scene->RenderAll(ourShader);
 
 		/*
 		debugDepth->use();
@@ -489,6 +491,8 @@ namespace GameEngine {
 		{
 			textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		}
+		textRenderer->RenderText(std::to_string(gameManager->getTime()), 1400.0f, 900.0f, 2.0f, glm::vec3(1.0, 1.0f, 1.0f));
+
 		//textRenderer->RenderText("Position " + std::to_string(mouseX) + " " + std::to_string( mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 
 		GuiComponent::windowCh = false;

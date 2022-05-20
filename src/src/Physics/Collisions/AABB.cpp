@@ -1,10 +1,10 @@
 #include "Physics/Collisions/AABB.h"
 
-GameEngine::AABB::AABB(const glm::vec3& min, const glm::vec3& max): center((max+min)*0.5f), extents(max.x - center.x, max.y - center.y, max.z - center.z) 
+GameEngine::AABB::AABB(const glm::vec3& min, const glm::vec3& max): GComponent(nullptr),center((max+min)*0.5f), extents(max.x - center.x, max.y - center.y, max.z - center.z) 
 {
 }
 
-GameEngine::AABB::AABB(const glm::vec3& inCenter, float iI, float iJ, float iK): center(inCenter), extents(iI, iJ, iK)
+GameEngine::AABB::AABB(const glm::vec3& inCenter, float iI, float iJ, float iK): GComponent(nullptr), center(inCenter), extents(iI, iJ, iK)
 {
 }
 

@@ -9,5 +9,16 @@ int GameEngine::Json::print()
 
     if (document.Parse(json).HasParseError())
         return 1;
+
+    FILE* fp = fopen("output.json", "wb"); // non-Windows use "w"
+
+    char writeBuffer[655];
+    rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+
+    rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+    document.Accept(writer);
+
+    fclose(fp);
+
     return 0;
 }

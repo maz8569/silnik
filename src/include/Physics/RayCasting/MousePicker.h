@@ -24,7 +24,7 @@ namespace GameEngine {
 
 		MousePicker(Ref<Camera> camera, Ref<InputManager> inputManager);
 
-		void update_transform();
+		void Update();
 
 		glm::vec3 getCurrentRay();
 

@@ -70,7 +70,7 @@ namespace GameEngine {
             Pitch = pitch;
             updateCameraVectors();
             updateFrustum();
-
+            RevertAcceleration();
         }
         // constructor with scalar values
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
@@ -81,6 +81,7 @@ namespace GameEngine {
             Pitch = pitch;
             updateCameraVectors();
             updateFrustum();
+            RevertAcceleration();
 
         }
 
@@ -106,7 +107,7 @@ namespace GameEngine {
                 acceleration.y += velocity;
         }
 
-        void RevertAcceleration(Camera_Movement direction)
+        void RevertAcceleration()
         {
             acceleration.x = 0;
             acceleration.y = 0;
@@ -183,7 +184,7 @@ namespace GameEngine {
             //std::cout << second[0] << " " << second[1] << " " << second[2] << std::endl;
             //}
             
-            //Position = (player->get_transform().m_position + courier) * 0.5f;
+            Position = player->get_transform().m_position + glm::vec3(0, 12, 12);
             //float x = player->get_transform().m_position.x - courier.x;
             //float y = player->get_transform().m_position.y - courier.y;
             //float distance = sqrtf( x * x + y * y) * 2;

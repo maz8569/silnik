@@ -1,6 +1,8 @@
 #pragma once
 #include <rapidjson/document.h>     // rapidjson's DOM-style API
+#include <rapidjson/writer.h>
 #include <rapidjson/prettywriter.h> // for stringify JSON
+#include "rapidjson/filewritestream.h"
 
 namespace GameEngine {
 	class Json

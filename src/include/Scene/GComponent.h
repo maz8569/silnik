@@ -1,6 +1,4 @@
 #pragma once
-#include <typedefs.h>
-#include <string>
 
 namespace GameEngine {
 
@@ -8,14 +6,11 @@ namespace GameEngine {
 
 	struct GComponent
 	{
-	private:
 
-		std::uint32_t m_ID;
-		GObject* m_parent;
+		GObject* parent;
+		unsigned int ID;
 
-	public:
-
-		GComponent(GObject* parent);
+		GComponent(GObject* obj);
 
 	};
 

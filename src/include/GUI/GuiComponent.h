@@ -23,6 +23,7 @@ namespace GameEngine {
 		float m_rotation = 0;
 
 		bool isHovered = false;
+		bool hasFunk = false;
 
 		glm::vec3 color = { 1, 1, 1 };
 		glm::vec3 highlightColor = { 1, 0, 0 };
