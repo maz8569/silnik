@@ -34,6 +34,7 @@ namespace GameEngine {
 		void LateUpdate();
 		void Render(Ref<Shader> shader);
 		void RenderAllShadow(Ref<Shader> shader);
+		void RenderAllFoam(Ref<Shader> shader);
 		void RenderAllWitTheirShader();
 
 		void checkFrustum();

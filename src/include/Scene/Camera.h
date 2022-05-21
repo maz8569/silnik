@@ -192,12 +192,14 @@ namespace GameEngine {
             //Position -= Front * distance;
 
             //std::cout << Position.x << " " << Position.y << " " << Position.z << "\n";
+            /*
             if (acceleration.x != 0 || acceleration.y != 0)
             {
                 updateFrustum();
             }
             Position += Front * acceleration.x;
             Position += Right * acceleration.y;
+            */
 
             updateCameraVectors();
 

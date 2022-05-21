@@ -85,6 +85,7 @@ namespace GameEngine {
 		ourShader = CreateRef<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
 		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
 		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
+		foaMap = CreateRef<Shader>("res/shaders/shadowmappingBend.vert", "res/shaders/shadowmapping.frag");
 		debugDepth = CreateRef<Shader>("res/shaders/debugdepth.vert", "res/shaders/debugdepth.frag");
 		masterRenderer = CreateRef<MasterRenderer>();
 		masterRenderer->setQuadShader(ourShader);
@@ -95,6 +96,8 @@ namespace GameEngine {
 		Ref<Model> pacz = CreateRef<Model>(Model("res/models/paczka/paczka.obj"));
 		Ref<Model> mo = CreateRef<Model>(Model("res/models/lowpolymost/niby_most.obj"));
 		Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
+
+		//Ref<GTexture> texture = CreateRef<GTexture>("res/textures/voronoi.png");
 
 		// Setup Dear ImGui binding
 		glEnable(GL_BLEND);
@@ -128,6 +131,23 @@ namespace GameEngine {
 		// attach depth texture as FBO's depth buffer
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		
+		glGenFramebuffers(1, &foamMapFBO);
+
+		glGenTextures(1, &foamMap);
+		glBindTexture(GL_TEXTURE_2D, foamMap);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+		// attach depth texture as FBO's depth buffer
+		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, foamMap, 0);
 		glDrawBuffer(GL_NONE);
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -311,6 +331,7 @@ namespace GameEngine {
 			water->set_tag("water");
 			water->set_color({ 0.38, 0.44, 0.91 });
 			water->cast_shadow = false;
+			//water->getModel()->meshes[0].textures[0].id = texture->GetTextureID();
 
 			m_scene->addObjectToScene(gameManager);
 			m_scene->addObjectToScene(player);
@@ -494,6 +515,22 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
+		/*
+		foaMap->use();
+		foaMap->setMat4("view", view);
+		foaMap->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
+		foaMap->setVec3("cameraPos", m_scene->m_camera->Position);
+		*/
+		shadowMap->use();
+		shadowMap->setMat4("lightSpaceMatrix", lightProjection * view);
+
+		//glCullFace(GL_FRONT);
+		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		m_scene->RenderAllShadow(shadowMap);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//glCullFace(GL_BACK);
 
 		ourShader->use();
 
@@ -518,14 +555,14 @@ namespace GameEngine {
 
 		m_scene->RenderAllWitTheirShader();
 
-		/*
+
 		debugDepth->use();
 		debugDepth->setFloat("near_plane", near_plane);
 		debugDepth->setFloat("far_plane", far_plane);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, depthMap);
+		glBindTexture(GL_TEXTURE_2D, foamMap);
 		renderQuad();
-		*/
+		
 	}
 
 	void Application::OnRenderUI()

@@ -96,10 +96,11 @@ namespace GameEngine {
 		unsigned int quadVAO = 0;
 		unsigned int quadVBO;
 
-		std::shared_ptr<Shader> ourShader = nullptr;
-		std::shared_ptr<Shader> shadowMap = nullptr;
-		std::shared_ptr<Shader> debugDepth = nullptr;
-		std::shared_ptr<Shader> waterShader = nullptr;
+		Ref<Shader> ourShader = nullptr;
+		Ref<Shader> shadowMap = nullptr;
+		Ref<Shader> foaMap = nullptr;
+		Ref<Shader> debugDepth = nullptr;
+		Ref<Shader> waterShader = nullptr;
 
 		//Ref<MousePicker> mousePicker = nullptr;
 		//Ref<Block> block = nullptr;
@@ -142,7 +143,11 @@ namespace GameEngine {
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;
 
+		glm::mat4 saas;
+
 		unsigned int depthMapFBO, depthMap;
+		
+		unsigned int foamMapFBO, foamMap;
 	};
 
 	extern Application app;
