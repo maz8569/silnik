@@ -99,9 +99,10 @@ namespace GameEngine {
 		std::shared_ptr<Shader> ourShader = nullptr;
 		std::shared_ptr<Shader> shadowMap = nullptr;
 		std::shared_ptr<Shader> debugDepth = nullptr;
+		std::shared_ptr<Shader> waterShader = nullptr;
 
-		Ref<MousePicker> mousePicker = nullptr;
-		Ref<Block> block = nullptr;
+		//Ref<MousePicker> mousePicker = nullptr;
+		//Ref<Block> block = nullptr;
 
 		float lastX = 0.0f;
 		float lastY = 0.0f;
@@ -127,13 +128,15 @@ namespace GameEngine {
 		BasicTexture texture1;
 		Ref<DirectionalLight> light;
 
+		float totalTime = 0.0f;
+
 		int fps = 0;
 		float defV = 0.1f;
 
-		std::shared_ptr<InputManager> inputManager = nullptr;
+		Ref<InputManager> inputManager = nullptr;
 
 		Ref<Player> player;
-		Ref<Courier> courier;
+		//Ref<Courier> courier;
 		Ref<GameManager> gameManager;
 
 		Ref<MasterRenderer> masterRenderer;

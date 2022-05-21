@@ -61,6 +61,9 @@ namespace GameEngine {
 
 	public:
 		Ref<Collision> m_colman;
+		Ref<Shader> shader = nullptr;
+
+		bool cast_shadow = true;
 
 		GObject();
 		explicit GObject(Ref<Model> model, std::shared_ptr<Collision> colMan);
@@ -71,7 +74,8 @@ namespace GameEngine {
 
 		glm::vec3 get_color();
 
-		void setModel(std::shared_ptr<Model> model);
+		void setModel(Ref<Model> model);
+		Ref<Model> getModel();
 		Ref<AABB> getAABB() const;
 
 		virtual void render(Ref<Shader> shader);

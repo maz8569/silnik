@@ -47,11 +47,24 @@ void GameEngine::Scene::Render(Ref<Shader> shader)
 	m_skybox.RenderSkybox(m_camera);
 }
 
-void GameEngine::Scene::RenderAll(Ref<Shader> shader)
+void GameEngine::Scene::RenderAllShadow(Ref<Shader> shader)
 {
 	for (auto& obj : m_GObjects)
 	{
-		obj->render(shader);
+		if(obj->cast_shadow)
+			obj->render(shader);
+	}
+
+	m_skybox.RenderSkybox(m_camera);
+}
+
+void GameEngine::Scene::RenderAllWitTheirShader()
+{
+	for (auto& obj : m_GObjects)
+	{
+		Ref<Shader> s = obj->shader;
+		if(s != nullptr)
+			obj->render(s);
 	}
 
 	m_skybox.RenderSkybox(m_camera);

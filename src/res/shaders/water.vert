@@ -16,6 +16,7 @@ uniform mat4 projection;
 uniform vec4 aColor;
 uniform vec3 cameraPos;
 uniform mat4 lightSpaceMatrix;
+uniform float uTime;
 
 float amount = 0.005f;
 
@@ -23,7 +24,11 @@ void main()
 {
     ourColor = aColor;
     TexCoord = aTexCoord;
-    vec3 worldPos = vec3(model * vec4(aPos, 1.0));
+    vec3 pos = aPos;
+
+    pos.y +=  cos(pos.z * 5.0 + uTime) * 0.1 * sin(pos.x * 5.0 + uTime);
+
+    vec3 worldPos = vec3(model * vec4(pos, 1.0));
     worldPos -= cameraPos;
     FragPos = worldPos;
     Normal = mat3(transpose(inverse(model))) * aNormal;

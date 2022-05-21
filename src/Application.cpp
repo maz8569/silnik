@@ -82,9 +82,10 @@ namespace GameEngine {
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 
-		ourShader = std::make_shared<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
-		shadowMap = std::make_shared<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
-		debugDepth = std::make_shared<Shader>("res/shaders/debugdepth.vert", "res/shaders/debugdepth.frag");
+		ourShader = CreateRef<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
+		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
+		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
+		debugDepth = CreateRef<Shader>("res/shaders/debugdepth.vert", "res/shaders/debugdepth.frag");
 		masterRenderer = CreateRef<MasterRenderer>();
 		masterRenderer->setQuadShader(ourShader);
 
@@ -92,7 +93,7 @@ namespace GameEngine {
 		Ref<Model> bu = CreateRef<Model>(Model("res/models/statek/untitled.obj"));
 		Ref<Model> dom = CreateRef<Model>(Model("res/models/dom/dom_p.obj"));
 		Ref<Model> pacz = CreateRef<Model>(Model("res/models/paczka/paczka.obj"));
-		Ref<Model> mo = CreateRef<Model>(Model("res/models/most/niby_most_p.obj"));
+		Ref<Model> mo = CreateRef<Model>(Model("res/models/lowpolymost/niby_most.obj"));
 		Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
 
 		// Setup Dear ImGui binding
@@ -102,6 +103,10 @@ namespace GameEngine {
 		ourShader->use();
 		ourShader->setInt("shadowMap", 1);
 		ourShader->setInt("ourTexture", 0);
+
+		waterShader->use();
+		waterShader->setInt("shadowMap", 1);
+		waterShader->setInt("ourTexture", 0);
 
 		debugDepth->use();
 		debugDepth->setInt("depthMap", 0);
@@ -131,6 +136,7 @@ namespace GameEngine {
 		light = CreateRef<DirectionalLight>(DirectionalLight({ -1.5f, -3.0f, 1.5f }));
 
 		light->activate_lights(ourShader, m_scene->m_camera);
+		light->activate_lights(waterShader, m_scene->m_camera);
 
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(-720, 370), glm::vec2(300, 150));
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(720, 370), glm::vec2(-300, 150));
@@ -152,31 +158,36 @@ namespace GameEngine {
 
 		gameManager->init();
 
-		mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
+		//mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
 		player = std::make_shared<Player>(inputManager, gameManager, b, colMan);
-		courier = std::make_shared<Courier>(mousePicker, bu, colMan);
-		courier->set_local_position({ 20, -20, 0 });
+		player->shader = ourShader;
+		//courier = std::make_shared<Courier>(mousePicker, bu, colMan);
+		//courier->set_local_position({ 20, -20, 0 });
+		//courier->getModel()->shader = ourShader;
 		//courier->set_local_rotation({ 90, 0, 0 });
 		player->set_local_position({ -2, 0, 0 });
 		//player->set_render_AABB(true);
-		courier->set_render_AABB(true);
+		//courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
-
+		b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
 		// TODO: move to scene
 		{
 			Ref<GObject> gdom = CreateRef<Box>(DeliveryColor::Blue, dom, colMan);
+			gdom->shader = ourShader;
 			gdom->set_local_position({ 0, -7, -13 });
 			gdom->getAABB()->setStatic(true);
 			gdom->set_render_AABB(true);
 			gdom->set_tag("house");
 
 			Ref<GObject> paczka = CreateRef<Box>(DeliveryColor::Blue, pacz, colMan);
+			paczka->shader = ourShader;
 			paczka->set_local_position({ 0, -7.2, 13 });
 			paczka->getAABB()->setStatic(true);
 			//paczka->set_render_AABB(true);
 			paczka->set_tag("package");
 
 			Ref<GObject> most = CreateRef<GObject>(mo, colMan);
+			most->shader = ourShader;
 			most->set_local_position({ 0, -7.2, -4 });
 			most->set_local_rotation({ 0, -90, 0 });
 			most->getAABB()->setStatic(true);
@@ -184,6 +195,7 @@ namespace GameEngine {
 			most->set_render_AABB(true);
 
 			Ref<GObject> most2 = CreateRef<GObject>(mo, colMan);
+			most2->shader = ourShader;
 			most2->set_local_position({ 0, -7.2, -8.5f });
 			most2->set_local_rotation({ 0, 90, 0 });
 			most2->getAABB()->setStatic(true);
@@ -191,6 +203,7 @@ namespace GameEngine {
 			most2->set_render_AABB(true);
 
 			Ref<GObject> most3 = CreateRef<GObject>(mo, colMan);
+			most3->shader = ourShader;
 			most3->set_local_position({ 0, -7.2, 8.5f });
 			most3->set_local_rotation({ 0, -90, 0 });
 			most3->getAABB()->setStatic(true);
@@ -198,6 +211,7 @@ namespace GameEngine {
 			most3->set_render_AABB(true);
 
 			Ref<GObject> most4 = CreateRef<GObject>(mo, colMan);
+			most4->shader = ourShader;
 			most4->set_local_position({ 0, -7.2, 4 });
 			most4->set_local_rotation({ 0, 90, 0 });
 			most4->getAABB()->setStatic(true);
@@ -205,12 +219,14 @@ namespace GameEngine {
 			most4->set_render_AABB(true);
 
 			Ref<GObject> most5 = CreateRef<GObject>(mo, colMan);
+			most5->shader = ourShader;
 			most5->set_local_position({4, -7.2, 0 });
 			most5->set_local_rotation({ 0, 0, 0 });
 			most5->getAABB()->setStatic(true);
 			most5->set_render_AABB(true);
 
 			Ref<GObject> most6 = CreateRef<GObject>(mo, colMan);
+			most6->shader = ourShader;
 			most6->set_local_position({ 8.5f, -7.2, 0 });
 			most6->set_local_rotation({ 0, 180, 0 });
 			most6->getAABB()->setStatic(true);
@@ -218,12 +234,14 @@ namespace GameEngine {
 			most6->set_render_AABB(true);
 
 			Ref<GObject> most7 = CreateRef<GObject>(mo, colMan);
+			most7->shader = ourShader;
 			most7->set_local_position({ -8.5f, -7.2, 0 });
 			most7->set_local_rotation({ 0, 0, 0 });
 			most7->getAABB()->setStatic(true);
 			most7->set_render_AABB(true);
 
 			Ref<GObject> most8 = CreateRef<GObject>(mo, colMan);
+			most8->shader = ourShader;
 			most8->set_local_position({ -4, -7.2, 0 });
 			most8->set_local_rotation({ 0, 180, 0 });
 			most8->getAABB()->setStatic(true);
@@ -231,6 +249,7 @@ namespace GameEngine {
 			most8->set_render_AABB(true);
 
 			Ref<GObject> iisland2 = CreateRef<GObject>(island, colMan);
+			iisland2->shader = ourShader;
 			iisland2->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland2->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland2->setAABBextentY(0.9f);
@@ -239,7 +258,8 @@ namespace GameEngine {
 			iisland2->getAABB()->setStatic(true);
 			iisland2->set_render_AABB(true);
 
-			Ref<GObject> iisland3 = CreateRef<GObject>(GObject(island, colMan));
+			Ref<GObject> iisland3 = CreateRef<GObject>(island, colMan);
+			iisland3->shader = ourShader;
 			iisland3->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland3->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland3->setAABBextentY(0.9f);
@@ -247,7 +267,8 @@ namespace GameEngine {
 			iisland3->set_tag("terrain");
 			iisland3->getAABB()->setStatic(true);
 
-			Ref<GObject> iisland4 = CreateRef<GObject>(GObject(island, colMan));
+			Ref<GObject> iisland4 = CreateRef<GObject>(island, colMan);
+			iisland4->shader = ourShader;
 			iisland4->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland4->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland4->setAABBextentY(0.9f);
@@ -255,7 +276,8 @@ namespace GameEngine {
 			iisland4->set_tag("terrain");
 			iisland4->getAABB()->setStatic(true);
 
-			Ref<GObject> iisland5 = CreateRef<GObject>(GObject(island, colMan));
+			Ref<GObject> iisland5 = CreateRef<GObject>(island, colMan);
+			iisland5->shader = ourShader;
 			iisland5->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland5->setAABBextentY(0.9f);
@@ -263,7 +285,8 @@ namespace GameEngine {
 			iisland5->set_tag("terrain");
 			iisland5->getAABB()->setStatic(true);
 			
-			Ref<GObject> iisland = CreateRef<GObject>(GObject(island, colMan));
+			Ref<GObject> iisland = CreateRef<GObject>(island, colMan);
+			iisland->shader = ourShader;
 			iisland->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland->setAABBextentY(0.9f);
@@ -271,24 +294,32 @@ namespace GameEngine {
 			iisland->set_tag("terrain");
 			iisland->getAABB()->setStatic(true);
 			
-			Ref<GObject> water = CreateRef<GObject>(b, colMan);
-			water->set_local_scale({ 60, 1, 60 });
+			Ref<GObject> sand = CreateRef<GObject>(b, colMan);
+			sand->shader = ourShader;
+			sand->set_local_scale({ 60, 1, 60 });
 			//water->setAABBextentY(0.9f);
-			water->set_local_position({ 0, -8.2, 0 });
+			sand->set_local_position({ 0, -10, 0 });
+			sand->getAABB()->setStatic(true);
+			sand->set_color({ 0.63, 0.68, 0.1 });
+
+			Ref<GObject> water = CreateRef<GObject>(b, colMan);
+			water->shader = waterShader;
+			water->set_local_scale({ 60, 4, 60 });
+			//water->setAABBextentY(0.9f);
+			water->set_local_position({ 0, -10, 0 });
 			water->getAABB()->setStatic(true);
 			water->set_tag("water");
-			water->set_color({ 0.63, 0.68, 0.85 });
-			water->set_render_AABB(true);
+			water->set_color({ 0.38, 0.44, 0.91 });
+			water->cast_shadow = false;
 
 			m_scene->addObjectToScene(gameManager);
 			m_scene->addObjectToScene(player);
-			m_scene->addObjectToScene(courier);
+			//m_scene->addObjectToScene(courier);
 			m_scene->addObjectToScene(iisland);
 			m_scene->addObjectToScene(iisland2);
 			m_scene->addObjectToScene(iisland3);
 			m_scene->addObjectToScene(iisland4);
 			m_scene->addObjectToScene(iisland5);
-			m_scene->addObjectToScene(water);
 			m_scene->addObjectToScene(gdom);
 			m_scene->addObjectToScene(paczka);
 			m_scene->addObjectToScene(most);
@@ -299,6 +330,9 @@ namespace GameEngine {
 			m_scene->addObjectToScene(most6);
 			m_scene->addObjectToScene(most7);
 			m_scene->addObjectToScene(most8);
+			m_scene->addObjectToScene(sand);
+			m_scene->addObjectToScene(water);
+
 			//root->update_transform(root->get_transform(), true);
 		}
 		m_scene->m_camera->player = player;
@@ -340,6 +374,13 @@ namespace GameEngine {
 
 			last_time = current_time;
 			unprocessed_time += passed_time;
+
+			if (totalTime > 360)
+			{
+				totalTime = 0.0f;
+			}
+
+			totalTime += passed_time;
 
 			OnInput();
 
@@ -402,10 +443,6 @@ namespace GameEngine {
 		//modelmatrx = glm::translate(iisland->get_transform().m_world_matrix, { 1, 4, 1 });
 		//shader->setMat4("model", modelmatrx);
 		//quad->Render(36);
-
-
-
-		//shader->setVec3("color", { 1, 1, 1 });
 	}
 
 	void Application::OnInput()
@@ -419,14 +456,18 @@ namespace GameEngine {
 	void Application::OnUpdate(float dt)
 	{
 		ourShader->setMat4("view", view);
+		waterShader->setMat4("view", view);
 
 		m_scene->Update();
-		m_scene->m_camera->courier = courier->get_transform().m_position;
+
+		//m_scene->m_camera->courier = courier->get_transform().m_position;
 		colMan->CollisionCheck();
 
 		guiManager->Update();
+		ourShader->setVec3("cameraPos", m_scene->m_camera->Position);
+		waterShader->setVec3("cameraPos", m_scene->m_camera->Position);
 
-		mousePicker->Update();
+		//mousePicker->Update();
 
 		if(!gameManager->isWin())
 			gameManager->setTime(gameManager->getTime() - dt);
@@ -449,7 +490,7 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE1);
-		m_scene->RenderAll(shadowMap);
+		m_scene->RenderAllShadow(shadowMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
@@ -465,7 +506,17 @@ namespace GameEngine {
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		m_scene->RenderAll(ourShader);
+
+		waterShader->use();
+
+		waterShader->setVec3("color", { 1, 1, 1 });
+		waterShader->setMat4("view", view);
+		waterShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
+		waterShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		waterShader->setFloat("uTime", totalTime);
+		light->activate_lights(waterShader, m_scene->m_camera);
+
+		m_scene->RenderAllWitTheirShader();
 
 		/*
 		debugDepth->use();

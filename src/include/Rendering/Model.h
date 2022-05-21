@@ -18,6 +18,9 @@
 #include <iostream>
 #include <map>
 #include <vector>
+
+#include <typedefs.h>
+
 using namespace std;
 
 namespace GameEngine {
@@ -32,6 +35,8 @@ namespace GameEngine {
         string directory;
         bool gammaCorrection;
 
+
+
         // constructor, expects a filepath to a 3D model.
         Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
         {
@@ -39,7 +44,7 @@ namespace GameEngine {
         }
 
         // draws the model, and thus all its meshes
-        void Draw(std::shared_ptr<Shader> shader)
+        void Draw(Ref<Shader> shader)
         {
             for (unsigned int i = 0; i < meshes.size(); i++)
                 meshes[i].Draw(shader);

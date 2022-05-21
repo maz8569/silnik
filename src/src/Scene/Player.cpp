@@ -63,13 +63,13 @@ void GameEngine::Player::reactOnCollision(GObject* other)
 {
     
     auto otherAABB = other->getAABB();
-    
+    /*
     if (otherAABB->tag == "water")
     {
         //std::cout << "water";
         get_transform().m_position = lastPosition;
     }
-
+    */
     if (otherAABB->tag == "terrain")
     {
         lastPosition = get_transform().m_position;

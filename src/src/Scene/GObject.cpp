@@ -151,6 +151,11 @@ void GameEngine::GObject::setModel(std::shared_ptr<Model> model)
 	m_model = model;
 }
 
+Ref<Model> GameEngine::GObject::getModel()
+{
+	return m_model;
+}
+
 Ref<AABB> GameEngine::GObject::getAABB() const
 {
 	return m_aabb;
