@@ -55,7 +55,6 @@ void GameEngine::Scene::RenderAllShadow(Ref<Shader> shader)
 			obj->render(shader);
 	}
 
-	m_skybox.RenderSkybox(m_camera);
 }
 
 void GameEngine::Scene::RenderAllFoam(Ref<Shader> shader)
@@ -65,7 +64,6 @@ void GameEngine::Scene::RenderAllFoam(Ref<Shader> shader)
 		obj->render(shader);
 	}
 
-	m_skybox.RenderSkybox(m_camera);
 }
 
 void GameEngine::Scene::RenderAllWitTheirShader()

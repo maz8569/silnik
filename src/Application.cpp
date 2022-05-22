@@ -95,7 +95,8 @@ namespace GameEngine {
 		Ref<Model> dom = CreateRef<Model>(Model("res/models/dom/dom_p.obj"));
 		Ref<Model> pacz = CreateRef<Model>(Model("res/models/paczka/paczka.obj"));
 		Ref<Model> mo = CreateRef<Model>(Model("res/models/lowpolymost/niby_most.obj"));
-		Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
+		//Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
+		Ref<Model> island = CreateRef<Model>(Model("res/models/islandNew/wyspa.obj"));
 
 		//Ref<GTexture> texture = CreateRef<GTexture>("res/textures/voronoi.png");
 
@@ -110,6 +111,7 @@ namespace GameEngine {
 
 		waterShader->use();
 		waterShader->setInt("foamTexture", 2);
+		waterShader->setInt("screenPosTexture", 3);
 		waterShader->setInt("ourTexture", 0);
 
 		debugDepth->use();
@@ -137,19 +139,44 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
 		glGenFramebuffers(1, &foamMapFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
 
+		glGenTextures(1, &gPosition);
+		glBindTexture(GL_TEXTURE_2D, gPosition);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		/*
+		glGenTextures(1, &gNormal);
+		glBindTexture(GL_TEXTURE_2D, gNormal);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+
+		// - color + specular color buffer
+		glGenTextures(1, &gAlbedoSpec);
+		glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0);
+		*/
 		glGenTextures(1, &foamMap);
 		glBindTexture(GL_TEXTURE_2D, foamMap);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
 		// attach depth texture as FBO's depth buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, foamMap, 0);
-		glDrawBuffer(GL_NONE);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -180,7 +207,7 @@ namespace GameEngine {
 		gameManager->init();
 
 		//mousePicker = CreateRef<MousePicker>(MousePicker(m_scene->m_camera, inputManager));
-		player = std::make_shared<Player>(inputManager, gameManager, b, colMan);
+		player = CreateRef<Player>(inputManager, gameManager, b, colMan);
 		player->shader = ourShader;
 		//courier = std::make_shared<Courier>(mousePicker, bu, colMan);
 		//courier->set_local_position({ 20, -20, 0 });
@@ -275,7 +302,7 @@ namespace GameEngine {
 			iisland2->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland2->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland2->setAABBextentY(0.9f);
-			iisland2->set_local_position({ 13, -10, 0 });
+			iisland2->set_local_position({ 13, -9.8, 0 });
 			iisland2->set_tag("terrain");
 			iisland2->getAABB()->setStatic(true);
 			iisland2->set_render_AABB(true);
@@ -285,7 +312,7 @@ namespace GameEngine {
 			iisland3->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland3->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland3->setAABBextentY(0.9f);
-			iisland3->set_local_position({ -13, -10, 0 });
+			iisland3->set_local_position({ -13, -9.8, 0 });
 			iisland3->set_tag("terrain");
 			iisland3->getAABB()->setStatic(true);
 
@@ -294,7 +321,7 @@ namespace GameEngine {
 			iisland4->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland4->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland4->setAABBextentY(0.9f);
-			iisland4->set_local_position({ 0, -10, 13 });
+			iisland4->set_local_position({ 0, -9.8, 13 });
 			iisland4->set_tag("terrain");
 			iisland4->getAABB()->setStatic(true);
 
@@ -303,7 +330,7 @@ namespace GameEngine {
 			iisland5->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland5->setAABBextentY(0.9f);
-			iisland5->set_local_position({ 0, -10, -13 });
+			iisland5->set_local_position({ 0, -9.8, -13 });
 			iisland5->set_tag("terrain");
 			iisland5->getAABB()->setStatic(true);
 			
@@ -312,7 +339,7 @@ namespace GameEngine {
 			iisland->set_local_scale({ 0.6, 0.6, 0.6 });
 			//iisland->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland->setAABBextentY(0.9f);
-			iisland->set_local_position({ 0, -10, 0 });
+			iisland->set_local_position({ 0, -9.8, 0 });
 			iisland->set_tag("terrain");
 			iisland->getAABB()->setStatic(true);
 			
@@ -320,16 +347,18 @@ namespace GameEngine {
 			sand->shader = ourShader;
 			sand->set_local_scale({ 60, 1, 60 });
 			//water->setAABBextentY(0.9f);
-			sand->set_local_position({ 0, -10, 0 });
+			sand->set_local_position({ 0, -15, 0 });
 			sand->getAABB()->setStatic(true);
 			sand->set_color({ 0.63, 0.68, 0.1 });
-			
+			//sand->cast_shadow = false;
+
+
 			Ref<GObject> water = CreateRef<GObject>(bu, colMan);
 			water->shader = waterShader;
 			water->set_local_scale({ 60, 4, 60 });
-			water->setAABBextentY(1.5);
+			water->setAABBextentY(1);
 			//water->setAABBextentY(0.9f);
-			water->set_local_position({ 0, -10, 0 });
+			water->set_local_position({ 0, -9.5, 0 });
 			water->getAABB()->setStatic(true);
 			water->set_tag("water");
 			water->set_color({ 0.38, 0.44, 0.91 });
@@ -360,6 +389,11 @@ namespace GameEngine {
 			//root->update_transform(root->get_transform(), true);
 		}
 		m_scene->m_camera->player = player;
+
+		float n = 0.1f;
+		float f = 100.0f;
+
+		ucamera_params = glm::vec4(1/f, f, (1 - f/ n)/2, (1 + f / n) / 2);
 
 		// load and create a texture 
 		// -------------------------
@@ -527,13 +561,15 @@ namespace GameEngine {
 		//shadowMap->use();
 		//shadowMap->setMat4("lightSpaceMatrix", m_scene->m_camera->m_projectionMatrix * view);
 
+		glDisable(GL_BLEND);
 		//glCullFace(GL_FRONT);
-		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+		glViewport(0, 0, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_scene->RenderAllShadow(foaMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
+		glEnable(GL_BLEND);
 
 		ourShader->use();
 
@@ -548,6 +584,8 @@ namespace GameEngine {
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, foamMap);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, gPosition);
 
 		waterShader->use();
 
@@ -558,6 +596,8 @@ namespace GameEngine {
 		waterShader->setFloat("uTime", totalTime);
 		waterShader->setFloat("near_plane", near_plane);
 		waterShader->setFloat("far_plane", far_plane);
+		waterShader->setVec4("camera_params", ucamera_params);
+		waterShader->setVec4("uScreenSize", uScreenSize);
 
 		light->activate_lights(waterShader, m_scene->m_camera);
 
@@ -803,6 +843,9 @@ namespace GameEngine {
 
 			GuiComponent::setScrWidth(e.wx);
 			GuiComponent::setScrHeight(windowManager.SCR_HEIGHT);
+
+			uScreenSize = glm::vec4(windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 1 / windowManager.SCR_WIDTH, 1 / windowManager.SCR_HEIGHT);
+
 
 			break;
 		default:

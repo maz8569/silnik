@@ -7,7 +7,7 @@ void GameEngine::MasterRenderer::DrawQuad(const glm::vec3& pos)
 
 void GameEngine::MasterRenderer::finishRender()
 {
-	glClearColor(0.4f, 0.4f, 0.4f, 0.6f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 	//m_quadRenderer.renderQuads(camera);
 

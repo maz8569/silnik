@@ -144,10 +144,12 @@ namespace GameEngine {
 		Ref<Shape> quad;
 
 		glm::mat4 saas;
+		glm::vec4 ucamera_params;
+		glm::vec4 uScreenSize;
 
 		unsigned int depthMapFBO, depthMap;
 		
-		unsigned int foamMapFBO, foamMap;
+		unsigned int foamMapFBO, foamMap, gPosition, gNormal, gColorSpec;
 	};
 
 	extern Application app;

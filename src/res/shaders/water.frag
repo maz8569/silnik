@@ -44,9 +44,13 @@ layout (location = 1) in vec2 TexCoord;
 layout (location = 2) in vec3 Normal;
 layout (location = 3) in vec3 FragPos;
 layout (location = 4) in vec4 FragPosLightSpace;
+layout (location = 5) in vec4 screenPosition;
+
+varying vec3 WorldPosition;
 
 uniform sampler2D ourTexture;
 uniform sampler2D foamTexture;
+uniform sampler2D screenPosTexture;
  
 uniform vec3 viewPos; 
 uniform vec3 color; 
@@ -55,6 +59,9 @@ uniform DirLight dirLight;
 uniform PointLight pointLight;
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 uniform float uTime;
+uniform vec4 camera_params;
+uniform vec4 uScreenSize;
+uniform mat4 view;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -65,11 +72,29 @@ float near_plane = 0.1f;
 float far_plane = 100.0f;
 
 vec3 foamcolor = vec3(1, 1, 1);
+float dinstance = 1;
 
 float LinearizeDepth(float depth)
 {
     float z = depth * 2.0 - 1.0; // Back to NDC 
     return (2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane));	
+}
+float linearizeDepth(float z) {
+        z = z * 2.0 - 1.0;
+        return 1.0 / (camera_params.z * z + camera_params.w);
+}
+
+float getLinearDepth(vec3 pos) {
+    return -(view * vec4(pos, 1.0)).z;
+}
+
+float getLinearScreenDepth(vec2 uv) {
+    return LinearizeDepth(texture2D(foamTexture, uv).r) * camera_params.y;
+}
+
+float getLinearScreenDepth() {
+    vec2 uv = gl_FragCoord.xy * uScreenSize.zw;
+    return getLinearScreenDepth(uv);
 }
 
 void main()
@@ -82,7 +107,7 @@ void main()
     //if(pointLight.ambient != vec3(0, 0, 0))
     //    result += CalcPointLight(pointLight, norm, FragPos, viewDir);    
     // phase 3: spot light
-    FragColor =  vec4(result, 0.5);
+    FragColor =  vec4(result, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
@@ -119,14 +144,37 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     vec3 finalColor = mix(color * clamp(1.0 - color2, 0.9, 1.0), foamcolor, textureee );
 
-    float depthValue = (texture(foamTexture, TexCoord).r) / far_plane;   
 
-    vec3 scolor = vec3(LinearizeDepth(depthValue) );
+    vec2 ndc = (screenPosition.xy/screenPosition.w)/2.0 + 0.5;
+    vec2 texcoordss = vec2(ndc.x, ndc.y);
 
+    vec2 texxtcoords = vec2(TexCoord.x, 1-TexCoord.y);
+
+    float depthValue = texture(foamTexture, texcoordss).r;   
+    depthValue = LinearizeDepth(depthValue) / far_plane;
+    depthValue = clamp(depthValue, 0, 1);
+
+
+    float worldDepth = getLinearDepth(WorldPosition);
+    float screenDepth = getLinearScreenDepth();
+    screenDepth = clamp(screenDepth, 0, 1) * 0.5;
     vec3 ambient = light.ambient * finalColor * vec3(1.0, 1.0, 1.2);
     vec3 diffuse = light.diffuse * diff * finalColor;
     vec3 specular = light.specular * spec*0.5;
-    //return (ambient + (diffuse + specular));
 
-    return (ambient + (diffuse + specular));
+    vec3 gg = (ambient + (diffuse + specular));
+
+    float foamLine = clamp((1.0-(screenDepth - depthValue)),0.0,1.0);
+    vec3 scolor = vec3(foamLine);
+
+        if(foamLine < 0.7){
+        //scolor.r += 0.2;
+    }
+
+    //return (ambient + (diffuse + specular));
+    vec3 ggcolor = scolor;
+
+    //return (ambient + (diffuse + specular));
+    //return ggcolor;
+    return ggcolor;
 }

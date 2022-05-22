@@ -55,6 +55,7 @@ uniform float shininess;
 uniform DirLight dirLight;
 uniform PointLight pointLight;
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
+uniform mat4 view;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 
@@ -109,6 +110,11 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 specular = light.specular * spec*0.5;
     //return (ambient + (diffuse + specular));
     float shadow = ShadowCalculation(lightDir, normal, FragPosLightSpace);
+ 
+    if      (shadow >= 0.8) { shadow = 1.0; }
+    else if (shadow >= 0.6) { shadow = 0.6; }
+    else if (shadow >= 0.3) { shadow = 0.3; }
+    else                              { shadow = 0.0; }
     return (ambient + (1.0 - shadow) * (diffuse + specular));
 }
 
