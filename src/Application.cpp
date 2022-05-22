@@ -85,7 +85,7 @@ namespace GameEngine {
 		ourShader = CreateRef<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
 		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
 		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
-		foaMap = CreateRef<Shader>("res/shaders/shadowmappingBend.vert", "res/shaders/shadowmapping.frag");
+		foaMap = CreateRef<Shader>("res/shaders/shadowmappingBend.vert", "res/shaders/shadowmappingBend.frag");
 		debugDepth = CreateRef<Shader>("res/shaders/debugdepth.vert", "res/shaders/debugdepth.frag");
 		masterRenderer = CreateRef<MasterRenderer>();
 		masterRenderer->setQuadShader(ourShader);
@@ -105,10 +105,11 @@ namespace GameEngine {
 
 		ourShader->use();
 		ourShader->setInt("shadowMap", 1);
+		ourShader->setInt("cameraDepthMap", 2);
 		ourShader->setInt("ourTexture", 0);
 
 		waterShader->use();
-		waterShader->setInt("shadowMap", 1);
+		waterShader->setInt("foamTexture", 2);
 		waterShader->setInt("ourTexture", 0);
 
 		debugDepth->use();
@@ -190,6 +191,7 @@ namespace GameEngine {
 		//courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
 		b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
+		bu = CreateRef<Model>(Model("res/models/hidefPlane/plane.obj"));
 		// TODO: move to scene
 		{
 			Ref<GObject> gdom = CreateRef<Box>(DeliveryColor::Blue, dom, colMan);
@@ -321,10 +323,11 @@ namespace GameEngine {
 			sand->set_local_position({ 0, -10, 0 });
 			sand->getAABB()->setStatic(true);
 			sand->set_color({ 0.63, 0.68, 0.1 });
-
-			Ref<GObject> water = CreateRef<GObject>(b, colMan);
+			
+			Ref<GObject> water = CreateRef<GObject>(bu, colMan);
 			water->shader = waterShader;
 			water->set_local_scale({ 60, 4, 60 });
+			water->setAABBextentY(1.5);
 			//water->setAABBextentY(0.9f);
 			water->set_local_position({ 0, -10, 0 });
 			water->getAABB()->setStatic(true);
@@ -500,7 +503,7 @@ namespace GameEngine {
 
 		// activate shader
 		m_scene->m_camera->m_projectionMatrix = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)windowManager.SCR_WIDTH / (float)windowManager.SCR_HEIGHT, 0.1f, 100.0f);
-		lightView = glm::lookAt(-light->lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
+		lightView = glm::lookAt(-light->lightPos, glm::vec3(0), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
 		shadowMap->use();
 		shadowMap->setMat4("lightSpaceMatrix", lightSpaceMatrix);
@@ -515,20 +518,20 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
-		/*
+
 		foaMap->use();
 		foaMap->setMat4("view", view);
 		foaMap->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
 		foaMap->setVec3("cameraPos", m_scene->m_camera->Position);
-		*/
-		shadowMap->use();
-		shadowMap->setMat4("lightSpaceMatrix", lightProjection * view);
+		
+		//shadowMap->use();
+		//shadowMap->setMat4("lightSpaceMatrix", m_scene->m_camera->m_projectionMatrix * view);
 
 		//glCullFace(GL_FRONT);
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, foamMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		m_scene->RenderAllShadow(shadowMap);
+		m_scene->RenderAllShadow(foaMap);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 
@@ -543,6 +546,8 @@ namespace GameEngine {
 		light->activate_lights(ourShader, m_scene->m_camera);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, foamMap);
 
 		waterShader->use();
 
@@ -551,14 +556,17 @@ namespace GameEngine {
 		waterShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
 		waterShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		waterShader->setFloat("uTime", totalTime);
+		waterShader->setFloat("near_plane", near_plane);
+		waterShader->setFloat("far_plane", far_plane);
+
 		light->activate_lights(waterShader, m_scene->m_camera);
 
 		m_scene->RenderAllWitTheirShader();
 
-
+		
 		debugDepth->use();
-		debugDepth->setFloat("near_plane", near_plane);
-		debugDepth->setFloat("far_plane", far_plane);
+		debugDepth->setFloat("near_plane", 0.1);
+		debugDepth->setFloat("far_plane", 100.0);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, foamMap);
 		renderQuad();

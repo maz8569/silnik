@@ -12,7 +12,6 @@ float amount = 0.005f;
 void main()
 {
     vec3 worldPos = vec3(model * vec4(aPos, 1.0));
-    worldPos -= cameraPos;
 
     worldPos = vec3(view * vec4(worldPos, 1.0));
     float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;
