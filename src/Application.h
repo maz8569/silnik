@@ -61,6 +61,7 @@ namespace GameEngine {
 
 		void playAudio(std::string filename);
 		void renderQuad();
+		void renderQuadFullScreen();
 
 		void moveCamera(Event e);
 		void stopCamera(Event e);
@@ -101,6 +102,7 @@ namespace GameEngine {
 		Ref<Shader> foaMap = nullptr;
 		Ref<Shader> debugDepth = nullptr;
 		Ref<Shader> waterShader = nullptr;
+		Ref<Shader> refrShader = nullptr;
 
 		//Ref<MousePicker> mousePicker = nullptr;
 		//Ref<Block> block = nullptr;
@@ -132,7 +134,7 @@ namespace GameEngine {
 		float totalTime = 0.0f;
 
 		int fps = 0;
-		float defV = 0.1f;
+		float defV = 1.5f;
 
 		Ref<InputManager> inputManager = nullptr;
 
@@ -150,6 +152,10 @@ namespace GameEngine {
 		unsigned int depthMapFBO, depthMap;
 		
 		unsigned int foamMapFBO, foamMap, gPosition, gNormal, gColorSpec;
+
+		unsigned int refrFBO, refrColor, refRBO;
+
+		unsigned int finalFBO, finalColor, finalRBO;
 	};
 
 	extern Application app;

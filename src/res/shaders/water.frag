@@ -50,7 +50,7 @@ varying vec3 WorldPosition;
 
 uniform sampler2D ourTexture;
 uniform sampler2D foamTexture;
-uniform sampler2D screenPosTexture;
+uniform sampler2D refractTexture;
  
 uniform vec3 viewPos; 
 uniform vec3 color; 
@@ -63,7 +63,7 @@ uniform vec4 camera_params;
 uniform vec4 uScreenSize;
 uniform mat4 view;
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
+vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 //float shadow = 0;
@@ -103,14 +103,17 @@ void main()
     vec3 norm = normalize(Normal);
     vec3 viewDir = normalize(viewPos - FragPos);
 
-    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    vec4 result = CalcDirLight(dirLight, norm, viewDir);
     //if(pointLight.ambient != vec3(0, 0, 0))
     //    result += CalcPointLight(pointLight, norm, FragPos, viewDir);    
     // phase 3: spot light
-    FragColor =  vec4(result, 1.0);
+    //vec4 ccc = vec4(screenPosition.x, screenPosition.y, screenPosition.z, 1.0);
+    //FragColor = screenPosition;
+    //result.rgb = pow(result.rgb, vec3(1.0 / 1.5));
+    FragColor =  result;
 }
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 {
     vec3 lightDir = normalize(-light.direction);
     //vec3 lightDir = normalize(light.direction + FragPos);
@@ -119,7 +122,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     if      (diff >= 0.8) { diff = 1.0; }
     else if (diff >= 0.6) { diff = 0.6; }
     else if (diff >= 0.3) { diff = 0.3; }
-    else                              { diff = 0.0; }
+    else                  { diff = 0.0; }
     // specular shading
     //vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);
@@ -128,7 +131,9 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     // combine results
 
-    vec3 textureee = vec3(texture(ourTexture, TexCoord  * 10));
+    vec2 foamTexturecoords = TexCoord;
+
+    vec3 textureee = vec3(texture(ourTexture, foamTexturecoords * 10));
 
   vec3 color2 = texture2D( ourTexture,
   TexCoord * 10.0 +
@@ -142,7 +147,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
   )
 ).rgb;
 
-    vec3 finalColor = mix(color * clamp(1.0 - color2, 0.9, 1.0), foamcolor, textureee );
+    vec3 finalColor = mix(color * clamp(1.0 - color2, 0.85, 1.0), foamcolor, textureee );
 
 
     vec2 ndc = (screenPosition.xy/screenPosition.w)/2.0 + 0.5;
@@ -151,30 +156,55 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec2 texxtcoords = vec2(TexCoord.x, 1-TexCoord.y);
 
     float depthValue = texture(foamTexture, texcoordss).r;   
-    depthValue = LinearizeDepth(depthValue) / far_plane;
-    depthValue = clamp(depthValue, 0, 1);
+    depthValue = 60* LinearizeDepth(depthValue) / far_plane;
 
+    //texcoordss.y +=0.03;
+
+    float refValue = texture(foamTexture, texcoordss).r;
+    refValue = 60* LinearizeDepth(refValue) / far_plane;
 
     float worldDepth = getLinearDepth(WorldPosition);
     float screenDepth = getLinearScreenDepth();
-    screenDepth = clamp(screenDepth, 0, 1) * 0.5;
+
     vec3 ambient = light.ambient * finalColor * vec3(1.0, 1.0, 1.2);
     vec3 diffuse = light.diffuse * diff * finalColor;
     vec3 specular = light.specular * spec*0.5;
 
-    vec3 gg = (ambient + (diffuse + specular));
+    vec2 pos = texcoordss;
 
-    float foamLine = clamp((1.0-(screenDepth - depthValue)),0.0,1.0);
-    vec3 scolor = vec3(foamLine);
+    float X = 3*(pos.x*15.+uTime*0.5);
+    float Y = 3*( pos.y*15.+uTime*0.5);
+    pos.y += cos(X+Y)*0.01*cos(Y);
+    pos.x += sin(X-Y)*0.01*sin(Y);
 
-        if(foamLine < 0.7){
-        //scolor.r += 0.2;
+    vec4 refrColor = texture(refractTexture, pos);
+    vec4 jColor = texture(refractTexture, texcoordss);
+
+    vec4 gg = vec4(ambient + (diffuse + specular), 1.0);
+
+    float foamLine = clamp( (-screenPosition.w/2 + depthValue)/10, 0, 1);
+    float refrline = clamp( (-screenPosition.w/2 + refValue)/20, 0, 1);
+    vec3 scolor = vec3(refrline);
+
+    if (refrline < 0.5)
+    {
+        gg = mix(gg, refrColor , 0.5);
+
+    }
+    else{
+        gg = mix(gg, jColor , 0.5);// * vec4(0.8, 0.8, 1, 1);
+
+    }
+
+    if(foamLine < 0.3){
+        gg.rgb = vec3(0.8, 0.8, 0.75);
+        //gg.a += 0.1;
     }
 
     //return (ambient + (diffuse + specular));
-    vec3 ggcolor = scolor;
+    vec4 ggcolor = vec4(scolor,1.0);
 
     //return (ambient + (diffuse + specular));
     //return ggcolor;
-    return ggcolor;
+    return gg;
 }

@@ -83,6 +83,7 @@ namespace GameEngine {
 		glFrontFace(GL_CCW);
 
 		ourShader = CreateRef<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
+		refrShader = CreateRef<Shader>(Shader("res/shaders/refract.vert", "res/shaders/refract.frag"));
 		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
 		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
 		foaMap = CreateRef<Shader>("res/shaders/shadowmappingBend.vert", "res/shaders/shadowmappingBend.frag");
@@ -109,9 +110,15 @@ namespace GameEngine {
 		ourShader->setInt("cameraDepthMap", 2);
 		ourShader->setInt("ourTexture", 0);
 
+		refrShader->use();
+		refrShader->setInt("shadowMap", 1);
+		refrShader->setInt("cameraDepthMap", 2);
+		waterShader->setInt("colorTexture", 3);
+		refrShader->setInt("ourTexture", 0);
+
 		waterShader->use();
 		waterShader->setInt("foamTexture", 2);
-		waterShader->setInt("screenPosTexture", 3);
+		waterShader->setInt("refractTexture", 3);
 		waterShader->setInt("ourTexture", 0);
 
 		debugDepth->use();
@@ -180,14 +187,58 @@ namespace GameEngine {
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+		glGenFramebuffers(1, &refrFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, refrFBO);
+
+		glGenTextures(1, &refrColor);
+		glBindTexture(GL_TEXTURE_2D, refrColor);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, refrColor, 0);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+		glGenRenderbuffers(1, &refRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, refRBO);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, refRBO);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glGenFramebuffers(1, &finalFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, finalFBO);
+
+		glGenTextures(1, &finalColor);
+		glBindTexture(GL_TEXTURE_2D, finalColor);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, finalColor, 0);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+		glGenRenderbuffers(1, &finalRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, finalRBO);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, finalRBO);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 		quad = CreateRef<Shape>(Shape(Coords::COORDSTEXT));
 		light = CreateRef<DirectionalLight>(DirectionalLight({ -1.5f, -3.0f, 1.5f }));
 
 		light->activate_lights(ourShader, m_scene->m_camera);
+		light->activate_lights(refrShader, m_scene->m_camera);
 		light->activate_lights(waterShader, m_scene->m_camera);
 
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(-720, 370), glm::vec2(300, 150));
 		guiManager->addComponent(std::string("res/textures/back.png"), glm::vec2(720, 370), glm::vec2(-300, 150));
+		guiManager->addComponent(std::string("res/textures/hourglass.png"), glm::vec2(800, 370), glm::vec2(150, 150));
 		guiManager->addComponent(std::string("res/textures/box.png"), glm::vec2(-795, 375), glm::vec2(100, 100));
 		Ref<GuiComponent> numbComponent = guiManager->addComponent(std::string("res/textures/numb1.png"), glm::vec2(-690, 360), glm::vec2(60, 60));
 		/*
@@ -413,16 +464,16 @@ namespace GameEngine {
 		double unprocessed_time = 0.0;
 
 		playAudio("TestSound");
-		/*
-		Ref<GuiComponent> but = guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
+		
+		//Ref<GuiComponent> but = guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
 		guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
 		Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
-		but->setOnClickFunction(print);
+		//but->setOnClickFunction(print);
 
 		Ref<Constraints> constraints = CreateRef<Constraints>(glm::vec2(500, 600), glm::vec2(0, 0), false, true);
 		slider->setConstraints(constraints);
-		*/
+		
 
 		while (!glfwWindowShouldClose(windowManager.window))
 		{
@@ -454,7 +505,7 @@ namespace GameEngine {
 			{
 				should_render = false;
 				OnRender();
-				OnRenderUI();
+				//OnRenderUI();
 
 				windowManager.updateWindow();
 			}
@@ -514,6 +565,7 @@ namespace GameEngine {
 	void Application::OnUpdate(float dt)
 	{
 		ourShader->setMat4("view", view);
+		refrShader->setMat4("view", view);
 		waterShader->setMat4("view", view);
 
 		m_scene->Update();
@@ -523,6 +575,7 @@ namespace GameEngine {
 
 		guiManager->Update();
 		ourShader->setVec3("cameraPos", m_scene->m_camera->Position);
+		refrShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		waterShader->setVec3("cameraPos", m_scene->m_camera->Position);
 
 		//mousePicker->Update();
@@ -560,7 +613,7 @@ namespace GameEngine {
 		
 		//shadowMap->use();
 		//shadowMap->setMat4("lightSpaceMatrix", m_scene->m_camera->m_projectionMatrix * view);
-
+		
 		glDisable(GL_BLEND);
 		//glCullFace(GL_FRONT);
 		glViewport(0, 0, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
@@ -570,22 +623,40 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glCullFace(GL_BACK);
 		glEnable(GL_BLEND);
+		
+		refrShader->use();
+		refrShader->setVec3("color", { 1, 1, 1 });
+		refrShader->setMat4("view", view);
+		refrShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
+		refrShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+		light->activate_lights(refrShader, m_scene->m_camera);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, depthMap);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, foamMap);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, refrColor);
+		glEnable(GL_DEPTH_TEST);
+
+		glViewport(0, 0, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, refrFBO);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		m_scene->RenderAllFoam(refrShader);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		ourShader->use();
 
 		glViewport(0, 0, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, finalFBO);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		ourShader->setVec3("color", { 1, 1, 1 });
 		ourShader->setMat4("view", view);
 		ourShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
 		ourShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		light->activate_lights(ourShader, m_scene->m_camera);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, depthMap);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, foamMap);
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, gPosition);
+
 
 		waterShader->use();
 
@@ -602,14 +673,21 @@ namespace GameEngine {
 		light->activate_lights(waterShader, m_scene->m_camera);
 
 		m_scene->RenderAllWitTheirShader();
-
+		OnRenderUI();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
 		debugDepth->use();
 		debugDepth->setFloat("near_plane", 0.1);
 		debugDepth->setFloat("far_plane", 100.0);
+		debugDepth->setFloat("uTime", totalTime);
+		debugDepth->setFloat("gamma", defV);
+		
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, foamMap);
-		renderQuad();
+		glBindTexture(GL_TEXTURE_2D, finalColor);
+		glDisable(GL_DEPTH_TEST);
+		renderQuadFullScreen();
+		glEnable(GL_DEPTH_TEST);
 		
 	}
 
@@ -627,7 +705,7 @@ namespace GameEngine {
 		{
 			textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		}
-		textRenderer->RenderText(std::to_string(gameManager->getTime()), 1400.0f, 900.0f, 2.0f, glm::vec3(1.0, 1.0f, 1.0f));
+		textRenderer->RenderText(std::to_string(gameManager->getTime()), 1600.0f, 800.0f, 1.0f, glm::vec3(1.0, 1.0f, 1.0f));
 
 		//textRenderer->RenderText("Position " + std::to_string(mouseX) + " " + std::to_string( mouseY), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 
@@ -659,6 +737,33 @@ namespace GameEngine {
 				 0.0f,  0.0f, 0.0f, 0.0f, 0.0f,
 				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
 				 1.0f,  0.0f, 0.0f, 1.0f, 0.0f,
+			};
+			// setup plane VAO
+			glGenVertexArrays(1, &quadVAO);
+			glGenBuffers(1, &quadVBO);
+			glBindVertexArray(quadVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		}
+		glBindVertexArray(quadVAO);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
+	}
+
+	void Application::renderQuadFullScreen()
+	{
+		if (quadVAO == 0)
+		{
+			float quadVertices[] = {
+				// positions        // texture Coords
+				 -1.0f,  1.0f, -1.5f, 0.0f, 1.0f,
+				 -1.0f,  -1.0f, -1.5f, 0.0f, 0.0f,
+				 1.0f,  1.0f, -1.5f, 1.0f, 1.0f,
+				 1.0f,  -1.0f, -0.5f, 1.0f, 0.0f,
 			};
 			// setup plane VAO
 			glGenVertexArrays(1, &quadVAO);
@@ -836,12 +941,20 @@ namespace GameEngine {
 			{
 				windowManager.SCR_HEIGHT = e.wy;
 			}
-			windowManager.SCR_WIDTH = e.wx;
 
-			m_scene->m_camera->scr_width = e.wx;
+			if (e.wx == 0)
+			{
+				windowManager.SCR_WIDTH = 1;
+			}
+			else 
+			{
+				windowManager.SCR_WIDTH = e.wx;
+			}
+
+			m_scene->m_camera->scr_width = windowManager.SCR_WIDTH;
 			m_scene->m_camera->scr_height = windowManager.SCR_HEIGHT;
 
-			GuiComponent::setScrWidth(e.wx);
+			GuiComponent::setScrWidth(windowManager.SCR_WIDTH);
 			GuiComponent::setScrHeight(windowManager.SCR_HEIGHT);
 
 			uScreenSize = glm::vec4(windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 1 / windowManager.SCR_WIDTH, 1 / windowManager.SCR_HEIGHT);

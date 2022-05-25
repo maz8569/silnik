@@ -61,8 +61,10 @@ void GameEngine::Scene::RenderAllFoam(Ref<Shader> shader)
 {
 	for (auto& obj : m_GObjects)
 	{
-		obj->render(shader);
+		if (obj->cast_shadow)
+			obj->render(shader);
 	}
+	m_skybox.RenderSkybox(m_camera);
 
 }
 
