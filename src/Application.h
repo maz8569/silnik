@@ -134,7 +134,7 @@ namespace GameEngine {
 		float totalTime = 0.0f;
 
 		int fps = 0;
-		float defV = 1.5f;
+		float defV = 0.1f;
 
 		Ref<InputManager> inputManager = nullptr;
 
