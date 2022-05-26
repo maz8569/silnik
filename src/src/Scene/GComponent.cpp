@@ -16,5 +16,12 @@ namespace GameEngine {
     {
 
     }
+    void GComponent::setParent(GObject* newParent)
+    {
+        parent = newParent;
+    }
+    void GComponent::Update(float dt)
+    {
+    }
 }
 

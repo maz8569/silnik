@@ -14,7 +14,7 @@ namespace GameEngine {
 	public:
 		Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Collision> colMan);
 		virtual void render(Ref<Shader> shader);
-		virtual void Update();
+		virtual void Update(float dt);
 		virtual void reactOnCollision(GObject* other);
 	};
 }

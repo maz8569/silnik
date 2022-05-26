@@ -16,7 +16,7 @@ void GameEngine::Player::render(Ref<Shader> shader)
     Entity::render(shader);
 }
 
-void GameEngine::Player::Update()
+void GameEngine::Player::Update(float dt)
 {
     currentSpeed.x = speed * inputManager->getHorizontal();
 
@@ -49,7 +49,7 @@ void GameEngine::Player::Update()
         package->get_transform().m_position = get_transform().m_position + glm::vec3(0, 2, 0);
     }
 
-    Entity::Update();
+    Entity::Update(dt);
     isGrounded = false;
 }
 

@@ -268,6 +268,21 @@ namespace GameEngine {
 		//player->set_render_AABB(true);
 		//courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
+
+		Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
+		boat->shader = ourShader;
+
+		std::vector<glm::vec3> pos;
+
+		pos.push_back({ 6, -7.5, 6 });
+		pos.push_back({ 6, -7.5, -6 });
+		pos.push_back({ -6, -7.5, -6 });
+		pos.push_back({ -6, -7.5, 6 });
+
+		Ref<Boat> boatComp = CreateRef<Boat>(2, pos);
+		boat->addComponent(boatComp);
+		boat->set_local_scale(glm::vec3(1.5));
+
 		b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
 		bu = CreateRef<Model>(Model("res/models/hidefPlane/plane.obj"));
 		// TODO: move to scene
@@ -418,7 +433,7 @@ namespace GameEngine {
 
 			m_scene->addObjectToScene(gameManager);
 			m_scene->addObjectToScene(player);
-			//m_scene->addObjectToScene(courier);
+			m_scene->addObjectToScene(boat);
 			m_scene->addObjectToScene(iisland);
 			m_scene->addObjectToScene(iisland2);
 			m_scene->addObjectToScene(iisland3);
@@ -466,13 +481,13 @@ namespace GameEngine {
 		playAudio("TestSound");
 		
 		//Ref<GuiComponent> but = guiManager->addComponent(std::string("res/textures/fullheart.png"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
-		guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
-		Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
+		//guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
+		//Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
 		//but->setOnClickFunction(print);
 
-		Ref<Constraints> constraints = CreateRef<Constraints>(glm::vec2(500, 600), glm::vec2(0, 0), false, true);
-		slider->setConstraints(constraints);
+		//Ref<Constraints> constraints = CreateRef<Constraints>(glm::vec2(500, 600), glm::vec2(0, 0), false, true);
+		//slider->setConstraints(constraints);
 		
 
 		while (!glfwWindowShouldClose(windowManager.window))
@@ -568,7 +583,7 @@ namespace GameEngine {
 		refrShader->setMat4("view", view);
 		waterShader->setMat4("view", view);
 
-		m_scene->Update();
+		m_scene->Update(dt);
 
 		//m_scene->m_camera->courier = courier->get_transform().m_position;
 		colMan->CollisionCheck();

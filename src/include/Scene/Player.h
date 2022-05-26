@@ -29,7 +29,7 @@ namespace GameEngine {
 		Player( std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
 
 		virtual void render(Ref<Shader> shader);
-		virtual void Update();
+		virtual void Update(float dt);
 		void jump();
 		virtual void reactOnCollision(GObject* other);
 	};

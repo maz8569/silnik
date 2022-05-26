@@ -52,6 +52,24 @@ void GameEngine::GObject::set_local_rotation(const glm::vec3& newRotation)
 	m_dirty = true;
 }
 
+void GameEngine::GObject::set_local_rotationX(const float& x)
+{
+	m_transform.m_rotation.x = x;
+	m_dirty = true;
+}
+
+void GameEngine::GObject::set_local_rotationY(const float& y)
+{
+	m_transform.m_rotation.y = y;
+	m_dirty = true;
+}
+
+void GameEngine::GObject::set_local_rotationZ(const float& z)
+{
+	m_transform.m_rotation.z = z;
+	m_dirty = true;
+}
+
 void GameEngine::GObject::set_local_scale(glm::vec3 newScale)
 {
 	m_transform.m_scale = newScale;
@@ -63,6 +81,12 @@ void GameEngine::GObject::set_local_scale(glm::vec3 newScale)
 std::vector<Ref<GObject>> GameEngine::GObject::get_children()
 {
 	return m_children;
+}
+
+void GameEngine::GObject::addComponent(Ref<GComponent> comp)
+{
+	components.push_back(comp);
+	comp->setParent(this);
 }
 
 void GameEngine::GObject::rotateAABBZ(Degrees deg)
@@ -183,9 +207,15 @@ void GameEngine::GObject::render(Ref<Shader> shader)
 	}
 }
 
-void GameEngine::GObject::Update()
+void GameEngine::GObject::Update(float dt)
 {
-	MoveColliders();
+
+	for (auto comp : components)
+	{
+		comp->Update(dt);
+	}
+
+		MoveColliders();
 }
 
 void GameEngine::GObject::reactOnCollision(GObject* other)

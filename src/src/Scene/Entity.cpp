@@ -9,9 +9,9 @@ void GameEngine::Entity::render(Ref<Shader> shader)
 	GObject::render(shader);
 }
 
-void GameEngine::Entity::Update()
+void GameEngine::Entity::Update(float dt)
 {
-	GObject::Update();
+	GObject::Update(dt);
 }
 
 void GameEngine::Entity::reactOnCollision(GObject* other)

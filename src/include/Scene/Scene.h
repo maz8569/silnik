@@ -29,7 +29,7 @@ namespace GameEngine {
 		//virtual ~Scene();
 
 		void Start();
-		void Update();
+		void Update(float dt);
 		void FixedUpdate();
 		void LateUpdate();
 		void Render(Ref<Shader> shader);

@@ -21,6 +21,7 @@
 #include <Scene/GameManager.h>
 #include <Blocks/Block.h>
 #include <GUI/GuiManager.h>
+#include <Scene/Boat.h>
 
 namespace GameEngine {
 

@@ -26,15 +26,15 @@ void main()
     float threshold  = 0.8;
     float amount     = 0.8;
 
-
-    //vec2 texSize = textureSize(depthMap, 0).xy;
-
-    //float value = 0.0;
-    //float count = 0.0;
-
-    //vec4 result = vec4(0);
-    //vec4 Scolor  = vec4(0);
     /*
+    vec2 texSize = textureSize(depthMap, 0).xy;
+
+    float value = 0.0;
+    float count = 0.0;
+
+    vec4 result = vec4(0);
+    vec4 Scolor  = vec4(0);
+    
     for (int i = -size; i <= size; ++i) {
         for (int j = -size; j <= size; ++j) {
                Scolor =
@@ -54,16 +54,18 @@ void main()
         }
     }
     result /= count;
-    */
-    //float X = 3*(pos.x*15.+uTime*0.5);
-    //float Y = 3*( pos.y*15.+uTime*0.5);
-   // pos.y += cos(X+Y)*0.01*cos(Y);
-   // pos.x += sin(X-Y)*0.01*sin(Y);
+   */
+    /*
+    float X = 3*(pos.x*15.+uTime*0.5);
+    float Y = 3*( pos.y*15.+uTime*0.5);
+    pos.y += cos(X+Y)*0.01*cos(Y);
+    pos.x += sin(X-Y)*0.01*sin(Y);
+   */
    vec3 color = vec3( texture(depthMap, pos));
 
-   color = pow(color, vec3(1.0/ gamma));
+   color = pow(color, vec3(1.0/ 1.5));
    //vec4 acolor = mix(vec4(0), result, amount);
-   //color += acolor.rgb;
+  // color += acolor.rgb;
     //float depthValue = texture(depthMap, TexCoords).r;
     FragColor = vec4(color, 1.0);
     //FragColor = acolor;

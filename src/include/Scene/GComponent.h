@@ -1,5 +1,7 @@
 #pragma once
 
+#include <typedefs.h>
+
 namespace GameEngine {
 
 	class GObject;
@@ -10,7 +12,11 @@ namespace GameEngine {
 		GObject* parent;
 		unsigned int ID;
 
-		GComponent(GObject* obj);
+		GComponent(GObject* obj = nullptr);
+
+		virtual void setParent(GObject* newParent);
+		
+		virtual void Update(float dt);
 
 	};
 

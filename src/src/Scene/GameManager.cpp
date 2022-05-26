@@ -14,7 +14,7 @@ namespace GameEngine {
 
 	}
 
-	void GameManager::Update()
+	void GameManager::Update(float dt)
 	{
 
 	}

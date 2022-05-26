@@ -5,7 +5,7 @@ GameEngine::Courier::Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std
 	: Entity(model, colMan), m_mousePicker(mousePicker)
 {
 	m_inputManager = mousePicker->getInputManager();
-	Entity::Update();
+	Entity::Update(0);
 }
 
 void GameEngine::Courier::render(Ref<Shader> shader)
@@ -13,7 +13,7 @@ void GameEngine::Courier::render(Ref<Shader> shader)
 	Entity::render(shader);
 }
 
-void GameEngine::Courier::Update()
+void GameEngine::Courier::Update(float dt)
 {
 	//if (get_transform().m_position.y > 10 || get_transform().m_position.y < -10)
 		//speed *= -1;
@@ -39,7 +39,7 @@ void GameEngine::Courier::Update()
 	}
 
 
-	Entity::Update();
+	Entity::Update(dt);
 }
 
 void GameEngine::Courier::reactOnCollision(GObject* other)

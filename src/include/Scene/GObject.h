@@ -41,8 +41,14 @@ namespace GameEngine {
 		Transform& get_transform();
 		void set_local_position(const glm::vec3& newPosition);
 		void set_local_rotation(const glm::vec3& newRotation);
+		void set_local_rotationX(const float& x);
+		void set_local_rotationY(const float& y);
+		void set_local_rotationZ(const float& z);
 		void set_local_scale(glm::vec3 newScale);
 		std::vector<Ref<GObject>> get_children();
+
+		std::vector<Ref<GComponent>> components;
+		void addComponent(Ref<GComponent> comp);
 
 	private:
 
@@ -79,7 +85,7 @@ namespace GameEngine {
 		Ref<AABB> getAABB() const;
 
 		virtual void render(Ref<Shader> shader);
-		virtual void Update();
+		virtual void Update(float dt);
 
 		virtual void reactOnCollision(GObject* other);
 

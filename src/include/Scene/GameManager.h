@@ -25,7 +25,7 @@ namespace GameEngine {
 
 		void init();
 
-		virtual void Update();
+		virtual void Update(float dt);
 
 		float getTime();
 		void setTime(float t);

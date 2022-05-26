@@ -373,6 +373,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\Boat.cpp" />
     <ClCompile Include="src\Scene\Box.cpp" />
     <ClCompile Include="src\Scene\GComponentManager.cpp" />
     <ClCompile Include="src\Scene\GObjectManager.cpp" />
@@ -438,6 +439,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
+    <ClInclude Include="include\Scene\Boat.h" />
     <ClInclude Include="include\Scene\Box.h" />
     <ClInclude Include="include\Scene\GComponentManager.h" />
     <ClInclude Include="include\Scene\GObjectManager.h" />
