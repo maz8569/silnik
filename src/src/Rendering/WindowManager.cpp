@@ -19,6 +19,8 @@ int GameEngine::WindowManager::createWindow()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    blockResize();
+
     // glfw window creation
     // --------------------
     
@@ -66,4 +68,14 @@ void GameEngine::WindowManager::blockCursor()
 void GameEngine::WindowManager::freeCursor()
 {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void GameEngine::WindowManager::freeResize()
+{
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+}
+
+void GameEngine::WindowManager::blockResize()
+{
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 }

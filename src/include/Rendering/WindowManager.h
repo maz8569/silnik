@@ -25,6 +25,9 @@ namespace GameEngine {
 		void closeWindow();
 		void blockCursor();
 		void freeCursor();
+
+		void freeResize();
+		void blockResize();
 	};
 }
 

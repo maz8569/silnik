@@ -291,7 +291,7 @@ namespace GameEngine {
 			gdom->shader = ourShader;
 			gdom->set_local_position({ 0, -7, -13 });
 			gdom->getAABB()->setStatic(true);
-			gdom->set_render_AABB(true);
+			//gdom->set_render_AABB(true);
 			gdom->set_tag("house");
 
 			Ref<GObject> paczka = CreateRef<Box>(DeliveryColor::Blue, pacz, colMan);
@@ -307,7 +307,7 @@ namespace GameEngine {
 			most->set_local_rotation({ 0, -90, 0 });
 			most->getAABB()->setStatic(true);
 			most->rotateAABB(Degrees::D90, Axis::Z);
-			most->set_render_AABB(true);
+			//most->set_render_AABB(true);
 
 			Ref<GObject> most2 = CreateRef<GObject>(mo, colMan);
 			most2->shader = ourShader;
@@ -315,7 +315,7 @@ namespace GameEngine {
 			most2->set_local_rotation({ 0, 90, 0 });
 			most2->getAABB()->setStatic(true);
 			most2->rotateAABB(Degrees::D270, Axis::Z);
-			most2->set_render_AABB(true);
+			//most2->set_render_AABB(true);
 
 			Ref<GObject> most3 = CreateRef<GObject>(mo, colMan);
 			most3->shader = ourShader;
@@ -323,7 +323,7 @@ namespace GameEngine {
 			most3->set_local_rotation({ 0, -90, 0 });
 			most3->getAABB()->setStatic(true);
 			most3->rotateAABB(Degrees::D90, Axis::Z);
-			most3->set_render_AABB(true);
+			//most3->set_render_AABB(true);
 
 			Ref<GObject> most4 = CreateRef<GObject>(mo, colMan);
 			most4->shader = ourShader;
@@ -331,14 +331,14 @@ namespace GameEngine {
 			most4->set_local_rotation({ 0, 90, 0 });
 			most4->getAABB()->setStatic(true);
 			most4->rotateAABB(Degrees::D270, Axis::Z);
-			most4->set_render_AABB(true);
+			//most4->set_render_AABB(true);
 
 			Ref<GObject> most5 = CreateRef<GObject>(mo, colMan);
 			most5->shader = ourShader;
 			most5->set_local_position({4, -7.2, 0 });
 			most5->set_local_rotation({ 0, 0, 0 });
 			most5->getAABB()->setStatic(true);
-			most5->set_render_AABB(true);
+			//most5->set_render_AABB(true);
 
 			Ref<GObject> most6 = CreateRef<GObject>(mo, colMan);
 			most6->shader = ourShader;
@@ -346,14 +346,14 @@ namespace GameEngine {
 			most6->set_local_rotation({ 0, 180, 0 });
 			most6->getAABB()->setStatic(true);
 			most6->rotateAABB(Degrees::D180, Axis::Z);
-			most6->set_render_AABB(true);
+			//most6->set_render_AABB(true);
 
 			Ref<GObject> most7 = CreateRef<GObject>(mo, colMan);
 			most7->shader = ourShader;
 			most7->set_local_position({ -8.5f, -7.2, 0 });
 			most7->set_local_rotation({ 0, 0, 0 });
 			most7->getAABB()->setStatic(true);
-			most7->set_render_AABB(true);
+			//most7->set_render_AABB(true);
 
 			Ref<GObject> most8 = CreateRef<GObject>(mo, colMan);
 			most8->shader = ourShader;
@@ -361,7 +361,7 @@ namespace GameEngine {
 			most8->set_local_rotation({ 0, 180, 0 });
 			most8->getAABB()->setStatic(true);
 			most8->rotateAABB(Degrees::D180, Axis::Z);
-			most8->set_render_AABB(true);
+			//most8->set_render_AABB(true);
 
 			Ref<GObject> iisland2 = CreateRef<GObject>(island, colMan);
 			iisland2->shader = ourShader;
@@ -371,7 +371,7 @@ namespace GameEngine {
 			iisland2->set_local_position({ 13, -9.8, 0 });
 			iisland2->set_tag("terrain");
 			iisland2->getAABB()->setStatic(true);
-			iisland2->set_render_AABB(true);
+			//iisland2->set_render_AABB(true);
 
 			Ref<GObject> iisland3 = CreateRef<GObject>(island, colMan);
 			iisland3->shader = ourShader;

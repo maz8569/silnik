@@ -503,11 +503,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Rendering\QuadRenderer.h" />
     <ClInclude Include="typedefs.h" />
     <ClInclude Include="include\Rendering\WindowManager.h" />
-    <ClInclude Include="imgui_impl_glfw.h" />
-    <ClInclude Include="imgui_impl_opengl3.h" />
     <ClCompile Include="src\Audio\dr_wav_impl.cpp" />
-    <ClCompile Include="imgui_impl_glfw.cpp" />
-    <ClCompile Include="imgui_impl_opengl3.cpp" />
     <ClCompile Include="main.cpp" />
     <ClInclude Include="include\Scene\Entity.h" />
     <ClInclude Include="include\Scene\GObject.h" />
@@ -544,10 +540,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\glfw\src\glfw.vcxproj">
       <Project>{158195E8-B1A6-321E-9F6F-8E51518C305D}</Project>
       <Name>glfw</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\imgui.vcxproj">
-      <Project>{DC6B01A4-3009-388D-B2B0-9E0393D62BBC}</Project>
-      <Name>imgui</Name>
     </ProjectReference>
     <ProjectReference Include="E:\prog\OpenGLPAG\OpenGLPAG\Build\stb_image.vcxproj">
       <Project>{DC4CB63C-60F6-3F29-BC04-C6D4AEA5A121}</Project>
