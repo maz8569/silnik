@@ -718,7 +718,7 @@ namespace GameEngine {
 		}
 		else
 		{
-			textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+			//textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		}
 		textRenderer->RenderText(std::to_string(gameManager->getTime()), 1600.0f, 800.0f, 1.0f, glm::vec3(1.0, 1.0f, 1.0f));
 

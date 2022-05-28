@@ -49,12 +49,12 @@ GameEngine::Skybox::Skybox() : m_VBO(GL_ARRAY_BUFFER), m_skyboxShader("res/shade
     };
 
     m_cubeMap.CreateCubemapTexture({
-            "res/textures/skybox/right.jpg",
-            "res/textures/skybox/left.jpg",
-            "res/textures/skybox/top.jpg",
-            "res/textures/skybox/bottom.jpg",
-            "res/textures/skybox/front.jpg",
-            "res/textures/skybox/back.jpg"
+            "res/textures/skybox2/right.jpg",
+            "res/textures/skybox2/left.jpg",
+            "res/textures/skybox2/top.jpg",
+            "res/textures/skybox2/bottom.jpg",
+            "res/textures/skybox2/front.jpg",
+            "res/textures/skybox2/back.jpg"
         });
 
     m_VAO.Bind();
