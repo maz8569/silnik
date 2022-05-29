@@ -31,7 +31,7 @@ namespace GameEngine {
 		virtual void render(Ref<Shader> shader);
 		virtual void Update(float dt);
 		void jump();
-		virtual void reactOnCollision(GObject* other);
+		virtual void OnCollisionStay(GObject* other);
 	};
 }
 

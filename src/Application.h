@@ -22,6 +22,7 @@
 #include <Blocks/Block.h>
 #include <GUI/GuiManager.h>
 #include <Scene/Boat.h>
+#include <Scene/BridgeTrigger.h>
 
 namespace GameEngine {
 
@@ -128,7 +129,10 @@ namespace GameEngine {
 		glm::mat4 punktLightpos;
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 0.5f, far_plane = 40.f;
+
+		glm::vec3 center = glm::vec3(0, 0, 0);
+
+		float near_plane = 0.1f, far_plane = 30.f;
 		BasicTexture texture1;
 		Ref<DirectionalLight> light;
 

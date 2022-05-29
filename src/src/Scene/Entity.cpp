@@ -14,6 +14,6 @@ void GameEngine::Entity::Update(float dt)
 	GObject::Update(dt);
 }
 
-void GameEngine::Entity::reactOnCollision(GObject* other)
+void GameEngine::Entity::OnCollisionStay(GObject* other)
 {
 }

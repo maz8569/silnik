@@ -65,7 +65,7 @@
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\prog\OpenGLPAG\OpenGLPAG\Build\src\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)src\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenGLPAG.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenGLPAG</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
@@ -85,6 +85,10 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)src;$(SolutionDir)thirdparty\OpenAL\Include;$(SolutionDir)thirdparty\dr_lib;$(SolutionDir)src\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)thirdparty\OpenAL\Build\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)src;$(SolutionDir)thirdparty\OpenAL\Include;$(SolutionDir)thirdparty\dr_lib;$(SolutionDir)src\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)thirdparty\OpenAL\Build\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -373,6 +377,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Rendering\Animator.cpp" />
+    <ClCompile Include="src\Scene\BridgeTrigger.cpp" />
     <ClCompile Include="src\Scene\Boat.cpp" />
     <ClCompile Include="src\Scene\Box.cpp" />
     <ClCompile Include="src\Scene\GComponentManager.cpp" />
@@ -439,6 +445,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
+    <ClInclude Include="include\Rendering\Animator.h" />
+    <ClInclude Include="include\Scene\BridgeTrigger.h" />
     <ClInclude Include="include\Scene\Boat.h" />
     <ClInclude Include="include\Scene\Box.h" />
     <ClInclude Include="include\Scene\GComponentManager.h" />

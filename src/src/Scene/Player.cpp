@@ -59,7 +59,7 @@ void GameEngine::Player::jump()
     isGrounded = false;
 }
 
-void GameEngine::Player::reactOnCollision(GObject* other)
+void GameEngine::Player::OnCollisionStay(GObject* other)
 {
     
     auto otherAABB = other->getAABB();
@@ -70,6 +70,12 @@ void GameEngine::Player::reactOnCollision(GObject* other)
         get_transform().m_position = lastPosition;
     }
     */
+
+    if (otherAABB->tag == "Tbridge")
+    {
+        return;
+    }
+
     if (otherAABB->tag == "terrain")
     {
         lastPosition = get_transform().m_position;
@@ -107,6 +113,8 @@ void GameEngine::Player::reactOnCollision(GObject* other)
 
 
     }
+
+
 
     auto vec = getAABB()->testDepth(otherAABB);
     

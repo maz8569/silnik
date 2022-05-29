@@ -10,6 +10,12 @@ namespace GameEngine {
 	{
 	private:
 		std::vector<std::shared_ptr<AABB>> collisions;
+
+		std::vector<std::pair<Ref<AABB>, Ref<AABB>>> pairs;
+
+		void addPair(std::pair < Ref<AABB>, Ref<AABB>> pair);
+		void removePair(std::pair < Ref<AABB>, Ref<AABB>> pair);
+
 	public:
 		Collision();
 		bool TestAABBAABB(std::shared_ptr<AABB> a, std::shared_ptr<AABB> b);

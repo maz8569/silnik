@@ -42,7 +42,7 @@ void GameEngine::Courier::Update(float dt)
 	Entity::Update(dt);
 }
 
-void GameEngine::Courier::reactOnCollision(GObject* other)
+void GameEngine::Courier::OnCollisionStay(GObject* other)
 {
 	//std::cout << "end";
 }

@@ -72,7 +72,7 @@ namespace GameEngine {
 		bool cast_shadow = true;
 
 		GObject();
-		explicit GObject(Ref<Model> model, std::shared_ptr<Collision> colMan);
+		explicit GObject(Ref<Model> model, Ref<Collision> colMan);
 		~GObject();
 
 		void set_tag(std::string newTag);
@@ -87,7 +87,9 @@ namespace GameEngine {
 		virtual void render(Ref<Shader> shader);
 		virtual void Update(float dt);
 
-		virtual void reactOnCollision(GObject* other);
+		virtual void OnCollisionEnter(GObject* other);
+		virtual void OnCollisionStay(GObject* other);
+		virtual void OnCollisionExit(GObject* other);
 
 		void MoveColliders();
 
@@ -109,6 +111,8 @@ namespace GameEngine {
 		void rotateAABB(Degrees deg, Axis axis);
 
 		void setAABBoffsets(glm::vec3 newOffset);
+
+		void setAABB(Ref<AABB> aabb);
 
 		void setName(std::string name);
 		const std::string& getName() const;

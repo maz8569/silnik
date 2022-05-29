@@ -1,5 +1,22 @@
 #include "Physics/Collisions/Collision.h"
 
+void GameEngine::Collision::addPair(std::pair<Ref<AABB>, Ref<AABB>> pair)
+{
+    pair.first->parent->OnCollisionEnter(pair.second->parent);
+    pair.second->parent->OnCollisionEnter(pair.first->parent);
+
+    pairs.push_back(pair);
+}
+
+void GameEngine::Collision::removePair(std::pair<Ref<AABB>, Ref<AABB>> pair)
+{
+    pair.first->parent->OnCollisionExit(pair.second->parent);
+    pair.second->parent->OnCollisionExit(pair.first->parent);
+
+    pairs.clear();
+
+}
+
 GameEngine::Collision::Collision()
 {
 }
@@ -19,6 +36,22 @@ void GameEngine::Collision::AddAABB(std::shared_ptr<AABB> a)
 
 void GameEngine::Collision::CollisionCheck()
 {
+    if (pairs.size() > 0)
+    {
+        for (auto pair : pairs)
+        {
+            if (pair.first->collides(pair.second))
+            {
+                pair.first->parent->OnCollisionStay(pair.second->parent);
+                pair.second->parent->OnCollisionStay(pair.first->parent);
+            }
+            else
+            {
+                removePair(pair);
+            }
+        }
+    }
+
     if (collisions.size() > 1)
     {
         for (unsigned int i = 0; i < collisions.size(); i++)
@@ -27,11 +60,16 @@ void GameEngine::Collision::CollisionCheck()
             {
                 if (!(collisions[i]->staticAABB) || !(collisions[j]->staticAABB))
                 {
-                    if (collisions[i]->collides(collisions[j]))
+                    std::pair<Ref<AABB>, Ref<AABB>> pair = std::make_pair(collisions[i], collisions[j]);
+                    if(std::count(pairs.begin(), pairs.end(), pair))
+                    { }
+                    else
                     {
-                        //std::cout << "coll";
-                        collisions[i]->parent->reactOnCollision(collisions[j]->parent);
-                        collisions[j]->parent->reactOnCollision(collisions[i]->parent);
+                        if (collisions[i]->collides(collisions[j]))
+                        {
+                            //std::cout << "coll";
+                            addPair(pair);
+                        }
                     }
                 }
             }

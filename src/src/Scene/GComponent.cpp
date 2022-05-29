@@ -23,5 +23,14 @@ namespace GameEngine {
     void GComponent::Update(float dt)
     {
     }
+    void GComponent::OnCollisionEnter(GObject* other)
+    {
+    }
+    void GComponent::OnCollisionStay(GObject* other)
+    {
+    }
+    void GComponent::OnCollisionExit(GObject* other)
+    {
+    }
 }
 

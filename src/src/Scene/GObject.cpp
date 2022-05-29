@@ -124,10 +124,13 @@ GameEngine::GObject::GObject(): m_dirty(true), m_transform(Transform()), m_color
 
 GameEngine::GObject::GObject(Ref<Model> model, std::shared_ptr<Collision> colMan): m_model(model), m_dirty(true), m_transform(Transform()), m_color({ 1, 1, 1 })
 {
+	m_colman = colMan;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
 	if (model != nullptr)
 	{
-		m_aabb = std::make_shared<AABB>(generateAABB(model));
-		m_colman = colMan;
+		m_aabb = CreateRef<AABB>(generateAABB(model));
 		m_colman->AddAABB(m_aabb);
 		m_aabb->parent = this;
 		std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
@@ -135,8 +138,6 @@ GameEngine::GObject::GObject(Ref<Model> model, std::shared_ptr<Collision> colMan
 		std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
 		std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
 
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
 		MoveColliders();
 
 		recalculateAABB();
@@ -170,7 +171,7 @@ glm::vec3 GameEngine::GObject::get_color()
 	return m_color;
 }
 
-void GameEngine::GObject::setModel(std::shared_ptr<Model> model)
+void GameEngine::GObject::setModel(Ref<Model> model)
 {
 	m_model = model;
 }
@@ -214,13 +215,32 @@ void GameEngine::GObject::Update(float dt)
 	{
 		comp->Update(dt);
 	}
-
-		MoveColliders();
+		
+	MoveColliders();
 }
 
-void GameEngine::GObject::reactOnCollision(GObject* other)
+void GameEngine::GObject::OnCollisionEnter(GObject* other)
 {
+	for (auto comp : components)
+	{
+		comp->OnCollisionEnter(other);
+	}
+}
 
+void GameEngine::GObject::OnCollisionStay(GObject* other)
+{
+	for (auto comp : components)
+	{
+		comp->OnCollisionStay(other);
+	}
+}
+
+void GameEngine::GObject::OnCollisionExit(GObject* other)
+{
+	for (auto comp : components)
+	{
+		comp->OnCollisionExit(other);
+	}
 }
 
 void GameEngine::GObject::MoveColliders()
@@ -349,4 +369,18 @@ void GameEngine::GObject::rotateAABB(Degrees deg, Axis axis)
 void GameEngine::GObject::setAABBoffsets(glm::vec3 newOffset)
 {
 	offset = newOffset;
+}
+
+void GameEngine::GObject::setAABB(Ref<AABB> aabb)
+{
+	m_aabb = aabb;
+	m_aabb->parent = this; 
+	offset = m_aabb->center;
+	m_colman->AddAABB(aabb);
+
+	MoveColliders();
+
+	recalculateAABB();
+
+	set_render_AABB(true);
 }

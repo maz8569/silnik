@@ -15,12 +15,12 @@ namespace GameEngine {
 		/*
 		if (m_collisions.size() > 1)
 		{
-			m_collisions.erase(std::remove(m_collisions.begin(), m_collisions.end(), c));
+			m_collisions.erase(std::remove(m_collisions.begin(), m_collisions.end(), c), m_collisions.end());
 		}
 		else
 		{
 		*/
-		m_collisions.clear();
+			m_collisions.clear();
 		//}
 	}
 

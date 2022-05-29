@@ -18,6 +18,7 @@ namespace GameEngine {
 		float p_ambient = 0.3f;
 		float p_diffuse = 1.0f;
 		float p_specular = 1.0f;
+		float near_plane = 0.1f, far_plane = 10.f;
 
 		glm::vec3 lightPos;
 
@@ -25,6 +26,11 @@ namespace GameEngine {
 		~DirectionalLight();
 
 		void activate_lights(Ref<Shader> shader, Ref<Camera> camera);
+
+		glm::mat4 getLightSpaceMatrix(Ref<Camera> camera);
+
+		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& projview);
+		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& proj, const glm::mat4& view);
 	};
 
 }

@@ -82,7 +82,7 @@ namespace GameEngine {
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 
-		ourShader = CreateRef<Shader>(Shader("res/shaders/basic.vert", "res/shaders/basic.frag"));
+		ourShader = CreateRef<Shader>("res/shaders/basic.vert", "res/shaders/basic.frag");
 		refrShader = CreateRef<Shader>(Shader("res/shaders/refract.vert", "res/shaders/refract.frag"));
 		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
 		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
@@ -91,13 +91,15 @@ namespace GameEngine {
 		masterRenderer = CreateRef<MasterRenderer>();
 		masterRenderer->setQuadShader(ourShader);
 
-		Ref<Model> b = CreateRef<Model>(Model("res/models/cube/cube.obj"));
-		Ref<Model> bu = CreateRef<Model>(Model("res/models/statek/untitled.obj"));
+		Ref<Model> b = CreateRef<Model>("res/models/cube/cube.obj");
+		Ref<Model> bu = CreateRef<Model>("res/models/statek/untitled.obj");
 		Ref<Model> dom = CreateRef<Model>(Model("res/models/dom/dom_p.obj"));
 		Ref<Model> pacz = CreateRef<Model>(Model("res/models/paczka/paczka.obj"));
 		Ref<Model> mo = CreateRef<Model>(Model("res/models/lowpolymost/niby_most.obj"));
 		//Ref<Model> island = CreateRef<Model>(Model("res/models/island/island.obj"));
 		Ref<Model> island = CreateRef<Model>(Model("res/models/islandNew/wyspa.obj"));
+
+		Ref<Model> test = CreateRef<Model>("res/models/test/test.dae");
 
 		//Ref<GTexture> texture = CreateRef<GTexture>("res/textures/voronoi.png");
 
@@ -229,8 +231,7 @@ namespace GameEngine {
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		quad = CreateRef<Shape>(Shape(Coords::COORDSTEXT));
-		light = CreateRef<DirectionalLight>(DirectionalLight({ -1.5f, -3.0f, 1.5f }));
+		light = CreateRef<DirectionalLight>(DirectionalLight({ -0.5f, -1.0f, 0.5f }));
 
 		light->activate_lights(ourShader, m_scene->m_camera);
 		light->activate_lights(refrShader, m_scene->m_camera);
@@ -282,11 +283,31 @@ namespace GameEngine {
 		Ref<Boat> boatComp = CreateRef<Boat>(2, pos);
 		boat->addComponent(boatComp);
 		boat->set_local_scale(glm::vec3(1.5));
+		boat->set_tag("boat");
 
 		b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
 		bu = CreateRef<Model>(Model("res/models/hidefPlane/plane.obj"));
 		// TODO: move to scene
 		{
+			Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
+			Ref<BridgeTrigger> bri = CreateRef<BridgeTrigger>();
+			Ref<GObject> bridgeTrigger = CreateRef<GObject>(nullptr, colMan);
+			bridgeTrigger->set_local_position({ -6, -7, 0 });
+			bridgeTrigger->shader = ourShader;
+
+			bridgeTrigger->setAABB(aabb);
+			bridgeTrigger->set_tag("Tbridge");
+			bridgeTrigger->getAABB()->setStatic(true);
+			bridgeTrigger->addComponent(bri);
+
+
+			std::cout << "test";
+			Ref<GObject> testanim = CreateRef<GObject>(test, colMan);
+			testanim->shader = ourShader;
+			testanim->set_render_AABB(true);
+			testanim->set_local_position({ 0, -3, -13 });
+			testanim->set_local_scale({ 0.01, 0.01, 0.01 });
+
 			Ref<GObject> gdom = CreateRef<Box>(DeliveryColor::Blue, dom, colMan);
 			gdom->shader = ourShader;
 			gdom->set_local_position({ 0, -7, -13 });
@@ -362,6 +383,8 @@ namespace GameEngine {
 			most8->getAABB()->setStatic(true);
 			most8->rotateAABB(Degrees::D180, Axis::Z);
 			//most8->set_render_AABB(true);
+			bri->bridgepart1 = most7;
+			bri->bridgepart2 = most8;
 
 			Ref<GObject> iisland2 = CreateRef<GObject>(island, colMan);
 			iisland2->shader = ourShader;
@@ -434,6 +457,7 @@ namespace GameEngine {
 			m_scene->addObjectToScene(gameManager);
 			m_scene->addObjectToScene(player);
 			m_scene->addObjectToScene(boat);
+			m_scene->addObjectToScene(testanim);
 			m_scene->addObjectToScene(iisland);
 			m_scene->addObjectToScene(iisland2);
 			m_scene->addObjectToScene(iisland3);
@@ -441,6 +465,7 @@ namespace GameEngine {
 			m_scene->addObjectToScene(iisland5);
 			m_scene->addObjectToScene(gdom);
 			m_scene->addObjectToScene(paczka);
+			m_scene->addObjectToScene(bridgeTrigger);
 			m_scene->addObjectToScene(most);
 			m_scene->addObjectToScene(most2);
 			m_scene->addObjectToScene(most3);
@@ -605,8 +630,10 @@ namespace GameEngine {
 
 		// activate shader
 		m_scene->m_camera->m_projectionMatrix = glm::perspective(glm::radians(m_scene->m_camera->Zoom), (float)windowManager.SCR_WIDTH / (float)windowManager.SCR_HEIGHT, 0.1f, 100.0f);
-		lightView = glm::lookAt(-light->lightPos, glm::vec3(0), glm::vec3(0.0, 1.0, 0.0));
+		center = m_scene->m_camera->Position - glm::vec3(2,  8, 24);
+		lightView = glm::lookAt(center -light->lightPos, center, glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
+		//lightSpaceMatrix = light->getLightSpaceMatrix(m_scene->m_camera);
 		shadowMap->use();
 		shadowMap->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		
