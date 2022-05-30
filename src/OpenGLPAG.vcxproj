@@ -94,7 +94,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>(SolutionDir)\src;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\imgui;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir)\src;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -151,7 +151,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\src;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\imgui;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -377,6 +377,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Rendering\ParticleRenderer.cpp" />
+    <ClCompile Include="src\Rendering\Particle.cpp" />
     <ClCompile Include="src\Rendering\Animator.cpp" />
     <ClCompile Include="src\Scene\BridgeTrigger.cpp" />
     <ClCompile Include="src\Scene\Boat.cpp" />
@@ -483,6 +485,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\ECS\MovingEntity.h" />
     <ClInclude Include="include\GUI\MouseCursor.h" />
     <ClInclude Include="include\GUI\Slider.h" />
+    <ClInclude Include="include\Scene\Particle.h" />
+    <ClInclude Include="include\Rendering\ParticleRenderer.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />
