@@ -13,7 +13,6 @@ namespace GameEngine {
 		void Unbind();
 		
 		GLuint array_id;
-		GLenum type;
 	};
 
 }

@@ -1,26 +1,35 @@
 #version 460 core
 
-layout (location = 0) in vec4 aPos;
+layout (location = 0) in vec3 aPos;
 //layout (location = 1) in vec2 aTexCoord;
-layout (location = 1) in vec3 aInstancedPos;
+layout (location = 1) in vec4 aInstancedPos;
 layout (location = 2) in vec4 aColor;
 
 layout (location = 0) out vec4 ourColor;
 layout (location = 1) out vec2 TexCoord;
 
-uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform vec3 cameraPos;
+uniform vec3 CameraRight_worldspace;
+uniform vec3 CameraUp_worldspace;
 
 float amount = 0.005f;
 
 void main()
 {
+    
     ourColor = aColor;
-    TexCoord = aPos.zw;
-    vec4 position = vec4(aPos.x, aPos.y, 0.0, 1.0);
-    vec3 worldPos = vec3(model * position);
+    TexCoord = aPos.xy + vec2(0.5, 0.5);
+
+    float particleSize = aInstancedPos.w;
+    vec3 particleCenter = aInstancedPos.xyz;
+
+    vec3 position = particleCenter 
+    + CameraRight_worldspace * aPos.x * particleSize
+    + CameraUp_worldspace * aPos.y * particleSize;
+
+    vec3 worldPos = vec3(view * vec4(position, 1.0));
     worldPos -= cameraPos;
     worldPos = vec3(view * vec4(worldPos, 1.0));
     float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;

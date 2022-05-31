@@ -29,8 +29,8 @@ namespace GameEngine {
 	enum GameState : uint8_t {
 		MenuState = 0,
 		PlayingState,
-		Win,
-		Lose
+		WinState,
+		LoseState
 	};
 
 	class Application

@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <Scene/GComponent.h>
 #include <Texture/Texture.h>
+#include <Utils/VertexArray.h>
+#include <Utils/VertexBuffer.h>
 
 namespace GameEngine {
 
@@ -32,9 +34,17 @@ namespace GameEngine {
 		std::vector<Particle> particles;
 		unsigned int amount;
 
+		VertexArray m_vao;
+		VertexBuffer m_vertVbo;
+		VertexBuffer m_elseVbo;
+
 	public:
 
+		ParticleSystem(unsigned int _amount, Ref<GTexture> particleTexture);
 
+		virtual void setParent(GObject* newParent);
+
+		virtual void Update(float dt);
 
 	};
 

@@ -275,7 +275,7 @@ namespace GameEngine {
 		{
 			Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
 			boat->shader = ourShader;
-			
+			boat->scaleAABB({ 0.8, 0.8, 0.8 });
 			/*
 			float x = boat->getAABB()->extents.x;
 			float z = boat->getAABB()->extents.z;
@@ -607,7 +607,7 @@ namespace GameEngine {
 			{
 				should_render = false;
 				OnRender();
-				//OnRenderUI();
+				OnRenderUI();
 
 				windowManager.updateWindow();
 			}
@@ -682,7 +682,7 @@ namespace GameEngine {
 
 		//mousePicker->Update();
 
-		if(!gameManager->isWin())
+		if(gameManager->isWin() == GState::Playing)
 			gameManager->setTime(gameManager->getTime() - dt);
 	}
 
@@ -777,7 +777,7 @@ namespace GameEngine {
 		light->activate_lights(waterShader, m_scene->m_camera);
 
 		m_scene->RenderAllWitTheirShader();
-		OnRenderUI();
+		//OnRenderUI();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		
 		debugDepth->use();
@@ -801,13 +801,19 @@ namespace GameEngine {
 
 		//textRenderer->RenderText("Position " + std::to_string(player->get_transform().m_position.x) + " " + std::to_string(player->get_transform().m_position.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 		//textRenderer->RenderText("Position " + std::to_string(mouseCursor->mousePos.x) + " " + std::to_string(mouseCursor->mousePos.y), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		if (gameManager->isWin())
+		switch (gameManager->isWin())
 		{
+		case GState::Win:
 			textRenderer->RenderText("win", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
-		}
-		else
-		{
+			break;
+		case GState::Lose:
+			textRenderer->RenderText("lost", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+			break;
+		case GState::Playing:
 			//textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+			break;
+		default:
+			break;
 		}
 		textRenderer->RenderText(std::to_string(gameManager->getTime()), 1600.0f, 800.0f, 1.0f, glm::vec3(1.0, 1.0f, 1.0f));
 

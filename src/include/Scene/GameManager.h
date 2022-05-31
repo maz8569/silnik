@@ -6,6 +6,12 @@
 
 namespace GameEngine {
 
+	enum GState {
+		Playing,
+		Win,
+		Lose
+	};
+
 	class GameManager : public GObject
 	{
 	private:
@@ -15,7 +21,7 @@ namespace GameEngine {
 
 		Ref<GuiComponent> m_GuiNumber;
 
-		bool m_win;
+		GState m_win;
 
 		float time = 60.0f;
 
@@ -33,7 +39,7 @@ namespace GameEngine {
 		void addTexture(Ref<GTexture> texture);
 		void givePackage();
 
-		bool isWin();
+		GState isWin();
 	};
 
 }
