@@ -270,25 +270,40 @@ namespace GameEngine {
 		//courier->set_render_AABB(true);
 		//courier->set_color({ 1, 0.0, 0.0 });
 
-		Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
-		boat->shader = ourShader;
-
-		std::vector<glm::vec3> pos;
-
-		pos.push_back({ 6, -7.5, 6 });
-		pos.push_back({ 6, -7.5, -6 });
-		pos.push_back({ -6, -7.5, -6 });
-		pos.push_back({ -6, -7.5, 6 });
-
-		Ref<Boat> boatComp = CreateRef<Boat>(2, pos);
-		boat->addComponent(boatComp);
-		boat->set_local_scale(glm::vec3(1.5));
-		boat->set_tag("boat");
-
-		b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
-		bu = CreateRef<Model>(Model("res/models/hidefPlane/plane.obj"));
-		// TODO: move to scene
+		
+		//TODO: move to scene
 		{
+			Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
+			boat->shader = ourShader;
+			
+			/*
+			float x = boat->getAABB()->extents.x;
+			float z = boat->getAABB()->extents.z;
+
+			if (abs(x) >= abs(z))
+			{
+				boat->setAABBextentZ(x);
+			}
+			else
+			{
+				boat->setAABBextentX(z);
+			}
+			*/
+			std::vector<glm::vec3> pos;
+
+			pos.push_back({ 6, -7.5, 6 });
+			pos.push_back({ 6, -7.5, -6 });
+			pos.push_back({ -6, -7.5, -6 });
+			pos.push_back({ -6, -7.5, 6 });
+
+			Ref<Boat> boatComp = CreateRef<Boat>(1, pos);
+			boat->addComponent(boatComp);
+			boat->set_local_scale(glm::vec3(1.5));
+			boat->set_tag("boat");
+
+			b = CreateRef<Model>(Model("res/models/hidefCube/cube.obj"));
+			bu = CreateRef<Model>(Model("res/models/hidefPlane/plane.obj"));
+
 			Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
 			Ref<BridgeTrigger> bri = CreateRef<BridgeTrigger>();
 			Ref<GObject> bridgeTrigger = CreateRef<GObject>(nullptr, colMan);
@@ -300,6 +315,38 @@ namespace GameEngine {
 			bridgeTrigger->getAABB()->setStatic(true);
 			bridgeTrigger->addComponent(bri);
 
+			Ref<AABB> aabb1 = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
+			Ref<BridgeTrigger> bri1 = CreateRef<BridgeTrigger>();
+			Ref<GObject> bridgeTrigger1 = CreateRef<GObject>(nullptr, colMan);
+			bridgeTrigger1->set_local_position({ 6, -7, 0 });
+			bridgeTrigger1->shader = ourShader;
+
+			bridgeTrigger1->setAABB(aabb1);
+			bridgeTrigger1->set_tag("Tbridge");
+			bridgeTrigger1->getAABB()->setStatic(true);
+			bridgeTrigger1->addComponent(bri1);
+
+			Ref<AABB> aabb2 = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
+			Ref<BridgeTrigger> bri2 = CreateRef<BridgeTrigger>();
+			Ref<GObject> bridgeTrigger2 = CreateRef<GObject>(nullptr, colMan);
+			bridgeTrigger2->set_local_position({ 0, -7, -6 });
+			bridgeTrigger2->shader = ourShader;
+
+			bridgeTrigger2->setAABB(aabb2);
+			bridgeTrigger2->set_tag("Tbridge");
+			bridgeTrigger2->getAABB()->setStatic(true);
+			bridgeTrigger2->addComponent(bri2);
+
+			Ref<AABB> aabb3 = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
+			Ref<BridgeTrigger> bri3 = CreateRef<BridgeTrigger>();
+			Ref<GObject> bridgeTrigger3 = CreateRef<GObject>(nullptr, colMan);
+			bridgeTrigger3->set_local_position({ 0, -7, 6 });
+			bridgeTrigger3->shader = ourShader;
+
+			bridgeTrigger3->setAABB(aabb3);
+			bridgeTrigger3->set_tag("Tbridge");
+			bridgeTrigger3->getAABB()->setStatic(true);
+			bridgeTrigger3->addComponent(bri3);
 
 			std::cout << "test";
 			Ref<GObject> testanim = CreateRef<GObject>(test, colMan);
@@ -327,62 +374,76 @@ namespace GameEngine {
 			most->set_local_position({ 0, -7.2, -4 });
 			most->set_local_rotation({ 0, -90, 0 });
 			most->getAABB()->setStatic(true);
-			most->rotateAABB(Degrees::D90, Axis::Z);
-			//most->set_render_AABB(true);
+			most->rotateAABB(Degrees::D90, Axis::Y);
+			most->set_render_AABB(true);
+			most->set_tag("dB");
 
 			Ref<GObject> most2 = CreateRef<GObject>(mo, colMan);
 			most2->shader = ourShader;
 			most2->set_local_position({ 0, -7.2, -8.5f });
 			most2->set_local_rotation({ 0, 90, 0 });
 			most2->getAABB()->setStatic(true);
-			most2->rotateAABB(Degrees::D270, Axis::Z);
-			//most2->set_render_AABB(true);
+			most2->setAABBrotation(Degrees::D270, Axis::Y);
+			most2->set_render_AABB(true);
+			most2->set_tag("uB");
+
+
+			bri2->bridgepart1 = most;
+			bri2->bridgepart2 = most2;
 
 			Ref<GObject> most3 = CreateRef<GObject>(mo, colMan);
 			most3->shader = ourShader;
 			most3->set_local_position({ 0, -7.2, 8.5f });
 			most3->set_local_rotation({ 0, -90, 0 });
 			most3->getAABB()->setStatic(true);
-			most3->rotateAABB(Degrees::D90, Axis::Z);
-			//most3->set_render_AABB(true);
+			most3->rotateAABB(Degrees::D90, Axis::Y);
+			most3->set_render_AABB(true);
+			most3->set_tag("dB");
 
 			Ref<GObject> most4 = CreateRef<GObject>(mo, colMan);
 			most4->shader = ourShader;
 			most4->set_local_position({ 0, -7.2, 4 });
 			most4->set_local_rotation({ 0, 90, 0 });
 			most4->getAABB()->setStatic(true);
-			most4->rotateAABB(Degrees::D270, Axis::Z);
-			//most4->set_render_AABB(true);
+			most4->setAABBrotation(Degrees::D270, Axis::Y);
+			most4->set_render_AABB(true);
+			most4->set_tag("uB");
+
+			bri3->bridgepart1 = most3;
+			bri3->bridgepart2 = most4;
 
 			Ref<GObject> most5 = CreateRef<GObject>(mo, colMan);
 			most5->shader = ourShader;
 			most5->set_local_position({4, -7.2, 0 });
 			most5->set_local_rotation({ 0, 0, 0 });
 			most5->getAABB()->setStatic(true);
-			//most5->set_render_AABB(true);
+			most5->set_render_AABB(true);
 
 			Ref<GObject> most6 = CreateRef<GObject>(mo, colMan);
 			most6->shader = ourShader;
 			most6->set_local_position({ 8.5f, -7.2, 0 });
 			most6->set_local_rotation({ 0, 180, 0 });
 			most6->getAABB()->setStatic(true);
-			most6->rotateAABB(Degrees::D180, Axis::Z);
-			//most6->set_render_AABB(true);
+			most6->setAABBrotation(Degrees::D180, Axis::Y);
+			most6->set_render_AABB(true);
+
+			bri1->bridgepart1 = most5;
+			bri1->bridgepart2 = most6;
 
 			Ref<GObject> most7 = CreateRef<GObject>(mo, colMan);
 			most7->shader = ourShader;
 			most7->set_local_position({ -8.5f, -7.2, 0 });
 			most7->set_local_rotation({ 0, 0, 0 });
 			most7->getAABB()->setStatic(true);
-			//most7->set_render_AABB(true);
+			most7->set_render_AABB(true);
 
 			Ref<GObject> most8 = CreateRef<GObject>(mo, colMan);
 			most8->shader = ourShader;
 			most8->set_local_position({ -4, -7.2, 0 });
 			most8->set_local_rotation({ 0, 180, 0 });
 			most8->getAABB()->setStatic(true);
-			most8->rotateAABB(Degrees::D180, Axis::Z);
-			//most8->set_render_AABB(true);
+			most8->setAABBrotation(Degrees::D180, Axis::Y);
+			most8->set_render_AABB(true);
 			bri->bridgepart1 = most7;
 			bri->bridgepart2 = most8;
 
@@ -417,7 +478,6 @@ namespace GameEngine {
 			Ref<GObject> iisland5 = CreateRef<GObject>(island, colMan);
 			iisland5->shader = ourShader;
 			iisland5->set_local_scale({ 0.6, 0.6, 0.6 });
-			//iisland5->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland5->setAABBextentY(0.9f);
 			iisland5->set_local_position({ 0, -9.8, -13 });
 			iisland5->set_tag("terrain");
@@ -426,7 +486,6 @@ namespace GameEngine {
 			Ref<GObject> iisland = CreateRef<GObject>(island, colMan);
 			iisland->shader = ourShader;
 			iisland->set_local_scale({ 0.6, 0.6, 0.6 });
-			//iisland->scaleAABB({ 0.6, 0.6, 0.6 });
 			iisland->setAABBextentY(0.9f);
 			iisland->set_local_position({ 0, -9.8, 0 });
 			iisland->set_tag("terrain");
@@ -466,6 +525,9 @@ namespace GameEngine {
 			m_scene->addObjectToScene(gdom);
 			m_scene->addObjectToScene(paczka);
 			m_scene->addObjectToScene(bridgeTrigger);
+			m_scene->addObjectToScene(bridgeTrigger1);
+			m_scene->addObjectToScene(bridgeTrigger2);
+			m_scene->addObjectToScene(bridgeTrigger3);
 			m_scene->addObjectToScene(most);
 			m_scene->addObjectToScene(most2);
 			m_scene->addObjectToScene(most3);

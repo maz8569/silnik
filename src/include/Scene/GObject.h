@@ -10,20 +10,6 @@
 namespace GameEngine {
 	class Collision;
 
-	enum class Degrees
-	{
-		D90,
-		D180,
-		D270
-	};
-
-	enum class Axis
-	{
-		X,
-		Y,
-		Z
-	};
-
 	class GObject
 	{
 	private:
@@ -63,9 +49,13 @@ namespace GameEngine {
 		unsigned int VBO, VAO;
 		glm::vec3 offset;
 
+		void rotateAABBY(Degrees deg);
 		void rotateAABBZ(Degrees deg);
+		void rotateAABBX(Degrees deg);
 
 	public:
+		void rotateAABB(Degrees deg, Axis axis);
+
 		Ref<Collision> m_colman;
 		Ref<Shader> shader = nullptr;
 
@@ -108,7 +98,7 @@ namespace GameEngine {
 		void setAABBoffsetY(float y);
 		void setAABBoffsetZ(float z);
 
-		void rotateAABB(Degrees deg, Axis axis);
+		void setAABBrotation(Degrees deg, Axis axis);
 
 		void setAABBoffsets(glm::vec3 newOffset);
 

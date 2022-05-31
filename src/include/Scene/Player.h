@@ -6,7 +6,7 @@
 #include "Utils/InputManager.h"
 
 namespace GameEngine {
-	class Player: public Entity
+	class Player: public GObject
 	{
 	private:
 		float speed = 20;
@@ -23,6 +23,7 @@ namespace GameEngine {
 		std::shared_ptr<InputManager> inputManager;
 
 		Box* package = nullptr;
+		GObject* boat = nullptr;
 		
 	public:
 		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
@@ -31,7 +32,9 @@ namespace GameEngine {
 		virtual void render(Ref<Shader> shader);
 		virtual void Update(float dt);
 		void jump();
+		virtual void OnCollisionEnter(GObject* other);
 		virtual void OnCollisionStay(GObject* other);
+		virtual void OnCollisionExit(GObject* other);
 	};
 }
 

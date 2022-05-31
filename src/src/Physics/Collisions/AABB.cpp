@@ -127,11 +127,25 @@ void GameEngine::AABB::scaleAABB(glm::vec3 scale)
 	}
 }
 
-void GameEngine::AABB::rotateAABBZ()
+void GameEngine::AABB::rotateAABBX()
+{
+	float ext = extents.y;
+	extents.y = extents.z;
+	extents.z = ext;
+}
+
+void GameEngine::AABB::rotateAABBY()
 {
 	float ext = extents.x;
 	extents.x = extents.z;
 	extents.z = ext;
+}
+
+void GameEngine::AABB::rotateAABBZ()
+{
+	float ext = extents.x;
+	extents.x = extents.y;
+	extents.y = ext;
 }
 
 glm::vec3 GameEngine::AABB::testDepth(Ref<AABB> other)

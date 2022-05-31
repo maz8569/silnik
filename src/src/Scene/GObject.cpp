@@ -89,11 +89,11 @@ void GameEngine::GObject::addComponent(Ref<GComponent> comp)
 	comp->setParent(this);
 }
 
-void GameEngine::GObject::rotateAABBZ(Degrees deg)
+void GameEngine::GObject::rotateAABBY(Degrees deg)
 {
 	if (deg != Degrees::D180)
 	{
-		m_aabb->rotateAABBZ();
+		m_aabb->rotateAABBY();
 	}
 	float x = offset.x;
 
@@ -118,6 +118,60 @@ void GameEngine::GObject::rotateAABBZ(Degrees deg)
 
 }
 
+void GameEngine::GObject::rotateAABBZ(Degrees deg)
+{
+	if (deg != Degrees::D180)
+	{
+		m_aabb->rotateAABBZ();
+	}
+	float x = offset.x;
+
+	switch (deg)
+	{
+	case GameEngine::Degrees::D90:
+		offset.x = offset.y;
+		offset.y = -x;
+		break;
+	case GameEngine::Degrees::D180:
+		offset.x = -x;
+		offset.y = -offset.y;
+		break;
+	case GameEngine::Degrees::D270:
+		offset.x = offset.y;
+		offset.y = x;
+		break;
+	default:
+		break;
+	}
+}
+
+void GameEngine::GObject::rotateAABBX(Degrees deg)
+{
+	if (deg != Degrees::D180)
+	{
+		m_aabb->rotateAABBX();
+	}
+	float y = offset.y;
+
+	switch (deg)
+	{
+	case GameEngine::Degrees::D90:
+		offset.y = offset.z;
+		offset.z = -y;
+		break;
+	case GameEngine::Degrees::D180:
+		offset.y = -y;
+		offset.z = -offset.z;
+		break;
+	case GameEngine::Degrees::D270:
+		offset.y = offset.z;
+		offset.z = y;
+		break;
+	default:
+		break;
+	}
+}
+
 GameEngine::GObject::GObject(): m_dirty(true), m_transform(Transform()), m_color({1, 1, 1})
 {
 }
@@ -133,10 +187,10 @@ GameEngine::GObject::GObject(Ref<Model> model, std::shared_ptr<Collision> colMan
 		m_aabb = CreateRef<AABB>(generateAABB(model));
 		m_colman->AddAABB(m_aabb);
 		m_aabb->parent = this;
-		std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
+		//std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
 		offset = m_aabb->center;
-		std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
-		std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
+		//std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
+		//std::cout << m_aabb->extents.x << " " << m_aabb->extents.y << " " << m_aabb->extents.z << " " << std::endl;
 
 		MoveColliders();
 
@@ -342,13 +396,45 @@ void GameEngine::GObject::setAABBoffsetZ(float z)
 	offset.z = z;
 }
 
+void GameEngine::GObject::setAABBrotation(Degrees deg, Axis axis)
+{
+	switch (axis)
+	{
+	case GameEngine::Axis::X:
+		if (m_aabb->Xrot != deg)
+		{
+			m_aabb->Xrot = deg;
+			rotateAABB(deg, axis);
+		}
+		break;
+	case GameEngine::Axis::Y:
+		if (m_aabb->Yrot != deg)
+		{
+			m_aabb->Yrot = deg;
+			rotateAABB(deg, axis);
+		}
+		break;
+	case GameEngine::Axis::Z:
+		if (m_aabb->Zrot != deg)
+		{
+			m_aabb->Zrot = deg;
+			rotateAABB(deg, axis);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
 void GameEngine::GObject::rotateAABB(Degrees deg, Axis axis)
 {
 	switch (axis)
 	{
 	case GameEngine::Axis::X:
+		rotateAABBX(deg);
 		break;
 	case GameEngine::Axis::Y:
+		rotateAABBY(deg);
 		break;
 	case GameEngine::Axis::Z:
 		rotateAABBZ(deg);
@@ -359,8 +445,8 @@ void GameEngine::GObject::rotateAABB(Degrees deg, Axis axis)
 
 	MoveColliders();
 
-	std::cout <<"\n\n" << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
-	std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
+	//std::cout <<"\n\n" << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
+	//std::cout << offset.x << " " << offset.y << " " << offset.z << " " << std::endl;
 
 
 	recalculateAABB();
@@ -381,6 +467,4 @@ void GameEngine::GObject::setAABB(Ref<AABB> aabb)
 	MoveColliders();
 
 	recalculateAABB();
-
-	set_render_AABB(true);
 }

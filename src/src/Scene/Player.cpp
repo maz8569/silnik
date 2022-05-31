@@ -1,19 +1,19 @@
 #include "Scene/Player.h"
 
 GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) 
-    : inputManager(inputManager), m_gameManager(gameManager), Entity(model, colMan) 
+    : inputManager(inputManager), m_gameManager(gameManager), GObject(model, colMan)
 {
     lastPosition = get_transform().m_position;
 }
 
 GameEngine::Player::Player(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan)
-    : Entity(model, colMan)
+    : GObject(model, colMan)
 {
 }
 
 void GameEngine::Player::render(Ref<Shader> shader)
 {
-    Entity::render(shader);
+    GObject::render(shader);
 }
 
 void GameEngine::Player::Update(float dt)
@@ -27,12 +27,17 @@ void GameEngine::Player::Update(float dt)
 
     get_transform().m_position.z += currentSpeed.y * 0.005;
 
+    if (boat != nullptr)
+    {
+        get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 3, 0);
+        isGrounded = true;
+    }
+
     jumpPower += gravity / 60;
 
     if (isGrounded)
     {
         jumpPower = 0;
-        isGrounded = true;
     }
 
     get_transform().m_position.y += jumpPower * 0.005;
@@ -49,7 +54,7 @@ void GameEngine::Player::Update(float dt)
         package->get_transform().m_position = get_transform().m_position + glm::vec3(0, 2, 0);
     }
 
-    Entity::Update(dt);
+    GObject::Update(dt);
     isGrounded = false;
 }
 
@@ -57,19 +62,28 @@ void GameEngine::Player::jump()
 {
     jumpPower = jumpHeight;
     isGrounded = false;
+    boat = nullptr;
+}
+
+void GameEngine::Player::OnCollisionEnter(GObject* other)
+{
+    if (other->getAABB()->tag == "boat")
+    {
+        boat = other;
+    }
 }
 
 void GameEngine::Player::OnCollisionStay(GObject* other)
 {
     
     auto otherAABB = other->getAABB();
-    /*
+    
     if (otherAABB->tag == "water")
     {
         //std::cout << "water";
         get_transform().m_position = lastPosition;
     }
-    */
+    
 
     if (otherAABB->tag == "Tbridge")
     {
@@ -160,4 +174,8 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
     }
 
     //MoveColliders();
+}
+
+void GameEngine::Player::OnCollisionExit(GObject* other)
+{
 }

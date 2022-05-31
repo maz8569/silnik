@@ -9,6 +9,21 @@
 namespace GameEngine {
 	class GObject;
 
+	enum class Degrees
+	{
+		D0,
+		D90,
+		D180,
+		D270
+	};
+
+	enum class Axis
+	{
+		X,
+		Y,
+		Z
+	};
+
 	class AABB : public GComponent
 	{
 	public:
@@ -19,6 +34,10 @@ namespace GameEngine {
 
 		glm::vec3 center{ 0.f, 0.f, 0.f };
 		glm::vec3 extents{ 0.f, 0.f, 0.f };
+
+		Degrees Xrot;
+		Degrees Yrot;
+		Degrees Zrot;
 
 		AABB(const glm::vec3& min, const glm::vec3& max);
 		AABB(const glm::vec3& inCenter, float iI, float iJ, float iK);
@@ -45,6 +64,8 @@ namespace GameEngine {
 
 		void scaleAABB(glm::vec3 scale);
 
+		void rotateAABBX();
+		void rotateAABBY();
 		void rotateAABBZ();
 
 		glm::vec3 testDepth(Ref<AABB> other);
