@@ -63,6 +63,7 @@ namespace GameEngine {
 		inputManager = std::make_shared<InputManager>(windowManager.window);
 
 		guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
+		particleRenderer = CreateRef<ParticleRenderer>();
 	}
 
 	Application::~Application()
@@ -71,6 +72,7 @@ namespace GameEngine {
 		textRenderer->clean();
 		audioManager->clean();
 		quad->clean();
+		ResourceManager::clear();
 	}
 
 	void Application::RunLoop()
@@ -82,7 +84,7 @@ namespace GameEngine {
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 
-		ourShader = CreateRef<Shader>("res/shaders/basic.vert", "res/shaders/basic.frag");
+		ourShader = ResourceManager::loadShader("ourShader", "res/shaders/basic.vert", "res/shaders/basic.frag");
 		refrShader = CreateRef<Shader>(Shader("res/shaders/refract.vert", "res/shaders/refract.frag"));
 		waterShader = CreateRef<Shader>(Shader("res/shaders/water.vert", "res/shaders/water.frag"));
 		shadowMap = CreateRef<Shader>("res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
@@ -157,22 +159,6 @@ namespace GameEngine {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		/*
-		glGenTextures(1, &gNormal);
-		glBindTexture(GL_TEXTURE_2D, gNormal);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-
-		// - color + specular color buffer
-		glGenTextures(1, &gAlbedoSpec);
-		glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0);
-		*/
 		glGenTextures(1, &foamMap);
 		glBindTexture(GL_TEXTURE_2D, foamMap);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -251,7 +237,8 @@ namespace GameEngine {
 		*/
 		gameManager = CreateRef<GameManager>(1, numbComponent);
 
-		Ref<GTexture> texture0 = CreateRef<GTexture>("res/textures/numb0.png");;
+		Ref<GTexture> texture0 = CreateRef<GTexture>("res/textures/numb0.png");
+		Ref<GTexture> fh = CreateRef<GTexture>("res/textures/fullheart.png");
 
 		gameManager->addTexture(texture0);
 		gameManager->addTexture(numbComponent->getTexture());
@@ -276,6 +263,9 @@ namespace GameEngine {
 			Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
 			boat->shader = ourShader;
 			boat->scaleAABB({ 0.8, 0.8, 0.8 });
+			Ref<ParticleSystem> partsys = CreateRef<ParticleSystem>(20, fh);
+			player->addComponent(partsys);
+			particleRenderer->addParticleSystem(partsys);
 			/*
 			float x = boat->getAABB()->extents.x;
 			float z = boat->getAABB()->extents.z;
@@ -777,6 +767,7 @@ namespace GameEngine {
 		light->activate_lights(waterShader, m_scene->m_camera);
 
 		m_scene->RenderAllWitTheirShader();
+		particleRenderer->Render(m_scene->m_camera);
 		//OnRenderUI();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		

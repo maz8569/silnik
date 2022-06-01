@@ -18,7 +18,7 @@ void main()
         discard;
     }
 
-    result *= ourColor;
+    //result *= ourColor;
 
     FragColor =  result; 
 }

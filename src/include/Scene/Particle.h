@@ -38,6 +38,8 @@ namespace GameEngine {
 		VertexBuffer m_vertVbo;
 		VertexBuffer m_elseVbo;
 
+		std::vector<float> positioncolors;
+
 	public:
 
 		ParticleSystem(unsigned int _amount, Ref<GTexture> particleTexture);
@@ -45,6 +47,16 @@ namespace GameEngine {
 		virtual void setParent(GObject* newParent);
 
 		virtual void Update(float dt);
+
+		Ref<GTexture> getTexture();
+		void activateTexture();
+
+		void respawnParticle(Particle& particle, glm::vec3 offset);
+
+		void bindVAO();
+		void unbindVAO();
+
+		unsigned int getAmount();
 
 	};
 

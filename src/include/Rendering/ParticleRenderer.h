@@ -2,7 +2,8 @@
 
 #include <Scene/Particle.h>
 #include <vector>
-#include <Shaders/Shader.h>
+#include <Utils/ResourceManager.h>
+#include <Scene/Camera.h>
 
 namespace GameEngine {
 
@@ -15,7 +16,11 @@ namespace GameEngine {
 
 	public:
 
-		void Render();
+		ParticleRenderer();
+
+		void addParticleSystem(Ref<ParticleSystem> syst);
+
+		void Render(Ref<Camera> camera);
 
 	};
 

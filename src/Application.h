@@ -23,6 +23,8 @@
 #include <GUI/GuiManager.h>
 #include <Scene/Boat.h>
 #include <Scene/BridgeTrigger.h>
+#include <Utils/ResourceManager.h>
+#include <Rendering/ParticleRenderer.h>
 
 namespace GameEngine {
 
@@ -149,6 +151,7 @@ namespace GameEngine {
 
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;
+		Ref<ParticleRenderer> particleRenderer;
 
 		glm::mat4 saas;
 		glm::vec4 ucamera_params;
