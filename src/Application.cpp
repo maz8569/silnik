@@ -33,7 +33,7 @@ namespace GameEngine {
 		// Queue a window resize event to properly scale the cameras (according to the window dimensions)
 
 
-		m_scene = new Scene("new scene");
+		m_scene = new Scene("scene1");
 		Event e;
 		e.type = EventTypes::WindowResize;
 		e.wx = windowManager.SCR_WIDTH;
@@ -263,7 +263,7 @@ namespace GameEngine {
 			Ref<GObject> boat = CreateRef<GObject>(bu, colMan);
 			boat->shader = ourShader;
 			boat->scaleAABB({ 0.8, 0.8, 0.8 });
-			Ref<ParticleSystem> partsys = CreateRef<ParticleSystem>(20, fh);
+			Ref<ParticleSystem> partsys = CreateRef<ParticleSystem>(5, fh);
 			player->addComponent(partsys);
 			particleRenderer->addParticleSystem(partsys);
 			/*
@@ -288,6 +288,12 @@ namespace GameEngine {
 
 			Ref<Boat> boatComp = CreateRef<Boat>(1, pos);
 			boat->addComponent(boatComp);
+
+			Ref<Vehicle> vehicle = CreateRef<Vehicle>(glm::vec2(0, 1), 5.f, glm::vec2(0, 1), 1.f, 10.f, 5.f);
+			vehicle->addSteeringBehavior(player);
+
+			//boat->addComponent(vehicle);
+
 			boat->set_local_scale(glm::vec3(1.5));
 			boat->set_tag("boat");
 
@@ -766,6 +772,7 @@ namespace GameEngine {
 
 		light->activate_lights(waterShader, m_scene->m_camera);
 
+		//m_scene->Render(ourShader);
 		m_scene->RenderAllWitTheirShader();
 		particleRenderer->Render(m_scene->m_camera);
 		//OnRenderUI();
@@ -991,6 +998,11 @@ namespace GameEngine {
 			if (m_gameState == GameState::PlayingState)
 			{
 				moveCamera(e);
+			}
+
+			if (e.key == GLFW_KEY_K)
+			{
+				jsonParser->SerializeScene(m_scene);
 			}
 
 			break;

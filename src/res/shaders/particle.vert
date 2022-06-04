@@ -25,14 +25,19 @@ void main()
     float particleSize = aInstancedPos.w;
     vec3 particleCenter = aInstancedPos.xyz;
 
+    /*
+    vec3 worldPos = particleCenter - cameraPos;
+    worldPos = vec3(view * vec4(worldPos, 1.0));
+    float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;
+    worldPos += vec3(0, ypos, 0);
+    */
+
     vec3 position = particleCenter 
     + CameraRight_worldspace * aPos.x * particleSize
     + CameraUp_worldspace * aPos.y * particleSize;
 
-    vec3 worldPos = position - cameraPos;
-    worldPos = vec3(view * vec4(worldPos, 1.0));
-    float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;
-    worldPos += vec3(0, ypos, 0);
+
     gl_Position =  projection * view * vec4(position, 1.0);
+    //gl_Position =  projection * vec4(position, 1.0);
     //gl_Position =  projection * vec4(worldPos, 1.0);
 }

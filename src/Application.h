@@ -25,6 +25,7 @@
 #include <Scene/BridgeTrigger.h>
 #include <Utils/ResourceManager.h>
 #include <Rendering/ParticleRenderer.h>
+#include <ECS/Vehicle.h>
 
 namespace GameEngine {
 

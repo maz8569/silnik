@@ -41,7 +41,10 @@ void GameEngine::Scene::Render(Ref<Shader> shader)
 
 	for (auto& obj : m_seenGObjects)
 	{
-		obj->render(shader);
+		Ref<Shader> s = obj->shader;
+		if (s != nullptr)
+
+			obj->render(s);
 	}
 
 	m_skybox.RenderSkybox(m_camera);
@@ -124,4 +127,9 @@ std::vector<Ref<GObject>> GameEngine::Scene::getAllObjectsByName(const std::stri
 Ref<GObject> GameEngine::Scene::getObjectByID(unsigned int ID)
 {
 	return Ref<GObject>();
+}
+
+std::string GameEngine::Scene::getName()
+{
+	return m_name;
 }

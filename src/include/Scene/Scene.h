@@ -45,6 +45,7 @@ namespace GameEngine {
 		virtual std::vector<Ref<GObject>> getAllObjectsByName(const std::string& name);
 		virtual Ref<GObject> getObjectByID(unsigned int ID);
 		
+		std::string getName();
 	};
 }
 

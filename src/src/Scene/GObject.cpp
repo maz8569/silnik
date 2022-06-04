@@ -46,6 +46,12 @@ void GameEngine::GObject::set_local_position(const glm::vec3& newPosition)
 	m_dirty = true;
 }
 
+void GameEngine::GObject::increment_local_position(const glm::vec3& newPosition)
+{
+	m_transform.m_position += newPosition;
+	m_dirty = true;
+}
+
 void GameEngine::GObject::set_local_rotation(const glm::vec3& newRotation)
 {
 	m_transform.m_rotation = newRotation;

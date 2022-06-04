@@ -447,6 +447,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\World\TileModel.cpp" />
     <ClCompile Include="src\Blocks\Texture.cpp" />
     <ClCompile Include="src\ECS\Vehicle.cpp" />
+    <ClCompile Include="src\ECS\SteeringBehaviors.cpp" />
     <ClInclude Include="include\Rendering\Animator.h" />
     <ClInclude Include="include\Scene\BridgeTrigger.h" />
     <ClInclude Include="include\Scene\Boat.h" />
@@ -487,6 +488,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\GUI\Slider.h" />
     <ClInclude Include="include\Scene\Particle.h" />
     <ClInclude Include="include\Rendering\ParticleRenderer.h" />
+    <ClInclude Include="include\ECS\SteeringBehaviors.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

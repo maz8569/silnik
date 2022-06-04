@@ -3,6 +3,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/prettywriter.h> // for stringify JSON
 #include "rapidjson/filewritestream.h"
+#include <Scene/Scene.h>
 
 namespace GameEngine {
 	class Json
@@ -12,6 +13,9 @@ namespace GameEngine {
 		Json() = default;
 
 		int print();
+
+		void SerializeScene(Scene* scene);
+		Scene* DeserializeScene(std::string filename);
 	};
 }
 

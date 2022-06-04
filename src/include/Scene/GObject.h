@@ -26,6 +26,7 @@ namespace GameEngine {
 		void update_transform(const Transform& parent_transform, bool dirty);
 		Transform& get_transform();
 		void set_local_position(const glm::vec3& newPosition);
+		void increment_local_position(const glm::vec3& newPosition);
 		void set_local_rotation(const glm::vec3& newRotation);
 		void set_local_rotationX(const float& x);
 		void set_local_rotationY(const float& y);

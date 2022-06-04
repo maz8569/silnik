@@ -19,7 +19,7 @@ int GameEngine::WindowManager::createWindow()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    blockResize();
+    //blockResize();
 
     // glfw window creation
     // --------------------

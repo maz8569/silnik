@@ -185,6 +185,8 @@ namespace GameEngine {
             //}
             
             Position = player->get_transform().m_position + glm::vec3(0, 12, 12);
+            //updateFrustum();
+
             //float x = player->get_transform().m_position.x - courier.x;
             //float y = player->get_transform().m_position.y - courier.y;
             //float distance = sqrtf( x * x + y * y) * 2;
@@ -195,7 +197,6 @@ namespace GameEngine {
             /*
             if (acceleration.x != 0 || acceleration.y != 0)
             {
-                updateFrustum();
             }
             Position += Front * acceleration.x;
             Position += Right * acceleration.y;
