@@ -1,4 +1,5 @@
 #include "GUI/GuiComponent.h"
+#include <Utils/ResourceManager.h>
 
 namespace GameEngine {
 
@@ -9,7 +10,7 @@ namespace GameEngine {
 	GuiComponent::GuiComponent(std::string texture, glm::vec2 position, glm::vec2 scale, float rotation)
 		: m_position(position), m_scale(scale), m_rotation(rotation)
 	{
-		m_texture = CreateRef<GTexture>(texture);
+		m_texture = ResourceManager::getTexture(texture);
 		m_transfrom_matrix = getTransformatiomMatrix();
 	}
 

@@ -1,5 +1,6 @@
 #include "Scene/Particle.h"
 #include <Scene/GObject.h>
+#include <Utils/ResourceManager.h>
 
 namespace GameEngine {
 
@@ -32,9 +33,11 @@ namespace GameEngine {
 		return life > 0;
 	}
 
-	ParticleSystem::ParticleSystem(unsigned int _amount, Ref<GTexture> particleTexture)
-		: GComponent(), amount(_amount), m_particleTexture(particleTexture), m_vertVbo(GL_ARRAY_BUFFER), m_elseVbo(GL_ARRAY_BUFFER)
+	ParticleSystem::ParticleSystem(unsigned int _amount, std::string textureName)
+		: GComponent(), amount(_amount), m_vertVbo(GL_ARRAY_BUFFER), m_elseVbo(GL_ARRAY_BUFFER)
 	{
+		m_particleTexture = ResourceManager::getTexture(textureName);
+		
 		m_vao.Bind();
 
 		m_vertVbo.Bind();

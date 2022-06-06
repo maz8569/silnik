@@ -1,6 +1,6 @@
 #include "Scene/Entity.h"
 
-GameEngine::Entity::Entity(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) : GObject(model, colMan)
+GameEngine::Entity::Entity(std::shared_ptr<Model> model) : GObject("")
 {
 }
 

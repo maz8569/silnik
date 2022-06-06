@@ -16,7 +16,6 @@
 #include <Scene/Light.h>
 #include "Physics/Collisions/Collision.h"
 #include "Physics/RayCasting/MousePicker.h"
-#include <Scene/Courier.h>
 #include <Scene/Box.h>
 #include <Scene/GameManager.h>
 #include <Blocks/Block.h>
@@ -26,6 +25,7 @@
 #include <Utils/ResourceManager.h>
 #include <Rendering/ParticleRenderer.h>
 #include <ECS/Vehicle.h>
+#include <Scene/Player.h>
 
 namespace GameEngine {
 
@@ -40,6 +40,9 @@ namespace GameEngine {
 	{
 	public:
 		WindowManager windowManager;
+
+		void maketestscene();
+		void make1scene();
 
 		Application();
 		~Application();
@@ -91,13 +94,10 @@ namespace GameEngine {
 
 		MasterRenderer renderer;
 
+
 		double frame_time = 1.0 / 60.0;
 
 		Ref<Json> jsonParser = nullptr;
-		Ref<TextRenderer> textRenderer = nullptr;
-		Ref<Collision> colMan = nullptr;
-
-		Ref<GuiManager> guiManager = nullptr;
 
 		unsigned int quadVAO = 0;
 		unsigned int quadVBO;
@@ -145,10 +145,6 @@ namespace GameEngine {
 		float defV = 0.1f;
 
 		Ref<InputManager> inputManager = nullptr;
-
-		Ref<Player> player;
-		//Ref<Courier> courier;
-		Ref<GameManager> gameManager;
 
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;

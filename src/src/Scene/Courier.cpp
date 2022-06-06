@@ -1,8 +1,8 @@
 #include "Scene/Courier.h"
 #include "Physics/Collisions/Collision.h"
 
-GameEngine::Courier::Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Collision> colMan) 
-	: Entity(model, colMan), m_mousePicker(mousePicker)
+GameEngine::Courier::Courier(Ref<MousePicker> mousePicker, Ref<Model> model) 
+	: Entity(model), m_mousePicker(mousePicker)
 {
 	m_inputManager = mousePicker->getInputManager();
 	Entity::Update(0);

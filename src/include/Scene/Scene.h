@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include <Blocks/Chunk.h>
 #include "Skybox.h"
+#include <Rendering/TextRenderer.h>
+#include <GUI/GuiManager.h>
 
 namespace GameEngine {
 	class Scene
@@ -18,12 +20,16 @@ namespace GameEngine {
 		std::vector<Ref<GObject>> m_GObjects;
 		std::vector<Ref<GObject>> m_seenGObjects;
 
-		Skybox m_skybox;
+		Ref<Skybox> m_skybox;
 
 	public:
 
 		Ref<Camera> m_camera;
+		Ref<GameManager> gameManager;
 		glm::mat4 m_lightSpace;
+		Ref<Collision> colMan = nullptr;
+		Ref<TextRenderer> textRenderer = nullptr;
+		Ref<GuiManager> guiManager = nullptr;
 
 		Scene(std::string name);
 		//virtual ~Scene();
@@ -44,7 +50,7 @@ namespace GameEngine {
 		virtual std::vector<Ref<GObject>> getAllObjects();
 		virtual std::vector<Ref<GObject>> getAllObjectsByName(const std::string& name);
 		virtual Ref<GObject> getObjectByID(unsigned int ID);
-		
+
 		std::string getName();
 	};
 }

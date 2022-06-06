@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GObject.h"
+#include "GComponent.h"
 
 namespace GameEngine {
 
@@ -11,14 +11,14 @@ namespace GameEngine {
 		None
 	};
 
-	class Box : public GObject
+	class Box : public GComponent
 	{
 	private:
 		DeliveryColor m_color;
 
 	public:
 
-		Box(DeliveryColor color,Ref<Model> model, std::shared_ptr<Collision> colMan);
+		Box(DeliveryColor color);
 
 		DeliveryColor getDeliveryColor();
 	};

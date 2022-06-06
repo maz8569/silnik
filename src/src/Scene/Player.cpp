@@ -1,19 +1,17 @@
 #include "Scene/Player.h"
 
-GameEngine::Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan) 
-    : inputManager(inputManager), m_gameManager(gameManager), GObject(model, colMan)
-{
-    lastPosition = get_transform().m_position;
-}
+namespace GameEngine { 
 
-GameEngine::Player::Player(std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan)
-    : GObject(model, colMan)
-{
-}
+    Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager) 
+        : inputManager(inputManager), m_gameManager(gameManager), GComponent()
+    {
+    }
 
-void GameEngine::Player::render(Ref<Shader> shader)
+void GameEngine::Player::setParent(GObject* newParent)
 {
-    GObject::render(shader);
+    GComponent::setParent(newParent);
+    lastPosition = parent->get_transform().m_position;
+
 }
 
 void GameEngine::Player::Update(float dt)
@@ -23,13 +21,13 @@ void GameEngine::Player::Update(float dt)
     currentSpeed.y = -speed * inputManager->getVertical();
 
     //currentSpeed = glm::normalize(currentSpeed);
-    get_transform().m_position.x += currentSpeed.x * 0.005;
+    parent->get_transform().m_position.x += currentSpeed.x * 0.005;
 
-    get_transform().m_position.z += currentSpeed.y * 0.005;
+    parent->get_transform().m_position.z += currentSpeed.y * 0.005;
 
     if (boat != nullptr)
     {
-        get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 3, 0);
+        parent->get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 3, 0);
         isGrounded = true;
     }
 
@@ -40,7 +38,7 @@ void GameEngine::Player::Update(float dt)
         jumpPower = 0;
     }
 
-    get_transform().m_position.y += jumpPower * 0.005;
+    parent->get_transform().m_position.y += jumpPower * 0.005;
 
 
     if (inputManager->getJump() && isGrounded) {
@@ -51,10 +49,9 @@ void GameEngine::Player::Update(float dt)
 
     if (package != nullptr)
     {
-        package->get_transform().m_position = get_transform().m_position + glm::vec3(0, 2, 0);
+        package->parent->get_transform().m_position = parent->get_transform().m_position + glm::vec3(0, 2, 0);
     }
 
-    GObject::Update(dt);
     isGrounded = false;
 }
 
@@ -81,7 +78,7 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
     if (otherAABB->tag == "water")
     {
         //std::cout << "water";
-        get_transform().m_position = lastPosition;
+        parent->get_transform().m_position = lastPosition;
     }
     
 
@@ -92,26 +89,26 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
 
     if (otherAABB->tag == "terrain")
     {
-        lastPosition = get_transform().m_position;
+        lastPosition = parent->get_transform().m_position;
     }
 
     if (otherAABB->tag == "package")
     {
-        package = (Box*) other;
+        package = other->GetComponent<Box>();
         if(package->getDeliveryColor() == DeliveryColor::Blue)
             std::cout << "package";
-        package->get_transform().m_scale = { 0.5, 0.5, 0.5 };
+        package->parent->get_transform().m_scale = { 0.5, 0.5, 0.5 };
     }
 
     if (otherAABB->tag == "house")
     {
-        Box* house = (Box*)other;
+        Ref<Box> house = other->GetComponent<Box>();
         //
         if (package != nullptr)
         {
             if (house->getDeliveryColor() == package->getDeliveryColor())
             {
-                package->get_transform().m_position += glm::vec3({ 0, -20, 0 });
+                package->parent->get_transform().m_position += glm::vec3({ 0, -20, 0 });
                 package = nullptr;
                  
                 if (m_gameManager != nullptr)
@@ -130,7 +127,7 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
 
 
 
-    auto vec = getAABB()->testDepth(otherAABB);
+    auto vec = parent->getAABB()->testDepth(otherAABB);
     
     int i = 2;
     
@@ -160,15 +157,15 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
     //std::cout << vec[0] << " " << vec[1] << " " << vec[2] << "\n";
     switch(i) {
     case 0:
-        get_transform().m_position.x -= vec[0];
+        parent->get_transform().m_position.x -= vec[0];
         break;
     case 1:
-        get_transform().m_position.y -= vec[1];
+        parent->get_transform().m_position.y -= vec[1];
         if(vec[1] < 0)
             isGrounded = true;
         break;
     case 2:
-        get_transform().m_position.z -= vec[2];
+        parent->get_transform().m_position.z -= vec[2];
 
         break;
     }
@@ -176,6 +173,8 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
     //MoveColliders();
 }
 
-void GameEngine::Player::OnCollisionExit(GObject* other)
-{
+    void Player::OnCollisionExit(GObject* other)
+    {
+    }
+
 }

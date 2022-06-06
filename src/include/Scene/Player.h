@@ -1,12 +1,12 @@
 #pragma once
 #include <glm/glm.hpp>
-#include<Scene/Entity.h>
+#include <Scene/GComponent.h>
 #include<Scene/Box.h>
 #include<Scene/GameManager.h>
 #include "Utils/InputManager.h"
 
 namespace GameEngine {
-	class Player: public GObject
+	class Player: public GComponent  
 	{
 	private:
 		float speed = 20;
@@ -22,14 +22,15 @@ namespace GameEngine {
 
 		std::shared_ptr<InputManager> inputManager;
 
-		Box* package = nullptr;
+		Ref<Box> package = nullptr;
 		GObject* boat = nullptr;
 		
 	public:
-		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager, std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
-		Player( std::shared_ptr<Model> model, std::shared_ptr<Collision> colMan);
+		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager);
 
-		virtual void render(Ref<Shader> shader);
+
+		virtual void setParent(GObject* newParent);
+
 		virtual void Update(float dt);
 		void jump();
 		virtual void OnCollisionEnter(GObject* other);

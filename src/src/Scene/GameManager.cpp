@@ -3,7 +3,7 @@
 namespace GameEngine {
 
 	GameManager::GameManager(int packageCount, Ref<GuiComponent> GuiNumber)
-		: GObject(nullptr, nullptr), m_packageCount(packageCount), m_GuiNumber(GuiNumber)
+		: GObject(""), m_packageCount(packageCount), m_GuiNumber(GuiNumber)
 	{
 		m_win = GState::Playing;
 	}
@@ -17,7 +17,10 @@ namespace GameEngine {
 	void GameManager::Update(float dt)
 	{
 		if (time <= 0)
+		{
 			m_win = GState::Lose;
+			time = 0;
+		}
 	}
 
 	float GameManager::getTime()

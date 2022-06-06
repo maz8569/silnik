@@ -4,8 +4,8 @@ namespace GameEngine {
 
 
 
-	Box::Box(DeliveryColor color, Ref<Model> model, std::shared_ptr<Collision> colMan)
-		: m_color(color), GObject(model, colMan)
+	Box::Box(DeliveryColor color)
+		: m_color(color), GComponent()
 	{
 
 	}

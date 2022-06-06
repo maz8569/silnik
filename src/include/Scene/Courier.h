@@ -12,7 +12,7 @@ namespace GameEngine {
 		Ref<InputManager> m_inputManager;
 
 	public:
-		Courier(Ref<MousePicker> mousePicker, Ref<Model> model, std::shared_ptr<Collision> colMan);
+		Courier(Ref<MousePicker> mousePicker, Ref<Model> model);
 		virtual void render(Ref<Shader> shader);
 		virtual void Update(float dt);
 		virtual void OnCollisionStay(GObject* other);

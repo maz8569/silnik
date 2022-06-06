@@ -62,8 +62,10 @@ namespace GameEngine {
 
 		bool cast_shadow = true;
 
+		void addToScene(Ref<Collision> coll);
+
 		GObject();
-		explicit GObject(Ref<Model> model, Ref<Collision> colMan);
+		explicit GObject(std::string modelName);
 		~GObject();
 
 		void set_tag(std::string newTag);
@@ -104,6 +106,18 @@ namespace GameEngine {
 		void setAABBoffsets(glm::vec3 newOffset);
 
 		void setAABB(Ref<AABB> aabb);
+
+		template<typename T>
+		inline Ref<T> GetComponent() const
+		{
+			for (auto component : components)
+			{
+				if (Ref<T> comp = Cast<T>(component))
+					return comp;
+			}
+
+			return Ref<T>();
+		}
 
 		void setName(std::string name);
 		const std::string& getName() const;

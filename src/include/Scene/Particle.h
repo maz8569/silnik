@@ -42,7 +42,7 @@ namespace GameEngine {
 
 	public:
 
-		ParticleSystem(unsigned int _amount, Ref<GTexture> particleTexture);
+		ParticleSystem(unsigned int _amount, std::string textureName);
 
 		virtual void setParent(GObject* newParent);
 
