@@ -4,12 +4,12 @@ namespace GameEngine {
 
 	Application app;
 
-	void print()
+	void testscene()
 	{
 		app.maketestscene();
 	}
 
-	void print1()
+	void scene1()
 	{
 		app.make1scene();
 	}
@@ -35,8 +35,8 @@ namespace GameEngine {
 		m_scene->guiManager->addComponent(std::string("hourglass"), glm::vec2(800, 370), glm::vec2(150, 150));
 		m_scene->guiManager->addComponent(std::string("box"), glm::vec2(-795, 375), glm::vec2(100, 100));
 		Ref<GuiComponent> numbComponent = m_scene->guiManager->addComponent(std::string("numb1"), glm::vec2(-690, 360), glm::vec2(60, 60));
-		Ref<GuiComponent> but = m_scene->guiManager->addComponent(std::string("fullheart"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
-		but->setOnClickFunction(print1);
+		Ref<GuiComponent> but = m_scene->guiManager->addComponent(std::string("fullheart"), glm::vec2(650, -350), glm::vec2(48, 48), 0);
+		but->setOnClickFunction(scene1);
 
 		m_scene->gameManager = CreateRef<GameManager>(1, numbComponent);
 
@@ -57,7 +57,7 @@ namespace GameEngine {
 		Ref<GObject> boat = CreateRef<GObject>("boat");
 		boat->shader = ourShader;
 		boat->scaleAABB({ 0.8, 0.8, 0.8 });
-		//Ref<ParticleSystem> partsys = CreateRef<ParticleSystem>(5, fh);
+		//Ref<ParticleSystem> partsys = CreateRef<ParticleSystem>(5, "fullheart");
 		//player->addComponent(partsys);
 		//particleRenderer->addParticleSystem(partsys);
 		/*
@@ -90,6 +90,18 @@ namespace GameEngine {
 
 		boat->set_local_scale(glm::vec3(1.5));
 		boat->set_tag("boat");
+
+		Ref<GObject> boatCollision = CreateRef<GObject>("");
+		boatCollision->set_local_position({ 0, -5, -10 });
+		Ref<AABB> bAABB = CreateRef<AABB>(glm::vec3(0, 0, 0), 7, 1, 7);
+		boatCollision->setAABB(bAABB);
+		boatCollision->set_tag("Tboat");
+		boatCollision->shader = ourShader;
+
+		Ref<Stealing> stealing = CreateRef<Stealing>();
+		stealing->addBoat(boat);
+		boatCollision->addComponent(stealing);
+		boatCollision->set_render_AABB(true);
 
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 3, 0.5, 3);
 		Ref<BridgeTrigger> bri = CreateRef<BridgeTrigger>();
@@ -135,7 +147,7 @@ namespace GameEngine {
 		bridgeTrigger3->getAABB()->setStatic(true);
 		bridgeTrigger3->addComponent(bri3);
 
-		std::cout << "test";
+		std::cout << "test\n";
 		Ref<GObject> testanim = CreateRef<GObject>("testanim");
 		testanim->shader = ourShader;
 		testanim->set_render_AABB(true);
@@ -303,6 +315,7 @@ namespace GameEngine {
 
 		m_scene->addObjectToScene(player);
 		m_scene->addObjectToScene(boat);
+		m_scene->addObjectToScene(boatCollision);
 		m_scene->addObjectToScene(testanim);
 		m_scene->addObjectToScene(iisland);
 		m_scene->addObjectToScene(iisland2);
@@ -354,7 +367,7 @@ namespace GameEngine {
 		m_scene->guiManager->addComponent(std::string("box"), glm::vec2(-795, 375), glm::vec2(100, 100));
 		Ref<GuiComponent> numbComponent = m_scene->guiManager->addComponent(std::string("numb1"), glm::vec2(-690, 360), glm::vec2(60, 60));
 		Ref<GuiComponent> but = m_scene->guiManager->addComponent(std::string("fullheart"), glm::vec2(-300, 300), glm::vec2(48, 48), 0);
-		but->setOnClickFunction(print);
+		but->setOnClickFunction(testscene);
 
 		m_scene->gameManager = CreateRef<GameManager>(1, numbComponent);
 
@@ -521,7 +534,7 @@ namespace GameEngine {
 		m_EventQueue.push_back(e);
 
 		jsonParser = CreateRef<Json>();
-		if (jsonParser->print() == 1)
+		if (jsonParser->testscene() == 1)
 		{
 			exit(-1);
 		}
@@ -569,7 +582,6 @@ namespace GameEngine {
 		foaMap = ResourceManager::getShader("foaMap");
 		debugDepth = ResourceManager::getShader("debugDepth");
 		masterRenderer = CreateRef<MasterRenderer>();
-		masterRenderer->setQuadShader(ourShader);
 
 		Ref<Model> b = ResourceManager::getModel("cube");
 		Ref<Model> bu = ResourceManager::getModel("boat");

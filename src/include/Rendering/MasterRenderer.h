@@ -1,8 +1,9 @@
 #pragma once
 
 #include "typedefs.h"
-#include "QuadRenderer.h"
 #include "WindowManager.h"
+#include <Shaders/Shader.h>
+#include <Texture/BasicTexture.h>
 
 namespace GameEngine {
 	
@@ -17,7 +18,6 @@ namespace GameEngine {
 		void setQuadShader(Ref<Shader> shader);
 
 	private:
-		//QuadRenderer m_quadRenderer;
 
 	};
 }

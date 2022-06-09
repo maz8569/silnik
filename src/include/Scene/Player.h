@@ -20,7 +20,7 @@ namespace GameEngine {
 
 		glm::vec3 lastPosition;
 
-		std::shared_ptr<InputManager> inputManager;
+		Ref<InputManager> inputManager;
 
 		Ref<Box> package = nullptr;
 		GObject* boat = nullptr;

@@ -56,6 +56,41 @@ namespace GameEngine {
 
 	}
 
+	ParticleSystem::~ParticleSystem()
+	{
+		positioncolors.clear();
+
+		for (int i = 0; i < amount; i++)
+		{
+			Particle& particle = particles[i];
+
+			positioncolors.push_back(particle.pos.x);
+			positioncolors.push_back(particle.pos.y);
+			positioncolors.push_back(particle.pos.z);
+
+			positioncolors.push_back(0);
+
+			positioncolors.push_back(particle.color.r);
+			positioncolors.push_back(particle.color.g);
+			positioncolors.push_back(particle.color.b);
+			positioncolors.push_back(particle.color.a);
+		}
+		m_vao.Bind();
+
+		m_elseVbo.Bind();
+		m_elseVbo.BufferData(amount * 8 * sizeof(float), NULL, GL_STREAM_DRAW);
+		m_elseVbo.BufferSubData(0, amount * 8 * sizeof(float), &positioncolors[0]);
+		m_elseVbo.VertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		m_elseVbo.VertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)4);
+
+		glVertexAttribDivisor(0, 0); // particles vertices : always reuse the same 4 vertices -> 0
+		glVertexAttribDivisor(1, 1); // positions : one per quad (its center)                 -> 1
+		glVertexAttribDivisor(2, 1);
+
+		m_vao.Unbind();
+
+	}
+
 	void ParticleSystem::setParent(GObject* newParent)
 	{
 		GComponent::setParent(newParent);
@@ -140,6 +175,11 @@ namespace GameEngine {
 	unsigned int ParticleSystem::getAmount()
 	{
 		return amount;
+	}
+
+	void ParticleSystem::setAmount(unsigned int am)
+	{
+		amount = am;
 	}
 
 }

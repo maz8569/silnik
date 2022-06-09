@@ -17,6 +17,7 @@ namespace GameEngine {
 	public:
 
 		ParticleRenderer();
+		~ParticleRenderer();
 
 		void addParticleSystem(Ref<ParticleSystem> syst);
 

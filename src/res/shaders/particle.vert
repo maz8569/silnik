@@ -24,15 +24,15 @@ void main()
 
     float particleSize = aInstancedPos.w;
     vec3 particleCenter = aInstancedPos.xyz;
-
+    vec3 worldPos = particleCenter;
     /*
-    vec3 worldPos = particleCenter - cameraPos;
+    vec3 worldPos = worldPos - cameraPos;
     worldPos = vec3(view * vec4(worldPos, 1.0));
     float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;
     worldPos += vec3(0, ypos, 0);
     */
 
-    vec3 position = particleCenter 
+    vec3 position = worldPos 
     + CameraRight_worldspace * aPos.x * particleSize
     + CameraUp_worldspace * aPos.y * particleSize;
 

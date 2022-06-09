@@ -1,4 +1,5 @@
 #include "Scene/Player.h"
+#include <Scene/Stealing.h>
 
 namespace GameEngine { 
 
@@ -74,33 +75,40 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
 {
     
     auto otherAABB = other->getAABB();
+    auto tag = otherAABB->tag;
     
-    if (otherAABB->tag == "water")
+    if (tag == "water")
     {
         //std::cout << "water";
         parent->get_transform().m_position = lastPosition;
     }
     
 
-    if (otherAABB->tag == "Tbridge")
+    if (tag == "Tbridge" || tag == "Tboat")
     {
         return;
     }
 
-    if (otherAABB->tag == "terrain")
+    if (tag == "terrain")
     {
         lastPosition = parent->get_transform().m_position;
     }
 
-    if (otherAABB->tag == "package")
+    if (tag == "package")
     {
         package = other->GetComponent<Box>();
+        if (package->currentHolder != nullptr)
+        {
+            Stealing* stealing = (Stealing*)package->currentHolder;
+            stealing->releasePackage();
+            package->currentHolder = this;
+        }
         if(package->getDeliveryColor() == DeliveryColor::Blue)
             std::cout << "package";
         package->parent->get_transform().m_scale = { 0.5, 0.5, 0.5 };
     }
 
-    if (otherAABB->tag == "house")
+    if (tag == "house")
     {
         Ref<Box> house = other->GetComponent<Box>();
         //

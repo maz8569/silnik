@@ -12,7 +12,7 @@ namespace GameEngine {
 		rapidjson::Document document;  // Default template parameter uses UTF8 and MemoryPoolAllocator.
 		Json() = default;
 
-		int print();
+		int testscene();
 
 		void SerializeScene(Scene* scene);
 		Scene* DeserializeScene(std::string filename);

@@ -43,6 +43,7 @@ namespace GameEngine {
 	public:
 
 		ParticleSystem(unsigned int _amount, std::string textureName);
+		~ParticleSystem();
 
 		virtual void setParent(GObject* newParent);
 
@@ -57,6 +58,7 @@ namespace GameEngine {
 		void unbindVAO();
 
 		unsigned int getAmount();
+		void setAmount(unsigned int am);
 
 	};
 

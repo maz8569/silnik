@@ -8,6 +8,11 @@ namespace GameEngine {
 		m_particleShader->setInt("ourTexture", 0);
 	}
 
+	ParticleRenderer::~ParticleRenderer()
+	{
+		m_particleSystems.clear();
+	}
+
 	void ParticleRenderer::addParticleSystem(Ref<ParticleSystem> syst)
 	{
 		m_particleSystems.push_back(syst);

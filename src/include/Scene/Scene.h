@@ -5,7 +5,6 @@
 #include <vector>
 #include <Scene/GObject.h>
 #include "Camera.h"
-#include <Blocks/Chunk.h>
 #include "Skybox.h"
 #include <Rendering/TextRenderer.h>
 #include <GUI/GuiManager.h>

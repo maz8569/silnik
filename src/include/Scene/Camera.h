@@ -173,16 +173,6 @@ namespace GameEngine {
 
         virtual void Move()
         {
-            //glm::vec3 second;
-            //if (courier)
-            //{
-                //second = { 0, 0, 0 };
-            //}
-            //else
-            //{
-            //second = courier.m_position;
-            //std::cout << second[0] << " " << second[1] << " " << second[2] << std::endl;
-            //}
             
             Position = player->get_transform().m_position + glm::vec3(0, 12, 12);
             //updateFrustum();

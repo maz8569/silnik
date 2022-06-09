@@ -1,8 +1,8 @@
-#include "Utils/Json.h"
+  #include "Utils/Json.h"
 
 namespace GameEngine {
 
-    int Json::print()
+    int Json::testscene()
     {
         // 1. Parse a JSON text string to a document.
         const char json[] = " { \"hello\" : \"world\", \"t\" : true , \"f\" : false, \"n\": null, \"i\":123, \"pi\": 3.1416, \"a\":[1, 2, 3, 4] } ";

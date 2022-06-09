@@ -14,6 +14,8 @@ void GameEngine::Collision::removePair(std::pair<Ref<AABB>, Ref<AABB>> pair)
     pair.second->parent->OnCollisionExit(pair.first->parent);
 
     pairs.clear();
+    //pairs.erase(std::remove(pairs.begin(), pairs.end(), pair));
+    //pairs.shrink_to_fit();
 
 }
 

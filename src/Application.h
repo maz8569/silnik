@@ -18,7 +18,6 @@
 #include "Physics/RayCasting/MousePicker.h"
 #include <Scene/Box.h>
 #include <Scene/GameManager.h>
-#include <Blocks/Block.h>
 #include <GUI/GuiManager.h>
 #include <Scene/Boat.h>
 #include <Scene/BridgeTrigger.h>
@@ -26,6 +25,7 @@
 #include <Rendering/ParticleRenderer.h>
 #include <ECS/Vehicle.h>
 #include <Scene/Player.h>
+#include <Scene/Stealing.h>
 
 namespace GameEngine {
 

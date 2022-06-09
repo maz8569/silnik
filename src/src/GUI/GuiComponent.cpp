@@ -129,7 +129,7 @@ namespace GameEngine {
 
 	void GuiComponent::onCollisionEnter(Ref<MouseCursor> cursor)
 	{
-		color = highlightColor;
+		//color = highlightColor;
 		isHovered = true;
 	}
 

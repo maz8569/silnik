@@ -18,6 +18,8 @@ namespace GameEngine {
 
 	public:
 
+		GComponent* currentHolder = nullptr;
+
 		Box(DeliveryColor color);
 
 		DeliveryColor getDeliveryColor();
