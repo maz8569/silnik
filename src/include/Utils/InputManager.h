@@ -14,6 +14,7 @@ namespace GameEngine {
 	public:
 
 		bool m_isRclicked = false;
+		bool m_isLclicked = false;
 
 		double m_posx = 0;
 		double m_posy = 0;

@@ -28,6 +28,8 @@ namespace GameEngine {
 		loadModel("testanim", std::string("res/models/test/test.dae"));
 		loadModel("hidefCube", std::string("res/models/hidefCube/cube.obj"));
 		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));
+		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));
+		loadModel("dirt", std::string("res/models/dirt/dirt.obj"));
 
 		loadTexture("back", std::string("res/textures/back.png"));
 		loadTexture("hourglass", std::string("res/textures/hourglass.png"));

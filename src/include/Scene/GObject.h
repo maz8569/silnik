@@ -9,6 +9,7 @@
 
 namespace GameEngine {
 	class Collision;
+	class Scene;
 
 	class GObject
 	{
@@ -56,6 +57,8 @@ namespace GameEngine {
 
 	public:
 		void rotateAABB(Degrees deg, Axis axis);
+
+		Scene* scene;
 
 		Ref<Collision> m_colman;
 		Ref<Shader> shader = nullptr;

@@ -1,6 +1,7 @@
 #include "Scene/GObject.h"
 #include "Physics/Collisions/Collision.h"
 #include <Utils/ResourceManager.h>
+#include <Scene/Scene.h>
 
 namespace GameEngine {
 

@@ -80,18 +80,13 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
     if (tag == "water")
     {
         //std::cout << "water";
-        parent->get_transform().m_position = lastPosition;
+        parent->get_transform().m_position = lastPosition;// +glm::vec3(0, 0.1, 0);
     }
     
 
     if (tag == "Tbridge" || tag == "Tboat")
     {
         return;
-    }
-
-    if (tag == "terrain")
-    {
-        lastPosition = parent->get_transform().m_position;
     }
 
     if (tag == "package")
@@ -178,7 +173,12 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
         break;
     }
 
-    //MoveColliders();
+    if (tag == "terrain" && isGrounded)
+    {
+        lastPosition = parent->get_transform().m_position + glm::vec3(0, 0.5, 0);
+    }
+
+    //parent->MoveColliders();
 }
 
     void Player::OnCollisionExit(GObject* other)

@@ -377,6 +377,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scene\Dig.cpp" />
     <ClCompile Include="src\Rendering\ParticleRenderer.cpp" />
     <ClCompile Include="src\Rendering\Particle.cpp" />
     <ClCompile Include="src\Rendering\Animator.cpp" />
@@ -442,6 +443,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClCompile Include="src\ECS\SteeringBehaviors.cpp" />
     <ClCompile Include="src\Scene\Stealing.cpp" />
+    <ClInclude Include="include\Scene\Dig.h" />
     <ClInclude Include="include\Rendering\Animator.h" />
     <ClInclude Include="include\Scene\BridgeTrigger.h" />
     <ClInclude Include="include\Scene\Boat.h" />

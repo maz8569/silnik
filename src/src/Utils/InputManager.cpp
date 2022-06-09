@@ -21,6 +21,9 @@ bool GameEngine::InputManager::getJump()
 
 void GameEngine::InputManager::getInput()
 {
+    m_isLclicked = false;
+
+
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
@@ -58,5 +61,16 @@ void GameEngine::InputManager::getInput()
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE && m_isRclicked)
     {
         m_isRclicked = false;
+    }
+
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+    {
+        glfwGetCursorPos(window, &m_posx, &m_posy);
+        m_isLclicked = true;
+    }
+
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE && m_isLclicked)
+    {
+        m_isLclicked = false;
     }
 }

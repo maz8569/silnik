@@ -3,8 +3,11 @@
 #include "GObject.h"
 #include <Texture/Texture.h>
 #include <GUI/GuiComponent.h>
+#include "Box.h"
 
 namespace GameEngine {
+
+	class Scene;
 
 	enum GState {
 		Playing,
@@ -40,6 +43,8 @@ namespace GameEngine {
 		void givePackage();
 
 		GState isWin();
+
+		void makePackageAt(DeliveryColor color, glm::vec3 position, Scene* scene);
 	};
 
 }

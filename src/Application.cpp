@@ -53,6 +53,7 @@ namespace GameEngine {
 		player->addComponent(plaComp);
 		player->shader = ourShader;
 		player->set_local_position({ -2, 0, 0 });
+		player->set_tag("player");
 
 		Ref<GObject> boat = CreateRef<GObject>("boat");
 		boat->shader = ourShader;
@@ -162,7 +163,7 @@ namespace GameEngine {
 		gdom->getAABB()->setStatic(true);
 		//gdom->set_render_AABB(true);
 		gdom->set_tag("house");
-
+		/*
 		Ref<GObject> paczka = CreateRef<GObject>("package");
 		Ref<Box> boxp = CreateRef<Box>(DeliveryColor::Blue);
 		paczka->addComponent(boxp);
@@ -171,6 +172,13 @@ namespace GameEngine {
 		paczka->getAABB()->setStatic(true);
 		//paczka->set_render_AABB(true);
 		paczka->set_tag("package");
+		*/
+		Ref<GObject> dirt = CreateRef<GObject>("dirt");
+		dirt->shader = ourShader;
+		dirt->set_local_position({ 13, -9.8, 0 });
+
+		Ref<Dig> digDirt = CreateRef<Dig>(3, DeliveryColor::Blue, inputManager);
+		dirt->addComponent(digDirt);
 
 		Ref<GObject> most = CreateRef<GObject>("bridge");
 		most->shader = ourShader;
@@ -274,6 +282,7 @@ namespace GameEngine {
 		iisland4->set_local_position({ 0, -9.8, 13 });
 		iisland4->set_tag("terrain");
 		iisland4->getAABB()->setStatic(true);
+		iisland4->set_render_AABB(true);
 
 		Ref<GObject> iisland5 = CreateRef<GObject>("island");
 		iisland5->shader = ourShader;
@@ -304,7 +313,7 @@ namespace GameEngine {
 		Ref<GObject> water = CreateRef<GObject>("hidefPlane");
 		water->shader = waterShader;
 		water->set_local_scale({ 60, 4, 60 });
-		water->setAABBextentY(1);
+		water->setAABBextentY(1.1);
 		//water->setAABBextentY(0.9f);
 		water->set_local_position({ 0, -9.5, 0 });
 		water->getAABB()->setStatic(true);
@@ -317,13 +326,14 @@ namespace GameEngine {
 		m_scene->addObjectToScene(boat);
 		m_scene->addObjectToScene(boatCollision);
 		m_scene->addObjectToScene(testanim);
+		m_scene->addObjectToScene(dirt);
 		m_scene->addObjectToScene(iisland);
 		m_scene->addObjectToScene(iisland2);
 		m_scene->addObjectToScene(iisland3);
 		m_scene->addObjectToScene(iisland4);
 		m_scene->addObjectToScene(iisland5);
 		m_scene->addObjectToScene(gdom);
-		m_scene->addObjectToScene(paczka);
+		//m_scene->addObjectToScene(paczka);
 		m_scene->addObjectToScene(bridgeTrigger);
 		m_scene->addObjectToScene(bridgeTrigger1);
 		m_scene->addObjectToScene(bridgeTrigger2);

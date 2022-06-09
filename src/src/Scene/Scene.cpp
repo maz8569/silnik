@@ -119,6 +119,7 @@ namespace GameEngine {
 			m_root->add_child(obj);
 			obj->add_parent(m_root);
 			obj->addToScene(colMan);
+			obj->scene = this;
 
 			m_GObjects.push_back(obj);
 		}

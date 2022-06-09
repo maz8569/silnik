@@ -26,6 +26,7 @@
 #include <ECS/Vehicle.h>
 #include <Scene/Player.h>
 #include <Scene/Stealing.h>
+#include <Scene/Dig.h>
 
 namespace GameEngine {
 
