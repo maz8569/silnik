@@ -60,13 +60,26 @@ namespace GameEngine {
 
 	void GameManager::makePackageAt(DeliveryColor color, glm::vec3 position, Scene* scene)
 	{
-		Ref<GObject> paczka = CreateRef<GObject>("package");
+		Ref<GObject> paczka;
+		switch (color)
+		{
+		case GameEngine::Blue:
+			paczka = CreateRef<GObject>("package");
+
+			break;
+		case GameEngine::Red:
+			paczka = CreateRef<GObject>("redpackage");
+
+			break;
+		default:
+			paczka = CreateRef<GObject>("package");
+			break;
+		}
 		Ref<Box> boxp = CreateRef<Box>(color);
 		paczka->addComponent(boxp);
 		paczka->shader = ResourceManager::getShader("ourShader");
 		paczka->set_local_position(position);
 		paczka->getAABB()->setStatic(true);
-		//paczka->set_render_AABB(true);
 		paczka->set_tag("package");
 
 		scene->addObjectToScene(paczka);

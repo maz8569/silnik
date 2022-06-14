@@ -31,8 +31,9 @@ namespace GameEngine {
 		gameManager->Update(dt);
 
 		m_root->update_transform(m_root->get_transform(), true);
-		for (auto& obj : m_GObjects)
+		for (i = 0; i < m_GObjects.size(); i++)
 		{
+			auto& obj = m_GObjects[i];
 			obj->Update(dt);
 		}
 		m_camera->Move();

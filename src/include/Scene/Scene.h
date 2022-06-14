@@ -21,6 +21,8 @@ namespace GameEngine {
 
 		Ref<Skybox> m_skybox;
 
+		int i = 0;
+
 	public:
 
 		Ref<Camera> m_camera;

@@ -199,6 +199,17 @@ namespace GameEngine {
 		if (modelName != "")
 		{
 			m_model = ResourceManager::getModel(modelName);
+
+			/*
+			if (m_model->GetBoneCount() > 0)
+			{
+				std::cout << "\nanimator\n";
+				Ref<Animation> danceAnimation = CreateRef<Animation>(m_model->path, m_model);
+				Ref<Animator> animator = CreateRef<Animator>(danceAnimation);
+				addComponent(animator);
+			}
+			*/
+
 			m_aabb = CreateRef<AABB>(generateAABB(m_model));
 			m_aabb->parent = this;
 			//std::cout << m_aabb->center.x << " " << m_aabb->center.y << " " << m_aabb->center.z << " " << std::endl;
@@ -261,6 +272,13 @@ namespace GameEngine {
 		if (m_model != nullptr)
 		{
 			shader->setVec3("color", m_color);
+			Ref<Animator> anim = GetComponent<Animator>();
+			if (anim != nullptr)
+			{
+				auto transforms = anim->GetFinalBoneMatrices();
+				for (int i = 0; i < transforms.size(); ++i)
+					shader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+			}
 			m_model->Draw(shader);
 		}
 

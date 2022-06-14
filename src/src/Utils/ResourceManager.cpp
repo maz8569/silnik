@@ -13,6 +13,7 @@ namespace GameEngine {
 	void ResourceManager::init()
 	{
 		loadShader("ourShader", "res/shaders/basic.vert", "res/shaders/basic.frag");
+		loadShader("animatedShader", "res/shaders/basicAnim.vert", "res/shaders/basicAnim.frag");
 		loadShader("refract", "res/shaders/refract.vert", "res/shaders/refract.frag");
 		loadShader("water", "res/shaders/water.vert", "res/shaders/water.frag");
 		loadShader("shadowMap", "res/shaders/shadowmapping.vert", "res/shaders/shadowmapping.frag");
@@ -22,10 +23,12 @@ namespace GameEngine {
 		loadModel("cube", std::string("res/models/cube/cube.obj"));
 		loadModel("boat", std::string("res/models/statek/untitled.obj"));
 		loadModel("house", std::string("res/models/dom/dom_p.obj"));
+		loadModel("redhouse", std::string("res/models/reddom/reddom.obj"));
 		loadModel("package", std::string("res/models/paczka/paczka.obj"));
+		loadModel("redpackage", std::string("res/models/redpaczka/redpaczka.obj"));
 		loadModel("bridge", std::string("res/models/lowpolymost/niby_most.obj"));
 		loadModel("island", std::string("res/models/islandNew/wyspa.obj"));
-		loadModel("testanimcol", std::string("res/models/test/test.dae"));
+		//loadModel("testanimcol", std::string("res/models/test/test.dae"));
 		loadModel("testanim", std::string("res/models/testanim/testanim.dae"));
 		loadModel("hidefCube", std::string("res/models/hidefCube/cube.obj"));
 		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));
@@ -36,6 +39,7 @@ namespace GameEngine {
 		loadTexture("back", std::string("res/textures/back.png"));
 		loadTexture("hourglass", std::string("res/textures/hourglass.png"));
 		loadTexture("box", std::string("res/textures/box.png"));
+		loadTexture("numb2", std::string("res/textures/numb2.png"));
 		loadTexture("numb1", std::string("res/textures/numb1.png"));
 		loadTexture("numb0", std::string("res/textures/numb0.png"));
 		loadTexture("fullheart", std::string("res/textures/fullheart.png"));

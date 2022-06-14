@@ -6,6 +6,7 @@
 #include <Physics/Collisions/AABB.h>
 #include <typedefs.h>
 #include <string>
+#include <Rendering/Animator.h>
 
 namespace GameEngine {
 	class Collision;

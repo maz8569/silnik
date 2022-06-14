@@ -186,7 +186,7 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
         lastPosition = parent->get_transform().m_position + glm::vec3(0, 0.5, 0);
     }
 
-    //parent->MoveColliders();
+    parent->MoveColliders();
 }
 
     void Player::OnCollisionExit(GObject* other)

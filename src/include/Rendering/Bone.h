@@ -51,15 +51,9 @@ namespace GameEngine {
         /*interpolates  b/w positions,rotations & scaling keys based on the curren time of
         the animation and prepares the local transformation matrix by combining all keys
         tranformations*/
-        void Update(float animationTime)
-        {
-            glm::mat4 translation = InterpolatePosition(animationTime);
-            glm::mat4 rotation = InterpolateRotation(animationTime);
-            glm::mat4 scale = InterpolateScaling(animationTime);
-            m_LocalTransform = translation * rotation * scale;
-        }
+        void Update(float animationTime);
 
-        glm::mat4 GetLocalTransform() { return m_LocalTransform; }
+        glm::mat4 GetLocalTransform();
         std::string GetBoneName() const { return m_Name; }
         int GetBoneID() { return m_ID; }
 

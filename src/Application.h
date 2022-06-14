@@ -112,6 +112,7 @@ namespace GameEngine {
 		unsigned int quadVBO;
 
 		Ref<Shader> ourShader = nullptr;
+		Ref<Shader> animShader = nullptr;
 		Ref<Shader> shadowMap = nullptr;
 		Ref<Shader> foaMap = nullptr;
 		Ref<Shader> debugDepth = nullptr;

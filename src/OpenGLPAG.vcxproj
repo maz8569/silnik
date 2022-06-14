@@ -377,6 +377,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Rendering\Animation.cpp" />
     <ClCompile Include="src\Utils\AssimpGLMHelpers.cpp" />
     <ClCompile Include="src\Rendering\Bone.cpp" />
     <ClCompile Include="src\Scene\Island.cpp" />
@@ -448,6 +449,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClCompile Include="src\ECS\SteeringBehaviors.cpp" />
     <ClCompile Include="src\Scene\Stealing.cpp" />
+    <ClInclude Include="include\Rendering\Animation.h" />
     <ClInclude Include="include\Utils\AssimpGLMHelpers.h" />
     <ClInclude Include="include\Rendering\Bone.h" />
     <ClInclude Include="include\Scene\Dig.h" />

@@ -98,6 +98,7 @@ namespace GameEngine {
 
 
 		ourShader = ResourceManager::getShader("ourShader");
+		animShader = ResourceManager::getShader("animatedShader");
 		refrShader = ResourceManager::getShader("refract");
 		waterShader = ResourceManager::getShader("water");
 		shadowMap = ResourceManager::getShader("shadowMap");
@@ -112,6 +113,11 @@ namespace GameEngine {
 		ourShader->setInt("shadowMap", 1);
 		ourShader->setInt("cameraDepthMap", 2);
 		ourShader->setInt("ourTexture", 0);
+
+		animShader->use();
+		animShader->setInt("shadowMap", 1);
+		animShader->setInt("cameraDepthMap", 2);
+		animShader->setInt("ourTexture", 0);
 
 		refrShader->use();
 		refrShader->setInt("shadowMap", 1);
@@ -218,8 +224,8 @@ namespace GameEngine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		//TODO: move to scene
-		//makemenucene();
-		maketestscene();
+		makemenucene();
+		//make3scene();
 
 		float n = 0.1f;
 		float f = 100.0f;
@@ -345,6 +351,7 @@ namespace GameEngine {
 	void Application::OnUpdate(float dt)
 	{
 		ourShader->setMat4("view", view);
+		animShader->setMat4("view", view);
 		refrShader->setMat4("view", view);
 		waterShader->setMat4("view", view);
 
@@ -353,6 +360,7 @@ namespace GameEngine {
 		//m_scene->m_camera->courier = courier->get_transform().m_position;
 
 		ourShader->setVec3("cameraPos", m_scene->m_camera->Position);
+		animShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		refrShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		waterShader->setVec3("cameraPos", m_scene->m_camera->Position);
 
@@ -441,6 +449,12 @@ namespace GameEngine {
 		ourShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		light->activate_lights(ourShader, m_scene->m_camera);
 
+		animShader->use();
+		animShader->setVec3("color", { 1, 1, 1 });
+		animShader->setMat4("view", view);
+		animShader->setMat4("projection", m_scene->m_camera->m_projectionMatrix);
+		animShader->setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		light->activate_lights(animShader, m_scene->m_camera);
 
 		waterShader->use();
 
@@ -673,6 +687,26 @@ namespace GameEngine {
 			if (e.key == GLFW_KEY_M)
 			{
 				playAudio("TestSound");
+			}
+
+			if (e.key == GLFW_KEY_1)
+			{
+				make1scene();
+			}
+			
+			if (e.key == GLFW_KEY_2)
+			{
+				make2scene();
+			}
+
+			if (e.key == GLFW_KEY_3)
+			{
+				maketestscene();
+			}
+
+			if (e.key == GLFW_KEY_4)
+			{
+				make3scene();
 			}
 
 			if (e.key == GLFW_KEY_TAB)

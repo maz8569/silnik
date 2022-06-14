@@ -1,5 +1,5 @@
 #include "Rendering/Model.h"
-
+#include <Rendering/Animator.h>
 namespace GameEngine {
 
 
@@ -41,6 +41,12 @@ namespace GameEngine {
         }
 
         return textureID;
+    }
+
+    Model::Model(string const& path, bool gamma)
+        : gammaCorrection(gamma)
+    {
+        loadModel(path);
     }
 
     void Model::SetVertexBoneDataToDefault(Vertex& vertex)

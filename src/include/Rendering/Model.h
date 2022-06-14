@@ -45,16 +45,14 @@ namespace GameEngine {
         vector<Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
         vector<Mesh>    meshes;
         string directory;
+        string path;
         bool gammaCorrection;
 
         auto& GetBoneInfoMap() { return m_BoneInfoMap; }
         int& GetBoneCount() { return m_BoneCounter; }
 
         // constructor, expects a filepath to a 3D model.
-        Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
-        {
-            loadModel(path);
-        }
+        Model(string const& path, bool gamma = false);
 
         // draws the model, and thus all its meshes
         void Draw(Ref<Shader> shader)
@@ -87,7 +85,7 @@ namespace GameEngine {
             }
             // retrieve the directory path of the filepath
             directory = path.substr(0, path.find_last_of('/'));
-
+            this->path = path;
             // process ASSIMP's root node recursively
             processNode(scene->mRootNode, scene);
         }

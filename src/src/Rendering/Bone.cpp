@@ -1,6 +1,7 @@
 #include "Rendering/Bone.h"
 
 namespace GameEngine {
+
 	Bone::Bone(const std::string& name, int ID, const aiNodeAnim* channel)
         :
         m_Name(name),
@@ -41,4 +42,18 @@ namespace GameEngine {
             m_Scales.push_back(data);
         }
     }
+
+    void Bone::Update(float animationTime)
+    {
+        glm::mat4 translation = InterpolatePosition(animationTime);
+        glm::mat4 rotation = InterpolateRotation(animationTime);
+        glm::mat4 scale = InterpolateScaling(animationTime);
+        m_LocalTransform = translation * rotation * scale;
+    }
+
+    glm::mat4 Bone::GetLocalTransform()
+    {
+        return m_LocalTransform;
+    }
+
 }
