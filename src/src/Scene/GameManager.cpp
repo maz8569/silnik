@@ -72,4 +72,9 @@ namespace GameEngine {
 		scene->addObjectToScene(paczka);
 	}
 
+	void GameManager::setState(GState st)
+	{
+		m_win = st;
+	}
+
 }

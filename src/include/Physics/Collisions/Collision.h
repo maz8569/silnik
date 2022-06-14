@@ -10,7 +10,7 @@ namespace GameEngine {
 	{
 	private:
 		std::vector<std::shared_ptr<AABB>> collisions;
-
+		int i = 0;
 		std::vector<std::pair<Ref<AABB>, Ref<AABB>>> pairs;
 
 		void addPair(std::pair < Ref<AABB>, Ref<AABB>> pair);

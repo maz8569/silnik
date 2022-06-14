@@ -119,7 +119,7 @@ namespace GameEngine {
 					return comp;
 			}
 
-			return Ref<T>();
+			return nullptr;
 		}
 
 		void setName(std::string name);

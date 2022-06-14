@@ -25,18 +25,22 @@ namespace GameEngine {
 		loadModel("package", std::string("res/models/paczka/paczka.obj"));
 		loadModel("bridge", std::string("res/models/lowpolymost/niby_most.obj"));
 		loadModel("island", std::string("res/models/islandNew/wyspa.obj"));
-		loadModel("testanim", std::string("res/models/test/test.dae"));
+		loadModel("testanimcol", std::string("res/models/test/test.dae"));
+		loadModel("testanim", std::string("res/models/testanim/testanim.dae"));
 		loadModel("hidefCube", std::string("res/models/hidefCube/cube.obj"));
 		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));
 		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));
 		loadModel("dirt", std::string("res/models/dirt/dirt.obj"));
 
+		loadTexture("perlinoise", std::string("res/textures/perlinnoise.png"));
 		loadTexture("back", std::string("res/textures/back.png"));
 		loadTexture("hourglass", std::string("res/textures/hourglass.png"));
 		loadTexture("box", std::string("res/textures/box.png"));
 		loadTexture("numb1", std::string("res/textures/numb1.png"));
 		loadTexture("numb0", std::string("res/textures/numb0.png"));
 		loadTexture("fullheart", std::string("res/textures/fullheart.png"));
+		loadTexture("exit", std::string("res/textures/buttonExit.png"));
+		loadTexture("play", std::string("res/textures/buttonPlay.png"));
 	}
 
 	Ref<Shader> ResourceManager::loadShader(std::string name, const char* vertexPath, const char* fragmentPath, const char* geometryPath)

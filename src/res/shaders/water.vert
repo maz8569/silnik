@@ -23,6 +23,8 @@ uniform vec4 uScreenSize;
 
 varying vec3 WorldPosition;
 
+uniform sampler2D noiseTexture;
+
 float amount = 0.005f;
 
 void main()
@@ -30,7 +32,17 @@ void main()
     ourColor = aColor;
     vec3 pos = aPos;
 
-    float distortion = cos(pos.z * 5.0 + uTime) * 0.1 * sin(pos.x * 5.0 + uTime);
+    vec2 texcoor = aTexCoord;
+
+    float distortion = 0;
+
+    distortion = cos(pos.z * 5.0 + uTime) * 0.1 * sin(pos.x * 5.0 + uTime);
+
+    //texcoor.x -= uTime * 0.001;
+    //texcoor.y -= uTime * 0.001;
+
+    //distortion = 0.1  * texture2D(noiseTexture, texcoor * 100).r;
+
 
     pos.y +=  distortion;
 

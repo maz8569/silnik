@@ -21,6 +21,14 @@ void GameEngine::Player::Update(float dt)
 
     currentSpeed.y = -speed * inputManager->getVertical();
 
+    if ((currentSpeed.x != 0) || (currentSpeed.y != 0))
+    {
+        float yRot = atan2(-currentSpeed.x, currentSpeed.y);
+
+        parent->set_local_rotationY(glm::degrees(yRot));
+    }
+
+
     //currentSpeed = glm::normalize(currentSpeed);
     parent->get_transform().m_position.x += currentSpeed.x * 0.005;
 

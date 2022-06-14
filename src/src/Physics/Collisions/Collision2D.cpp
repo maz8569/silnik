@@ -12,6 +12,16 @@ namespace GameEngine {
 	void Collision2D::removeCollision(Ref<GuiComponent> c)
 	{
 		c->onCollisionExit(m_mouseCursor);
+		
+		for (i = 0; i < m_collisions.size(); i++)
+		{
+			if (m_collisions[i] == c)
+			{
+				m_collisions.erase(m_collisions.begin() + i);
+				m_collisions.shrink_to_fit();
+			}
+		}
+
 		/*
 		if (m_collisions.size() > 1)
 		{
@@ -20,7 +30,7 @@ namespace GameEngine {
 		else
 		{
 		*/
-			m_collisions.clear();
+		//	m_collisions.clear();
 		//}
 	}
 
@@ -51,7 +61,8 @@ namespace GameEngine {
 	{
 		if (m_collisions.size() > 0)
 		{
-			for (auto c : m_collisions) {
+			for (i = 0; i < m_collisions.size(); i++) {
+				auto c = m_collisions[i];
 				if (testPointAABB(c, m_mouseCursor->mousePos))
 				{
 					c->onCollisionStay(m_mouseCursor);

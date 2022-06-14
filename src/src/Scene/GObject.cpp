@@ -313,7 +313,8 @@ namespace GameEngine {
 
 	void GameEngine::GObject::MoveColliders()
 	{
-		m_aabb->center = get_transform().m_position + offset;
+		if (m_aabb != nullptr)
+			m_aabb->center = get_transform().m_position + offset;
 	}
 
 	void GameEngine::GObject::set_render_AABB(bool set)

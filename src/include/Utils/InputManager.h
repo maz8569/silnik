@@ -11,10 +11,13 @@ namespace GameEngine {
 		bool jump = false;
 		GLFWwindow* window;
 
+		bool LonCooldown = false;
+
 	public:
 
 		bool m_isRclicked = false;
 		bool m_isLclicked = false;
+		bool m_isLpressed = false;
 
 		double m_posx = 0;
 		double m_posy = 0;
@@ -24,6 +27,7 @@ namespace GameEngine {
 		int getVertical();
 		bool getJump();
 		void getInput();
+		void postUpdate();
 	};
 }
 

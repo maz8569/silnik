@@ -1,15 +1,16 @@
 #include "Scene/Scene.h"
 #include <Physics/Collisions/Collision.h>
-
+#include <Rendering/WindowManager.h>
 
 namespace GameEngine {
 
-	GameEngine::Scene::Scene(std::string name) : m_name(name)
+	Scene::Scene(std::string name) : m_name(name)
 	{
-		m_skybox = CreateRef<Skybox>();
 		m_camera = CreateRef<Camera>(Camera(glm::vec3(0.0f, 10.0f, 0.0f)));
 		m_camera->Pitch = -45;
 		m_camera->Yaw = -90;
+
+		m_skybox = CreateRef<Skybox>();
 		colMan = CreateRef<Collision>();
 		textRenderer = CreateRef<TextRenderer>(m_camera, "res/fonts/PressStart2P.ttf", "res/shaders/GUIText.vert", "res/shaders/GUIText.frag");
 		if (!textRenderer->success)
@@ -20,13 +21,12 @@ namespace GameEngine {
 		m_root = CreateRef<GObject>();
 	}
 
-	void GameEngine::Scene::Start()
+	void Scene::Start()
 	{
 	}
 
-	void GameEngine::Scene::Update(float dt)
+	void Scene::Update(float dt)
 	{
-		colMan->CollisionCheck();
 
 		gameManager->Update(dt);
 
@@ -38,17 +38,18 @@ namespace GameEngine {
 		m_camera->Move();
 
 		guiManager->Update();
+		colMan->CollisionCheck();
 	}
 
-	void GameEngine::Scene::FixedUpdate()
+	void Scene::FixedUpdate()
 	{
 	}
 
-	void GameEngine::Scene::LateUpdate()
+	void Scene::LateUpdate()
 	{
 	}
 
-	void GameEngine::Scene::Render(Ref<Shader> shader)
+	void Scene::Render(Ref<Shader> shader)
 	{
 		checkFrustum();
 
@@ -64,7 +65,7 @@ namespace GameEngine {
 		m_skybox->RenderSkybox(m_camera);
 	}
 
-	void GameEngine::Scene::RenderAllShadow(Ref<Shader> shader)
+	void Scene::RenderAllShadow(Ref<Shader> shader)
 	{
 		for (auto& obj : m_GObjects)
 		{
@@ -74,7 +75,7 @@ namespace GameEngine {
 
 	}
 
-	void GameEngine::Scene::RenderAllFoam(Ref<Shader> shader)
+	void Scene::RenderAllFoam(Ref<Shader> shader)
 	{
 		for (auto& obj : m_GObjects)
 		{
@@ -85,7 +86,7 @@ namespace GameEngine {
 
 	}
 
-	void GameEngine::Scene::RenderAllWitTheirShader()
+	void Scene::RenderAllWitTheirShader()
 	{
 		for (auto& obj : m_GObjects)
 		{
@@ -97,7 +98,7 @@ namespace GameEngine {
 		m_skybox->RenderSkybox(m_camera);
 	}
 
-	void GameEngine::Scene::checkFrustum()
+	void Scene::checkFrustum()
 	{
 		m_seenGObjects.clear();
 		for (auto& obj : m_GObjects)
@@ -112,7 +113,7 @@ namespace GameEngine {
 		}
 	}
 
-	void GameEngine::Scene::addObjectToScene(Ref<GObject> obj)
+	void Scene::addObjectToScene(Ref<GObject> obj)
 	{
 		if (obj != nullptr)
 		{
@@ -125,27 +126,27 @@ namespace GameEngine {
 		}
 	}
 
-	Ref<GObject> GameEngine::Scene::getObjectByName(const std::string& name)
+	Ref<GObject> Scene::getObjectByName(const std::string& name)
 	{
 		return Ref<GObject>();
 	}
 
-	std::vector<Ref<GObject>> GameEngine::Scene::getAllObjects()
+	std::vector<Ref<GObject>> Scene::getAllObjects()
 	{
 		return std::vector<Ref<GObject>>();
 	}
 
-	std::vector<Ref<GObject>> GameEngine::Scene::getAllObjectsByName(const std::string& name)
+	std::vector<Ref<GObject>> Scene::getAllObjectsByName(const std::string& name)
 	{
 		return std::vector<Ref<GObject>>();
 	}
 
-	Ref<GObject> GameEngine::Scene::getObjectByID(unsigned int ID)
+	Ref<GObject> Scene::getObjectByID(unsigned int ID)
 	{
 		return Ref<GObject>();
 	}
 
-	std::string GameEngine::Scene::getName()
+	std::string Scene::getName()
 	{
 		return m_name;
 	}

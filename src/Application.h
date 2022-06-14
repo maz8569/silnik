@@ -26,6 +26,7 @@
 #include <ECS/Vehicle.h>
 #include <Scene/Player.h>
 #include <Scene/Stealing.h>
+#include <Scene/Island.h>
 #include <Scene/Dig.h>
 
 namespace GameEngine {
@@ -42,8 +43,15 @@ namespace GameEngine {
 	public:
 		WindowManager windowManager;
 
+		int sceneNumb = 0;
+
 		void maketestscene();
+		void makemenucene();
 		void make1scene();
+		void make2scene();
+		void make3scene();
+		void make4scene();
+		void make5scene();
 
 		Application();
 		~Application();
@@ -111,7 +119,6 @@ namespace GameEngine {
 		Ref<Shader> refrShader = nullptr;
 
 		//Ref<MousePicker> mousePicker = nullptr;
-		//Ref<Block> block = nullptr;
 
 		float lastX = 0.0f;
 		float lastY = 0.0f;
@@ -150,6 +157,8 @@ namespace GameEngine {
 		Ref<MasterRenderer> masterRenderer;
 		Ref<Shape> quad;
 		Ref<ParticleRenderer> particleRenderer;
+
+		Ref<GTexture> perlinTexture;
 
 		glm::mat4 saas;
 		glm::vec4 ucamera_params;

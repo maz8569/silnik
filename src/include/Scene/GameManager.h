@@ -12,7 +12,8 @@ namespace GameEngine {
 	enum GState {
 		Playing,
 		Win,
-		Lose
+		Lose,
+		Menu
 	};
 
 	class GameManager : public GObject
@@ -45,6 +46,7 @@ namespace GameEngine {
 		GState isWin();
 
 		void makePackageAt(DeliveryColor color, glm::vec3 position, Scene* scene);
+		void setState(GState st);
 	};
 
 }

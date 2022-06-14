@@ -377,6 +377,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\AssimpGLMHelpers.cpp" />
+    <ClCompile Include="src\Rendering\Bone.cpp" />
+    <ClCompile Include="src\Scene\Island.cpp" />
+    <ClCompile Include="src\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Scene\Dig.cpp" />
     <ClCompile Include="src\Rendering\ParticleRenderer.cpp" />
     <ClCompile Include="src\Rendering\Particle.cpp" />
@@ -404,6 +408,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Scene\FPcam.cpp" />
     <ClCompile Include="src\Scene\Light.cpp" />
     <ClCompile Include="src\Scene\SceneGraph.cpp" />
+    <ClCompile Include="src\Scene\Scenes.cpp" />
     <ClCompile Include="src\Texture\CubemapTexture.cpp" />
     <ClCompile Include="src\Scene\Skybox.cpp" />
     <ClCompile Include="src\Events\Events.cpp" />
@@ -443,6 +448,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\ECS\Vehicle.cpp" />
     <ClCompile Include="src\ECS\SteeringBehaviors.cpp" />
     <ClCompile Include="src\Scene\Stealing.cpp" />
+    <ClInclude Include="include\Utils\AssimpGLMHelpers.h" />
+    <ClInclude Include="include\Rendering\Bone.h" />
     <ClInclude Include="include\Scene\Dig.h" />
     <ClInclude Include="include\Rendering\Animator.h" />
     <ClInclude Include="include\Scene\BridgeTrigger.h" />
@@ -479,6 +486,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Rendering\ParticleRenderer.h" />
     <ClInclude Include="include\ECS\SteeringBehaviors.h" />
     <ClInclude Include="include\Scene\Stealing.h" />
+    <ClInclude Include="include\Scene\Island.h" />
+    <ClInclude Include="include\Scene\SceneManager.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

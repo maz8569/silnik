@@ -50,7 +50,6 @@ namespace GameEngine {
         float min_z = 10.f;
         float max_z = 40.f;
         Ref<GObject> player;
-        glm::vec3 courier;
 
         glm::mat4 m_projectionMatrix;
         glm::mat4 m_viewMatrix;

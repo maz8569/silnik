@@ -50,13 +50,19 @@ namespace GameEngine {
 
 	void GuiManager::Click()
 	{
+		Ref<GuiComponent> clicked;
+
 		if (toDraw.size() > 0)
 		{
 			for (auto c : toDraw)
 			{
-				c->onClick();
+				if (c->getIsHovered())
+					clicked = c;
 			}
 		}
+
+		if(clicked != nullptr)
+			clicked->onClick();
 	}
 
 	void GuiManager::stopClick()

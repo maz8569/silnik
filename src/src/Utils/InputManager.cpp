@@ -21,11 +21,7 @@ bool GameEngine::InputManager::getJump()
 
 void GameEngine::InputManager::getInput()
 {
-    m_isLclicked = false;
-
-
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+    m_isLpressed = false;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         vertical = 1;
@@ -63,14 +59,29 @@ void GameEngine::InputManager::getInput()
         m_isRclicked = false;
     }
 
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+    {
+        m_isLpressed = false;
+        LonCooldown = false;
+    }
+
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
         glfwGetCursorPos(window, &m_posx, &m_posy);
-        m_isLclicked = true;
+        m_isLpressed = true;
+
+        if (!LonCooldown)
+        {
+            m_isLclicked = true;
+            LonCooldown = true;
+        }
+
     }
 
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE && m_isLclicked)
-    {
-        m_isLclicked = false;
-    }
+
+}
+
+void GameEngine::InputManager::postUpdate()
+{
+    m_isLclicked = false;
 }

@@ -51,6 +51,8 @@ varying vec3 WorldPosition;
 uniform sampler2D ourTexture;
 uniform sampler2D foamTexture;
 uniform sampler2D refractTexture;
+
+uniform sampler2D noiseTexture;
  
 uniform vec3 viewPos; 
 uniform vec3 color; 

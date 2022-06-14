@@ -13,6 +13,8 @@ namespace GameEngine {
 		std::vector<Ref<GuiComponent>> m_2DAABB;
 		std::vector< Ref<GuiComponent>> m_collisions;
 
+		int i = 0;
+
 		Ref<MouseCursor> m_mouseCursor;
 
 		void addCollision(Ref<GuiComponent> c);
