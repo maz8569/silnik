@@ -10,6 +10,7 @@ layout (location = 2) out vec3 Normal;
 layout (location = 3) out vec3 FragPos;
 layout (location = 4) out vec4 FragPosLightSpace;
 layout (location = 5) out vec4 screenPosition;
+layout (location = 6) out vec3 WorldPosition;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -20,8 +21,6 @@ uniform mat4 lightSpaceMatrix;
 uniform float uTime;
 
 uniform vec4 uScreenSize;
-
-varying vec3 WorldPosition;
 
 uniform sampler2D noiseTexture;
 

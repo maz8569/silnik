@@ -66,7 +66,7 @@ namespace GameEngine {
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
-		player->cast_shadow = false;
+		//player->cast_shadow = false;
 
 		Ref<Player> plaComp = CreateRef<Player>(inputManager, m_scene->gameManager);
 		player->addComponent(plaComp);
@@ -779,7 +779,7 @@ namespace GameEngine {
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
-		player->cast_shadow = false;
+		//player->cast_shadow = false;
 
 		Ref<Player> plaComp = CreateRef<Player>(inputManager, m_scene->gameManager);
 		player->addComponent(plaComp);

@@ -45,8 +45,7 @@ layout (location = 2) in vec3 Normal;
 layout (location = 3) in vec3 FragPos;
 layout (location = 4) in vec4 FragPosLightSpace;
 layout (location = 5) in vec4 screenPosition;
-
-varying vec3 WorldPosition;
+layout (location = 6) in vec3 WorldPosition;
 
 uniform sampler2D ourTexture;
 uniform sampler2D foamTexture;
