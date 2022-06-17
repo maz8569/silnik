@@ -25,6 +25,8 @@ namespace GameEngine {
 		Ref<Box> package = nullptr;
 		GObject* boat = nullptr;
 		
+		void getPackage();
+
 	public:
 		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager);
 

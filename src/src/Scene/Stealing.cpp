@@ -61,6 +61,11 @@ namespace GameEngine {
 		package = nullptr;
 	}
 
+	Ref<Box> Stealing::getPackage()
+	{
+		return package;
+	}
+
 	void Stealing::resetRandom()
 	{
 		random.clear();

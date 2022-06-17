@@ -9,7 +9,7 @@ uniform mat4 projection;
 uniform vec3 cameraPos;
 uniform mat4 model;
 
-float amount = 0.005f;
+uniform float amount;
 
 void main()
 {

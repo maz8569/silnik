@@ -200,7 +200,7 @@ namespace GameEngine {
 		{
 			m_model = ResourceManager::getModel(modelName);
 
-			/*
+			
 			if (m_model->GetBoneCount() > 0)
 			{
 				std::cout << "\nanimator\n";
@@ -208,7 +208,7 @@ namespace GameEngine {
 				Ref<Animator> animator = CreateRef<Animator>(danceAnimation);
 				addComponent(animator);
 			}
-			*/
+			
 
 			m_aabb = CreateRef<AABB>(generateAABB(m_model));
 			m_aabb->parent = this;

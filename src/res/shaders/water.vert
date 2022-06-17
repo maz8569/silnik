@@ -24,7 +24,7 @@ uniform vec4 uScreenSize;
 
 uniform sampler2D noiseTexture;
 
-float amount = 0.005f;
+uniform float amount;
 
 void main()
 {

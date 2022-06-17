@@ -32,6 +32,8 @@ namespace GameEngine {
 		void addBoat(Ref<GObject> b);
 		void releasePackage();
 
+		Ref<Box> getPackage();
+
 		void resetRandom();
 		void placePackage(GObject* other);
 	};

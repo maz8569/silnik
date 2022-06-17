@@ -173,7 +173,7 @@ namespace GameEngine {
         virtual void Move()
         {
             
-            Position = player->get_transform().m_position + glm::vec3(0, 12, 12);
+            Position = player->get_transform().m_position + glm::vec3(0, 15, 12);
             //updateFrustum();
 
             //float x = player->get_transform().m_position.x - courier.x;

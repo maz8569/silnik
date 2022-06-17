@@ -67,6 +67,7 @@ namespace GameEngine {
                 if (animationTime < m_Positions[index + 1].timeStamp)
                     return index;
             }
+            return m_Positions.size() - 2;  // made on tape
             assert(0);
         }
 
@@ -79,6 +80,8 @@ namespace GameEngine {
                 if (animationTime < m_Rotations[index + 1].timeStamp)
                     return index;
             }
+            return m_Rotations.size() - 2;  // made on tape
+
             assert(0);
         }
 
@@ -91,6 +94,8 @@ namespace GameEngine {
                 if (animationTime < m_Scales[index + 1].timeStamp)
                     return index;
             }
+            return m_Scales.size() - 2;  // made on tape
+
             assert(0);
         }
 

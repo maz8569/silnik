@@ -14,7 +14,7 @@ uniform vec3 cameraPos;
 uniform vec3 CameraRight_worldspace;
 uniform vec3 CameraUp_worldspace;
 
-float amount = 0.005f;
+uniform float amount;
 
 void main()
 {

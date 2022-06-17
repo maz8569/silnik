@@ -161,9 +161,6 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     //texcoordss.y +=0.03;
 
-    float refValue = texture(foamTexture, texcoordss).r;
-    refValue = 60* LinearizeDepth(refValue) / far_plane;
-
     float worldDepth = getLinearDepth(WorldPosition);
     float screenDepth = getLinearScreenDepth();
 
@@ -183,11 +180,11 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     vec4 gg = vec4(ambient + (diffuse + specular), 1.0);
 
-    float foamLine = clamp( (-screenPosition.w/2 + depthValue)/10, 0, 1);
-    float refrline = clamp( (-screenPosition.w/2 + refValue)/20, 0, 1);
+    //float foamLine = clamp( (-screenPosition.w/2 + depthValue)/20, 0, 1);
+    float refrline = clamp( (-screenPosition.w/2 + depthValue)/20, 0, 1);
     vec3 scolor = vec3(refrline);
 
-    if (refrline < 0.5)
+    if (refrline < 0.45)
     {
         gg = mix(gg, refrColor , 0.5);
 
@@ -197,7 +194,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     }
 
-    if(foamLine < 0.3){
+    if((refrline < 0.18) && (refrline > 0.09)){
         gg.rgb = vec3(0.8, 0.8, 0.75);
         //gg.a += 0.1;
     }

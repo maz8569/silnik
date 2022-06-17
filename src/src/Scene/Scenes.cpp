@@ -61,8 +61,9 @@ namespace GameEngine {
 
 		m_scene->gameManager->init();
 
-		Ref<GObject> player = CreateRef<GObject>("testanim");
-		player->set_local_scale({ 0.01, 0.01, 0.01 });
+		Ref<GObject> player = CreateRef<GObject>("ludek");
+		//player->set_local_scale({ 0.01, 0.01, 0.01 });
+		player->set_local_scale({ 0.005, 0.005, 0.005 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
@@ -81,6 +82,7 @@ namespace GameEngine {
 		//player->addComponent(partsys);
 		//particleRenderer->addParticleSystem(partsys);
 		std::vector<glm::vec3> pos;
+		boat->set_render_AABB(true);
 
 		pos.push_back({ 6, -7.5, 6 });
 		pos.push_back({ 6, -7.5, -6 });
@@ -774,8 +776,8 @@ namespace GameEngine {
 
 		m_scene->gameManager->init();
 
-		Ref<GObject> player = CreateRef<GObject>("testanim");
-		player->set_local_scale({ 0.01, 0.01, 0.01 });
+		Ref<GObject> player = CreateRef<GObject>("ludek");
+		player->set_local_scale({ 0.002, 0.002, 0.002 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);

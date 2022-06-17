@@ -24,38 +24,44 @@ const int MAX_BONES = 100;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBonesMatrices[MAX_BONES];
 
-float amount = 0.005f;
+uniform float amount;
 
 void main()
 {
     ourColor = aColor;
     TexCoord = aTexCoord;
 
-    vec4 totalPosition = vec4(0.0f);
-    /*
+    const vec4 pos = vec4(aPos, 1.0f);
+    const vec4 norm = vec4(aNormal, 0.0f);
+
+    vec4 posSkinned = vec4(0.0f);
+    vec4 normSkinned = vec4(0.0f);
+    
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
-        if(aBoneIds[i] == -1) 
-            continue;
-        if(aBoneIds[i] >=MAX_BONES) 
+        if(aBoneIds[i] >= 0)
         {
-            totalPosition = vec4(aPos,1.0f);
-            break;
-        }
-        vec4 localPosition = finalBonesMatrices[aBoneIds[i]] * vec4(aPos,1.0f);
-        totalPosition += localPosition * aWeights[i];
-        vec3 localNormal = mat3(finalBonesMatrices[aBoneIds[i]]) * Normal;
-    }
-    */
+            const mat4 bone = finalBonesMatrices[aBoneIds[i]];
+            const float weight = aWeights[i];
 
-    vec3 worldPos = vec3(model * vec4(aPos, 1.0));
-    worldPos -= cameraPos;
-    FragPos = worldPos;
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+            posSkinned += (bone * pos) * weight;
+            normSkinned += (bone * norm) * weight;
+
+        }
+    }
+    
+    posSkinned.w = 1.0f;
+
+    vec4 worldPos = model * posSkinned;
+    //vec4 worldPos = model * pos;
+    worldPos -= vec4(cameraPos, 0.0);
+    FragPos = vec3(worldPos);
+    Normal = mat3(transpose(inverse(model))) * vec3(normSkinned);
+    //Normal = mat3(transpose(inverse(model))) * vec3(aNormal);
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
-    worldPos = vec3(view * vec4(worldPos, 1.0));
+    worldPos = view * worldPos;
     float ypos = (pow(worldPos.z, 2) * 1.5 + pow(worldPos.x, 2) )* (-1) * amount ;
-    worldPos += vec3(0, ypos, 0);
-    screenPosition = projection * vec4(worldPos, 1.0);
+    worldPos += vec4(0, ypos, 0, 0);
+    screenPosition = projection * worldPos;
     gl_Position = screenPosition;
 }

@@ -109,30 +109,39 @@ namespace GameEngine {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		float ooo = 0.0075;
+
 		ourShader->use();
 		ourShader->setInt("shadowMap", 1);
 		ourShader->setInt("cameraDepthMap", 2);
 		ourShader->setInt("ourTexture", 0);
+		ourShader->setFloat("amount", ooo);
 
 		animShader->use();
 		animShader->setInt("shadowMap", 1);
 		animShader->setInt("cameraDepthMap", 2);
 		animShader->setInt("ourTexture", 0);
+		animShader->setFloat("amount", ooo);
 
 		refrShader->use();
 		refrShader->setInt("shadowMap", 1);
 		refrShader->setInt("cameraDepthMap", 2);
 		waterShader->setInt("colorTexture", 3);
 		refrShader->setInt("ourTexture", 0);
+		refrShader->setFloat("amount", ooo);
 
 		waterShader->use();
 		waterShader->setInt("foamTexture", 2);
 		waterShader->setInt("refractTexture", 3);
 		waterShader->setInt("noiseTexture", 4);
 		waterShader->setInt("ourTexture", 0);
+		waterShader->setFloat("amount", ooo);
 
 		debugDepth->use();
 		debugDepth->setInt("depthMap", 0);
+
+		foaMap->use();
+		foaMap->setFloat("amount", ooo);
 
 		float a = 0;
 		bool should_render = false;

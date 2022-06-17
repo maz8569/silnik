@@ -28,7 +28,8 @@ namespace GameEngine {
 		loadModel("redpackage", std::string("res/models/redpaczka/redpaczka.obj"));
 		loadModel("bridge", std::string("res/models/lowpolymost/niby_most.obj"));
 		loadModel("island", std::string("res/models/islandNew/wyspa.obj"));
-		//loadModel("testanimcol", std::string("res/models/test/test.dae"));
+		loadModel("ludek", std::string("res/models/ludek/ludek.fbx"));
+		loadModel("testanimcol", std::string("res/models/testanim/gurl.fbx"));
 		loadModel("testanim", std::string("res/models/testanim/testanim.dae"));
 		loadModel("hidefCube", std::string("res/models/hidefCube/cube.obj"));
 		loadModel("hidefPlane", std::string("res/models/hidefPlane/plane.obj"));

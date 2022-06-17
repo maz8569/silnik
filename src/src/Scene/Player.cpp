@@ -1,9 +1,15 @@
 #include "Scene/Player.h"
 #include <Scene/Stealing.h>
+#include <Scene/Boat.h>
 
-namespace GameEngine { 
+namespace GameEngine {
 
-    Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager) 
+    void Player::getPackage()
+    {
+        package->currentHolder = this;
+    }
+
+    Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager)
         : inputManager(inputManager), m_gameManager(gameManager), GComponent()
     {
     }
@@ -36,7 +42,7 @@ void GameEngine::Player::Update(float dt)
 
     if (boat != nullptr)
     {
-        parent->get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 3, 0);
+        parent->get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 0.4, 0);
         isGrounded = true;
     }
 
@@ -91,11 +97,23 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
         parent->get_transform().m_position = lastPosition;// +glm::vec3(0, 0.1, 0);
     }
     
+    if (tag == "Tboat" && boat != nullptr && package == nullptr)
+    {
+        Ref<Stealing> stealComp = other->GetComponent<Stealing>();
+        if (stealComp != nullptr)
+        {
+            package = stealComp->getPackage();
+            stealComp->releasePackage();
+            getPackage();
+        }
+    }
 
-    if (tag == "Tbridge" || tag == "Tboat")
+    if (tag == "Tbridge" || tag == "Tboat" || tag == "boat")
     {
         return;
     }
+
+
 
     if (tag == "package")
     {
@@ -104,7 +122,7 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
         {
             Stealing* stealing = (Stealing*)package->currentHolder;
             stealing->releasePackage();
-            package->currentHolder = this;
+            getPackage();
         }
         if(package->getDeliveryColor() == DeliveryColor::Blue)
             std::cout << "package";
