@@ -399,7 +399,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="src\Physics\Collisions\Collision2D.cpp" />
     <ClCompile Include="src\Scene\GameManager.cpp" />
-    <ClCompile Include="src\ECS\GEntityManager.cpp" />
     <ClCompile Include="src\GUI\Canvas.cpp" />
     <ClCompile Include="src\GUI\GUIRenderer.cpp" />
     <ClCompile Include="src\GUI\GuiComponent.cpp" />
@@ -418,7 +417,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Texture\BasicTexture.cpp" />
     <ClCompile Include="src\Utils\FileUtil.cpp" />
     <ClCompile Include="src\Rendering\Frustum.cpp" />
-    <ClCompile Include="src\ECS\ecsComponent.cpp" />
     <ClCompile Include="src\Physics\Collisions\PlaneCollider.cpp" />
     <ClCompile Include="src\Physics\RayCasting\MousePicker.cpp" />
     <ClCompile Include="src\Rendering\Shape.cpp" />
@@ -465,7 +463,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="Application.h" />
     <ClInclude Include="include\Physics\Collisions\Collision2D.h" />
     <ClInclude Include="include\Scene\GameManager.h" />
-    <ClInclude Include="include\ECS\GEntityManager.h" />
     <ClInclude Include="include\GUI\Canvas.h" />
     <ClInclude Include="include\GUI\GUIRenderer.h" />
     <ClInclude Include="include\GUI\GuiComponent.h" />
@@ -497,7 +494,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Utils\NonMovable.h" />
     <ClInclude Include="include\Utils\Singleton.h" />
     <ClInclude Include="include\Rendering\Frustum.h" />
-    <ClInclude Include="include\ECS\ecsComponent.h" />
     <ClInclude Include="include\Physics\Collisions\AABB.h" />
     <ClInclude Include="include\Audio\AudioManager.h" />
     <ClInclude Include="include\Scene\Camera.h" />

@@ -2,6 +2,7 @@
 #include <Scene/GObject.h>
 #include <chrono>
 #include <Scene/Island.h>
+#include <Scene/Player.h>
 
 namespace GameEngine {
 
@@ -105,6 +106,7 @@ namespace GameEngine {
 		if (randPlace())
 		{
 			package->parent->set_local_position(other->get_transform().m_position + glm::vec3(0, 3, 0));
+			package->currentHolder = nullptr;
 			releasePackage();
 			canTakePackage = islandsTreshold/2;
 		}

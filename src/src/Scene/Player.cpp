@@ -104,7 +104,8 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
         {
             package = stealComp->getPackage();
             stealComp->releasePackage();
-            getPackage();
+            if (package != nullptr)
+                getPackage();
         }
     }
 

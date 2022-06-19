@@ -718,6 +718,11 @@ namespace GameEngine {
 				make3scene();
 			}
 
+			if (e.key == GLFW_KEY_5)
+			{
+				make4scene();
+			}
+
 			if (e.key == GLFW_KEY_TAB)
 			{
 				if (m_gameState != GameState::MenuState)
