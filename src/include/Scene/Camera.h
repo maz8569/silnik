@@ -7,6 +7,7 @@
 #include "Scene/GObject.h"
 #include "Scene/Player.h"
 #include "Rendering/Frustum.h"
+#include <Rendering/WindowManager.h>
 //#include "Scene/Courier.h"
 
 namespace GameEngine {
@@ -172,7 +173,6 @@ namespace GameEngine {
 
         virtual void Move()
         {
-            
             Position = player->get_transform().m_position + glm::vec3(0, 15, 12);
             //updateFrustum();
 

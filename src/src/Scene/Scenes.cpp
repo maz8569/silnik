@@ -777,7 +777,7 @@ namespace GameEngine {
 		m_scene->gameManager->init();
 
 		Ref<GObject> player = CreateRef<GObject>("ludek");
-		player->set_local_scale({ 0.002, 0.002, 0.002 });
+		player->set_local_scale({ 1, 1, 1 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);

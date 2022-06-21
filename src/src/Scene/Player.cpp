@@ -12,16 +12,17 @@ namespace GameEngine {
     Player::Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager)
         : inputManager(inputManager), m_gameManager(gameManager), GComponent()
     {
+        auman = AudioManager::getInstance();
     }
 
-void GameEngine::Player::setParent(GObject* newParent)
+void Player::setParent(GObject* newParent)
 {
     GComponent::setParent(newParent);
     lastPosition = parent->get_transform().m_position;
 
 }
 
-void GameEngine::Player::Update(float dt)
+void Player::Update(float dt)
 {
     currentSpeed.x = speed * inputManager->getHorizontal();
 
@@ -34,33 +35,42 @@ void GameEngine::Player::Update(float dt)
         parent->set_local_rotationY(glm::degrees(yRot));
     }
 
-
-    //currentSpeed = glm::normalize(currentSpeed);
-    parent->get_transform().m_position.x += currentSpeed.x * 0.005;
-
-    parent->get_transform().m_position.z += currentSpeed.y * 0.005;
-
-    if (boat != nullptr)
+    if (drownTimer <= 0)
     {
-        parent->get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 0.4, 0);
-        isGrounded = true;
+        //currentSpeed = glm::normalize(currentSpeed);
+        parent->get_transform().m_position.x += currentSpeed.x * 0.005;
+
+        parent->get_transform().m_position.z += currentSpeed.y * 0.005;
+
+        if (boat != nullptr)
+        {
+            parent->get_transform().m_position = boat->get_transform().m_position + glm::vec3(0, 0.4, 0);
+            isGrounded = true;
+        }
+
+        jumpPower += gravity / 60;
+
+        if (isGrounded)
+        {
+            jumpPower = 0;
+        }
+
+        parent->get_transform().m_position.y += jumpPower * 0.005;
+
+
+        if (inputManager->getJump() && isGrounded) {
+            jump();
+        }
     }
-
-    jumpPower += gravity / 60;
-
-    if (isGrounded)
+    else
     {
-        jumpPower = 0;
+        drownTimer -= dt;
+        parent->get_transform().m_position.y += jumpPower * 0.005;
+        if (drownTimer <= 0)
+        {
+            parent->get_transform().m_position = lastPosition;// +glm::vec3(0, 0.1, 0);
+        }
     }
-
-    parent->get_transform().m_position.y += jumpPower * 0.005;
-
-
-    if (inputManager->getJump() && isGrounded) {
-        jump();
-    }
-
-    //update_transform(get_parent()->get_transform(), true);
 
     if (package != nullptr)
     {
@@ -70,32 +80,35 @@ void GameEngine::Player::Update(float dt)
     isGrounded = false;
 }
 
-void GameEngine::Player::jump()
+void Player::jump()
 {
     jumpPower = jumpHeight;
     isGrounded = false;
     boat = nullptr;
+    auman->playMonoSound("jump");
 }
 
-void GameEngine::Player::OnCollisionEnter(GObject* other)
+void Player::OnCollisionEnter(GObject* other)
 {
+    if (other->getAABB()->tag == "water")
+    {
+        //std::cout << "water";
+        drownTimer = 3;
+        jumpPower = -2;
+    }
     if (other->getAABB()->tag == "boat")
     {
         boat = other;
     }
 }
 
-void GameEngine::Player::OnCollisionStay(GObject* other)
+void Player::OnCollisionStay(GObject* other)
 {
     
     auto otherAABB = other->getAABB();
     auto tag = otherAABB->tag;
     
-    if (tag == "water")
-    {
-        //std::cout << "water";
-        parent->get_transform().m_position = lastPosition;// +glm::vec3(0, 0.1, 0);
-    }
+
     
     if (tag == "Tboat" && boat != nullptr && package == nullptr)
     {
@@ -108,6 +121,13 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
                 getPackage();
         }
     }
+
+    
+    if (tag == "boat" && jumpPower <-2)
+    {
+        boat = other;
+    }
+    
 
     if (tag == "Tbridge" || tag == "Tboat" || tag == "boat")
     {
@@ -202,7 +222,11 @@ void GameEngine::Player::OnCollisionStay(GObject* other)
 
     if (tag == "terrain" && isGrounded)
     {
-        lastPosition = parent->get_transform().m_position + glm::vec3(0, 0.5, 0);
+        proxy = other->get_transform().m_position;
+        parentProxy = parent->get_transform().m_position;
+        proxy.y = parentProxy.y;
+        lastPosition = 0.5f * parentProxy + 0.5f * proxy;
+        lastPosition += glm::vec3(0, 0.5, 0);
     }
 
     parent->MoveColliders();

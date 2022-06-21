@@ -61,14 +61,11 @@ namespace GameEngine {
 			exit(-1);
 		}
 
-		audioManager = CreateRef<AudioManager>();
+		audioManager = AudioManager::getInstance();
 		if (!audioManager->success)
 		{
 			exit(-1);
 		}
-
-		audioManager->readMonoData("TestSound");
-
 
 		inputManager = CreateRef<InputManager>(windowManager.window);
 
@@ -260,8 +257,7 @@ namespace GameEngine {
 		double last_time = glfwGetTime();
 		double unprocessed_time = 0.0;
 
-		playAudio("TestSound");
-		
+		audioManager->loopMonoSound("TestSound");
 		//guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
 		//Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
@@ -813,7 +809,6 @@ namespace GameEngine {
 			GuiComponent::setScrHeight(windowManager.SCR_HEIGHT);
 
 			uScreenSize = glm::vec4(windowManager.SCR_WIDTH, windowManager.SCR_HEIGHT, 1 / windowManager.SCR_WIDTH, 1 / windowManager.SCR_HEIGHT);
-
 
 			break;
 		default:

@@ -74,7 +74,7 @@ namespace GameEngine {
 		}
 		const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
-		Ref<AudioManager> audioManager = nullptr;
+		AudioManager* audioManager = nullptr;
 
 		void playAudio(std::string filename);
 		void renderQuad();
@@ -95,9 +95,6 @@ namespace GameEngine {
 		GameState m_gameState;
 		bool m_cursorLocked;
 		bool m_VSync = true;
-
-		Ref<Shape> quadd;
-		Ref<Shader> basicShader;
 
 		Scene* m_scene;
 

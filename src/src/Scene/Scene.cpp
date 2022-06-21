@@ -6,7 +6,7 @@ namespace GameEngine {
 
 	Scene::Scene(std::string name) : m_name(name)
 	{
-		m_camera = CreateRef<Camera>(Camera(glm::vec3(0.0f, 10.0f, 0.0f)));
+		m_camera = CreateRef<Camera>(glm::vec3(0.0f, 10.0f, 0.0f));
 		m_camera->Pitch = -55;
 		m_camera->Yaw = -90;
 

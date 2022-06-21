@@ -46,6 +46,11 @@ namespace GameEngine {
 		loadTexture("fullheart", std::string("res/textures/fullheart.png"));
 		loadTexture("exit", std::string("res/textures/buttonExit.png"));
 		loadTexture("play", std::string("res/textures/buttonPlay.png"));
+
+		AudioManager* audioManager = AudioManager::getInstance();
+		audioManager->readMonoData("TestSound");
+		audioManager->readMonoData("jump");
+
 	}
 
 	Ref<Shader> ResourceManager::loadShader(std::string name, const char* vertexPath, const char* fragmentPath, const char* geometryPath)

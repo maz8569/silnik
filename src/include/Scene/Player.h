@@ -4,6 +4,7 @@
 #include<Scene/Box.h>
 #include<Scene/GameManager.h>
 #include "Utils/InputManager.h"
+#include <Audio/AudioManager.h>
 
 namespace GameEngine {
 	class Player: public GComponent  
@@ -25,7 +26,13 @@ namespace GameEngine {
 		Ref<Box> package = nullptr;
 		GObject* boat = nullptr;
 		
+		glm::vec3 proxy;
+		glm::vec3 parentProxy;
+
 		void getPackage();
+		AudioManager* auman;
+
+		float drownTimer = 0;
 
 	public:
 		Player(std::shared_ptr<InputManager> inputManager, Ref<GameManager> gameManager);

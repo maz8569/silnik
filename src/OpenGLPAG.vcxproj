@@ -377,6 +377,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Audio\SoundBuffer.cpp" />
+    <ClCompile Include="src\Audio\SoundDevice.cpp" />
     <ClCompile Include="src\Rendering\Animation.cpp" />
     <ClCompile Include="src\Utils\AssimpGLMHelpers.cpp" />
     <ClCompile Include="src\Rendering\Bone.cpp" />
@@ -487,6 +489,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Scene\Stealing.h" />
     <ClInclude Include="include\Scene\Island.h" />
     <ClInclude Include="include\Scene\SceneManager.h" />
+    <ClInclude Include="include\Audio\SoundDevice.h" />
+    <ClInclude Include="include\Audio\SoundBuffer.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
     <ClInclude Include="include\Utils\FileUtil.h" />

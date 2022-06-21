@@ -5,6 +5,7 @@
 #include <typedefs.h>
 #include <Shaders/Shader.h>
 #include <Rendering/Model.h>
+#include <Audio/AudioManager.h>
 
 namespace GameEngine {
 
