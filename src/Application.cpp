@@ -26,6 +26,17 @@ namespace GameEngine {
 		}
 	}
 
+	void retryLev()
+	{
+		app.loadScene();
+	}
+
+	void nextLev()
+	{
+		app.sceneNumb++;
+		app.loadScene();
+	}
+
 	Application::Application()
 		: m_gameState(GameState::MenuState), m_cursorLocked(true)
 	{
@@ -257,7 +268,7 @@ namespace GameEngine {
 		double last_time = glfwGetTime();
 		double unprocessed_time = 0.0;
 
-		audioManager->loopMonoSound("TestSound");
+		//audioManager->loopMonoSound("menu");
 		//guiManager->addComponent(std::string("res/textures/torus.png"), glm::vec2( 550, -310 ), glm::vec2( 62, 6 ), 0);
 		//Ref<Slider> slider = guiManager->addSlider(-1, 2.2, &defV, std::string("res/textures/fullheart.png"), glm::vec2( 550, -310 ), glm::vec2( 24, 24));
 
@@ -307,42 +318,6 @@ namespace GameEngine {
 
 	void Application::RenderScene(Ref<Shader> shader)
 	{
-		/*
-		player->render(shader);
-		courier->render(shader);
-		iisland->render(shader);
-		iisland2->render(shader);
-		iisland3->render(shader);
-		iisland4->render(shader);
-		iisland5->render(shader);
-		water->render(shader);
-		gdom->render(shader);
-		paczka->render(shader);
-		most->render(shader);
-		most2->render(shader);
-		most3->render(shader);
-		most4->render(shader);
-		*/
-		//glBindTexture(GL_TEXTURE_2D, texture1);
-		//texture1.bindTexture();
-
-		//glm::mat4 modelmatrx = iisland->get_transform().m_world_matrix;
-
-		//shader->setInt("texture1", 0);
-		//glActiveTexture(GL_TEXTURE0);
-
-		//shader->setVec3("color", { 0.63, 0.68, 0.85 });
-		/*
-		for (int i = 0; i < 16; i++)
-		{
-			for (int j = 0; j < 16; j++)
-			{
-			}
-		}
-		*/
-		//modelmatrx = glm::translate(iisland->get_transform().m_world_matrix, { 1, 4, 1 });
-		//shader->setMat4("model", modelmatrx);
-		//quad->Render(36);
 	}
 
 	void Application::OnInput()
@@ -362,19 +337,36 @@ namespace GameEngine {
 
 		m_scene->Update(dt);
 
-		//m_scene->m_camera->courier = courier->get_transform().m_position;
-
 		ourShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		animShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		refrShader->setVec3("cameraPos", m_scene->m_camera->Position);
 		waterShader->setVec3("cameraPos", m_scene->m_camera->Position);
 
-		//mousePicker->Update();
-
-		if (m_scene->gameManager->isWin() == GState::Playing) {
-			m_scene->gameManager->setTime(m_scene->gameManager->getTime() - dt);
-
+		if (!m_scene->stateCh)
+		{
+			Ref<GuiComponent> but;
+			switch (m_scene->gameManager->isWin())
+			{
+			case GState::Playing:
+				m_scene->gameManager->setTime(m_scene->gameManager->getTime() - dt);
+				break;
+			case GState::Win:
+				m_scene->guiManager->addComponent(std::string("win"), glm::vec2(0, 0), glm::vec2(1000, 550));
+				but = m_scene->guiManager->addComponent(std::string("next"), glm::vec2(0, -300), glm::vec2(200, 70));
+				but->setOnClickFunction(nextLev);
+				m_scene->stateCh = true;
+				break;
+			case GState::Lose:
+				m_scene->guiManager->addComponent(std::string("lose"), glm::vec2(0, 0), glm::vec2(1000, 550));
+				but = m_scene->guiManager->addComponent(std::string("retry"), glm::vec2(0, -300), glm::vec2(200, 70));
+				but->setOnClickFunction(retryLev);
+				m_scene->stateCh = true;
+				break;
+			default:
+				break;
+			}
 		}
+
 		inputManager->postUpdate();
 	}
 
@@ -505,10 +497,10 @@ namespace GameEngine {
 		switch (m_scene->gameManager->isWin())
 		{
 		case GState::Win:
-			m_scene->textRenderer->RenderText("win", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+			//m_scene->textRenderer->RenderText("win", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 			break;
 		case GState::Lose:
-			m_scene->textRenderer->RenderText("lost", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
+			//m_scene->textRenderer->RenderText("lost", 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
 			break;
 		case GState::Playing:
 			//textRenderer->RenderText("value: " + std::to_string(defV), 10.0f, 60.0f, 0.5f, glm::vec3(1.0, 0.8f, 1.0f));
@@ -644,6 +636,33 @@ namespace GameEngine {
 		lastX = e.mx;
 		lastY = e.my;
 		m_scene->m_camera->ProcessMouseMovement(xoffset, yoffset);
+	}
+
+	void Application::loadScene()
+	{
+		switch (sceneNumb) {
+		case 0:
+			makemenucene();
+			break;
+		case 1:
+			make1scene();
+			break;
+		case 2:
+			make2scene();
+			break;
+		case 3: 
+			maketestscene();
+			break;
+		case 4:
+			make3scene();
+			break;
+		case 5:
+			make4scene();
+			break;
+		default:
+			makemenucene();
+			break;
+		}
 	}
 
 	std::vector<glm::vec4> Application::getFrustumCornersWorldSpace(const glm::mat4& proj, const glm::mat4& view)

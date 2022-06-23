@@ -21,10 +21,10 @@ void main()
 {             
     vec2 pos = TexCoords;
 
-    int   size       = 5;
-    float separation = 3;
-    float threshold  = 0.8;
-    float amount     = 0.8;
+    //int   size       = 5;
+    //float separation = 3;
+    //float threshold  = 0.8;
+    //float amount     = 0.8;
 
     /*
     vec2 texSize = textureSize(depthMap, 0).xy;

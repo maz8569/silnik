@@ -148,6 +148,7 @@ namespace GameEngine {
 	{
 		if (isHovered)
 		{
+			/*
 			std::cout << "click";
 			opacity += 0.1f;
 			if (opacity >= 1)
@@ -155,7 +156,7 @@ namespace GameEngine {
 				opacity = 0;
 			}
 			std::cout << opacity;
-
+			*/
 			if (hasFunk)
 			{
 				onClickFunc();

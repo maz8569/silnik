@@ -203,7 +203,7 @@ namespace GameEngine {
 			
 			if (m_model->GetBoneCount() > 0)
 			{
-				std::cout << "\nanimator\n";
+				std::cout << "\nanimator" << m_model->GetBoneCount() <<" bones\n";
 				Ref<Animation> danceAnimation = CreateRef<Animation>(m_model->path, m_model);
 				Ref<Animator> animator = CreateRef<Animator>(danceAnimation);
 				addComponent(animator);

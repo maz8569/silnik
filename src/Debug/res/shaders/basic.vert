@@ -18,7 +18,7 @@ uniform vec4 aColor;
 uniform vec3 cameraPos;
 uniform mat4 lightSpaceMatrix;
 
-float amount = 0.005f;
+uniform float amount;
 
 void main()
 {

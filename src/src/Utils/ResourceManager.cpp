@@ -28,7 +28,8 @@ namespace GameEngine {
 		loadModel("redpackage", std::string("res/models/redpaczka/redpaczka.obj"));
 		loadModel("bridge", std::string("res/models/lowpolymost/niby_most.obj"));
 		loadModel("island", std::string("res/models/islandNew/wyspa.obj"));
-		loadModel("ludek", std::string("res/models/ludek/ludek.fbx"));
+		loadModel("ludek", std::string("res/models/ludek/ludeknew.fbx"));
+		loadModel("testludek", std::string("res/models/ludek/ludek.obj"));
 		loadModel("testanimcol", std::string("res/models/testanim/gurl.fbx"));
 		loadModel("testanim", std::string("res/models/testanim/testanim.dae"));
 		loadModel("hidefCube", std::string("res/models/hidefCube/cube.obj"));
@@ -46,10 +47,16 @@ namespace GameEngine {
 		loadTexture("fullheart", std::string("res/textures/fullheart.png"));
 		loadTexture("exit", std::string("res/textures/buttonExit.png"));
 		loadTexture("play", std::string("res/textures/buttonPlay.png"));
+		loadTexture("retry", std::string("res/textures/buttonRetry.png"));
+		loadTexture("next", std::string("res/textures/buttonNext.png"));
+		loadTexture("title", std::string("res/textures/name.png"));
+		loadTexture("lose", std::string("res/textures/lose.png"));
+		loadTexture("win", std::string("res/textures/win.png"));
 
 		AudioManager* audioManager = AudioManager::getInstance();
-		audioManager->readMonoData("TestSound");
 		audioManager->readMonoData("jump");
+		audioManager->readMonoData("menu");
+		audioManager->readMonoData("level");
 
 	}
 

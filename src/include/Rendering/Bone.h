@@ -13,20 +13,20 @@ namespace GameEngine {
 
     struct KeyPosition
     {
-        glm::vec3 position;
-        float timeStamp;
+        glm::vec3 position = glm::vec3(0);
+        float timeStamp = 0;
     };
 
     struct KeyRotation
     {
         glm::quat orientation;
-        float timeStamp;
+        float timeStamp = 0;
     };
 
     struct KeyScale
     {
-        glm::vec3 scale;
-        float timeStamp;
+        glm::vec3 scale = glm::vec3(0);
+        float timeStamp = 0;
     };
 
     class Bone
@@ -35,13 +35,13 @@ namespace GameEngine {
         std::vector<KeyPosition> m_Positions;
         std::vector<KeyRotation> m_Rotations;
         std::vector<KeyScale> m_Scales;
-        int m_NumPositions;
-        int m_NumRotations;
-        int m_NumScalings;
+        int m_NumPositions = 0;
+        int m_NumRotations = 0;
+        int m_NumScalings = 0;
 
-        glm::mat4 m_LocalTransform;
+        glm::mat4 m_LocalTransform = glm::mat4(0);
         std::string m_Name;
-        int m_ID;
+        int m_ID = 0;
 
     public:
 

@@ -84,6 +84,8 @@ namespace GameEngine {
 		void stopCamera(Event e);
 		void rotateCamera(Event e);
 
+		void loadScene();
+
 		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& proj, const glm::mat4& view);
 		std::vector<glm::vec4> getFrustumCornersWorldSpace(const glm::mat4& projview);
 

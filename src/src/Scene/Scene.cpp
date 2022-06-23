@@ -19,6 +19,7 @@ namespace GameEngine {
 		}
 
 		m_root = CreateRef<GObject>();
+		stateCh = false;
 	}
 
 	void Scene::Start()

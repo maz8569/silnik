@@ -123,7 +123,7 @@ void Player::OnCollisionStay(GObject* other)
     }
 
     
-    if (tag == "boat" && jumpPower <-2)
+    if (tag == "boat" && jumpPower <-15)
     {
         boat = other;
     }

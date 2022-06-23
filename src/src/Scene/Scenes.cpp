@@ -33,6 +33,11 @@ namespace GameEngine {
 		if (m_scene != nullptr)
 			delete m_scene;
 
+		sceneNumb = 3;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
+
 		m_scene = new Scene("scenetest");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
 
@@ -62,8 +67,7 @@ namespace GameEngine {
 		m_scene->gameManager->init();
 
 		Ref<GObject> player = CreateRef<GObject>("ludek");
-		//player->set_local_scale({ 0.01, 0.01, 0.01 });
-		player->set_local_scale({ 0.002, 0.002, 0.002 });
+		player->set_local_scale({ 0.01, 0.01, 0.01 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
@@ -361,7 +365,6 @@ namespace GameEngine {
 		m_scene->addObjectToScene(player);
 		m_scene->addObjectToScene(boat);
 		m_scene->addObjectToScene(boatCollision);
-		//m_scene->addObjectToScene(testanim);
 		m_scene->addObjectToScene(dirt);
 		m_scene->addObjectToScene(iisland);
 		m_scene->addObjectToScene(iisland2);
@@ -369,7 +372,6 @@ namespace GameEngine {
 		m_scene->addObjectToScene(iisland4);
 		m_scene->addObjectToScene(iisland5);
 		m_scene->addObjectToScene(gdom);
-		//m_scene->addObjectToScene(paczka);
 		m_scene->addObjectToScene(bridgeTrigger);
 		m_scene->addObjectToScene(bridgeTrigger1);
 		m_scene->addObjectToScene(bridgeTrigger2);
@@ -387,6 +389,8 @@ namespace GameEngine {
 		m_scene->addObjectToScene(water2);
 		m_scene->addObjectToScene(water3);
 
+		audioManager->loopMonoSound("level");
+
 		m_scene->m_camera->player = player;
 		Event e;
 		e.type = EventTypes::WindowResize;
@@ -400,6 +404,10 @@ namespace GameEngine {
 		if (m_scene != nullptr)
 			delete m_scene;
 
+		sceneNumb = 0;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
 		m_scene = new Scene("mainMenu");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
 		light = CreateRef<DirectionalLight>(DirectionalLight({ -0.5f, -1.0f, 0.5f }));
@@ -413,15 +421,17 @@ namespace GameEngine {
 
 		m_scene->gameManager = CreateRef<GameManager>(1, nullptr);
 		m_scene->gameManager->setState(GState::Menu);
+		m_scene->stateCh = true;
 
-		Ref<GuiComponent> butStart = m_scene->guiManager->addComponent(std::string("play"), glm::vec2(0, 200), glm::vec2(300, 100));
-		Ref<GuiComponent> but = m_scene->guiManager->addComponent(std::string("exit"), glm::vec2(0, -200), glm::vec2(300, 100));
+		Ref<GuiComponent> title = m_scene->guiManager->addComponent(std::string("title"), glm::vec2(0, 300), glm::vec2(550, 200));
+		Ref<GuiComponent> butStart = m_scene->guiManager->addComponent(std::string("play"), glm::vec2(0, 0), glm::vec2(200, 70));
+		Ref<GuiComponent> but = m_scene->guiManager->addComponent(std::string("exit"), glm::vec2(0, -200), glm::vec2(200, 70));
 		
 		butStart->setOnClickFunction(scene1);
 		but->setOnClickFunction(exit);
 
 		m_scene->addObjectToScene(tt);
-
+		audioManager->loopMonoSound("menu");
 		Event e;
 		e.type = EventTypes::WindowResize;
 		e.wx = windowManager.SCR_WIDTH;
@@ -433,6 +443,11 @@ namespace GameEngine {
 	{
 		if (m_scene != nullptr)
 			delete m_scene;
+		
+		sceneNumb = 1;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
 
 		m_scene = new Scene("scene1");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
@@ -458,13 +473,17 @@ namespace GameEngine {
 
 		m_scene->gameManager->addTexture(texture0);
 		m_scene->gameManager->addTexture(numbComponent->getTexture());
-
+		m_scene->gameManager->setTime(20);
 		m_scene->gameManager->init();
 
-		Ref<GObject> player = CreateRef<GObject>("cube");
+		Ref<GObject> player = CreateRef<GObject>("ludek");
+		player->set_local_scale({ 0.01, 0.01, 0.01 });
+		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
+		player->setAABB(aabb);
+		player->setAABBoffsetY(0.5f);
 		Ref<Player> plaComp = CreateRef<Player>(inputManager, m_scene->gameManager);
 		player->addComponent(plaComp);
-		player->shader = ourShader;
+		player->shader = animShader;
 		player->set_local_position({ -2, 0, 0 });
 
 		Ref<GObject> gdom = CreateRef<GObject>("house");
@@ -576,6 +595,8 @@ namespace GameEngine {
 		m_scene->addObjectToScene(sand);
 		m_scene->addObjectToScene(water);
 
+		audioManager->loopMonoSound("level");
+
 		m_scene->m_camera->player = player;
 		Event e;
 		e.type = EventTypes::WindowResize;
@@ -588,6 +609,11 @@ namespace GameEngine {
 	{
 		if (m_scene != nullptr)
 			delete m_scene;
+
+		sceneNumb = 2;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
 
 		m_scene = new Scene("scene2");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
@@ -616,10 +642,14 @@ namespace GameEngine {
 
 		m_scene->gameManager->init();
 
-		Ref<GObject> player = CreateRef<GObject>("cube");
+		Ref<GObject> player = CreateRef<GObject>("ludek");
+		player->set_local_scale({ 0.01, 0.01, 0.01 });
+		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
+		player->setAABB(aabb);
+		player->setAABBoffsetY(0.5f);
 		Ref<Player> plaComp = CreateRef<Player>(inputManager, m_scene->gameManager);
 		player->addComponent(plaComp);
-		player->shader = ourShader;
+		player->shader = animShader;
 		player->set_local_position({ 0, 0, 13 });
 
 		Ref<GObject> boat = CreateRef<GObject>("boat");
@@ -734,6 +764,9 @@ namespace GameEngine {
 		m_scene->addObjectToScene(sand);
 		m_scene->addObjectToScene(water);
 
+		audioManager->loopMonoSound("level");
+
+
 		m_scene->m_camera->player = player;
 		Event e;
 		e.type = EventTypes::WindowResize;
@@ -742,10 +775,15 @@ namespace GameEngine {
 		m_EventQueue.push_back(e);
 	}
 
-	void GameEngine::Application::make3scene()
+	void Application::make3scene()
 	{
 		if (m_scene != nullptr)
 			delete m_scene;
+
+		sceneNumb = 4;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
 
 		m_scene = new Scene("scenetest");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
@@ -777,7 +815,7 @@ namespace GameEngine {
 		m_scene->gameManager->init();
 
 		Ref<GObject> player = CreateRef<GObject>("ludek");
-		player->set_local_scale({ 1, 1, 1 });
+		player->set_local_scale({ 0.01, 0.01, 0.01 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
@@ -1106,6 +1144,8 @@ namespace GameEngine {
 		m_scene->addObjectToScene(water2);
 		m_scene->addObjectToScene(water3);
 
+		audioManager->loopMonoSound("level");
+
 		m_scene->m_camera->player = player;
 		Event e;
 		e.type = EventTypes::WindowResize;
@@ -1120,6 +1160,10 @@ namespace GameEngine {
 		if (m_scene != nullptr)
 			delete m_scene;
 
+		sceneNumb = 5;
+
+		audioManager->stopLoopMonoSound("level");
+		audioManager->stopLoopMonoSound("menu");
 		m_scene = new Scene("scenetest");
 		m_scene->guiManager = CreateRef<GuiManager>(mouseCursor, m_scene->m_camera);
 
@@ -1151,7 +1195,7 @@ namespace GameEngine {
 		m_scene->gameManager->init();
 
 		Ref<GObject> player = CreateRef<GObject>("ludek");
-		player->set_local_scale({ 0.002, 0.002, 0.002 });
+		player->set_local_scale({ 0.01, 0.01, 0.01 });
 		Ref<AABB> aabb = CreateRef<AABB>(glm::vec3(0, 0, 0), 0.5, 0.5, 0.5);
 		player->setAABB(aabb);
 		player->setAABBoffsetY(0.5f);
@@ -1510,6 +1554,8 @@ namespace GameEngine {
 		m_scene->addObjectToScene(sand);
 		m_scene->addObjectToScene(water);
 		m_scene->addObjectToScene(water2);
+
+		audioManager->loopMonoSound("level");
 
 		m_scene->m_camera->player = player;
 		Event e;

@@ -23,8 +23,8 @@ namespace GameEngine {
 	private:
 		std::vector<glm::mat4> m_FinalBoneMatrices;
 		Ref<Animation> m_CurrentAnimation;
-		float m_CurrentTime;
-		float m_DeltaTime;
+		float m_CurrentTime = 0;
+		float m_DeltaTime = 0;
 
 	};
 

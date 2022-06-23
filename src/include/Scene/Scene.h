@@ -23,6 +23,7 @@ namespace GameEngine {
 
 		int i = 0;
 
+
 	public:
 
 		Ref<Camera> m_camera;
@@ -53,6 +54,9 @@ namespace GameEngine {
 		virtual Ref<GObject> getObjectByID(unsigned int ID);
 
 		std::string getName();
+
+		bool stateCh;
+
 	};
 }
 

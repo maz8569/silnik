@@ -61,13 +61,13 @@
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)src\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenGLPAG.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">OpenGLPAG</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PackageRush</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)src\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenGLPAG.dir\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">OpenGLPAG</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PackageRush</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
@@ -136,7 +136,7 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;..\thirdparty\assimp\code\Debug\assimp-vc140-mt.lib;..\thirdparty\glfw\src\Debug\glfw3.lib;..\Debug\glad.lib;..\Debug\imgui.lib;..\Debug\stb_image.lib;..\thirdparty\assimp\contrib\zlib\Debug\zlibstaticd.lib;..\thirdparty\assimp\contrib\irrXML\Debug\IrrXML.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OpenAL32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;..\thirdparty\assimp\code\Debug\assimp-vc140-mt.lib;..\thirdparty\glfw\src\Debug\glfw3.lib;..\Debug\glad.lib;..\Debug\stb_image.lib;..\thirdparty\assimp\contrib\zlib\Debug\zlibstaticd.lib;..\thirdparty\assimp\contrib\irrXML\Debug\IrrXML.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OpenAL32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -151,12 +151,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>(SolutionDir)\src;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glfw\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glad\include;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\glm;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\stb_image;E:\prog\OpenGLPAG\OpenGLPAG\thirdparty\assimp\code\..\include;E:\prog\OpenGLPAG\OpenGLPAG\Build\thirdparty\assimp\code\..\include;(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -193,13 +193,13 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;..\thirdparty\assimp\code\Release\assimp-vc140-mt.lib;..\thirdparty\glfw\src\Release\glfw3.lib;..\Release\glad.lib;..\Release\imgui.lib;..\Release\stb_image.lib;..\thirdparty\assimp\contrib\zlib\Release\zlibstatic.lib;..\thirdparty\assimp\contrib\irrXML\Release\IrrXML.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;..\thirdparty\assimp\code\Release\assimp-vc140-mt.lib;..\thirdparty\glfw\src\Release\glfw3.lib;..\Release\glad.lib;..\Release\stb_image.lib;..\thirdparty\assimp\contrib\zlib\Release\zlibstatic.lib;..\thirdparty\assimp\contrib\irrXML\Release\IrrXML.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>E:/prog/OpenGLPAG/OpenGLPAG/Build/src/Release/OpenGLPAG.lib</ImportLibrary>
-      <ProgramDataBaseFile>E:/prog/OpenGLPAG/OpenGLPAG/Build/src/Release/OpenGLPAG.pdb</ProgramDataBaseFile>
+      <ImportLibrary>../Release/OpenGLPAG.lib</ImportLibrary>
+      <ProgramDataBaseFile>../Release/OpenGLPAG.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>

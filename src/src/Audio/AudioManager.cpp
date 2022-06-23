@@ -137,6 +137,7 @@ namespace GameEngine {
     {
         ALuint monoSource = m_monoAudios[filename].second;
         alSourcei(monoSource, AL_LOOPING, 0);
+        stopMonoSound(filename);
     }
 
     void AudioManager::stopMonoSound(std::string filename)

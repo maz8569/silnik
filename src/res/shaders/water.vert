@@ -11,6 +11,7 @@ layout (location = 3) out vec3 FragPos;
 layout (location = 4) out vec4 FragPosLightSpace;
 layout (location = 5) out vec4 screenPosition;
 layout (location = 6) out vec3 WorldPosition;
+layout(location = 7) out float aTime;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -41,7 +42,7 @@ void main()
     //texcoor.y -= uTime * 0.001;
 
     //distortion = 0.1  * texture2D(noiseTexture, texcoor * 100).r;
-
+    aTime = uTime;
 
     pos.y +=  distortion;
 

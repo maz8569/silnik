@@ -18,7 +18,7 @@ namespace GameEngine {
 
 	void GameManager::Update(float dt)
 	{
-		if (time <= 0)
+		if (time <= 0 && m_win == GState::Playing)
 		{
 			m_win = GState::Lose;
 			time = 0;
@@ -49,6 +49,7 @@ namespace GameEngine {
 		if (m_packageCount == 0)
 		{
 			m_win = GState::Win;
+			std::cout << "win";
 		}
 
 	}

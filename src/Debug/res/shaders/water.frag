@@ -46,6 +46,7 @@ layout (location = 3) in vec3 FragPos;
 layout (location = 4) in vec4 FragPosLightSpace;
 layout (location = 5) in vec4 screenPosition;
 layout (location = 6) in vec3 WorldPosition;
+layout (location = 7) in float aTime;
 
 uniform sampler2D ourTexture;
 uniform sampler2D foamTexture;
@@ -139,12 +140,12 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
   vec3 color2 = texture2D( ourTexture,
   TexCoord * 10.0 +
   0.8*vec2(
-    cos(uTime*0.001*0.1),
-    sin(uTime*0.001*0.1)
+    cos(aTime*0.001*0.1),
+    sin(aTime*0.001*0.1)
   ) +
   0.01*vec2(
-    cos(1.7 + uTime*0.0012+3.2*100.0*TexCoord.x),
-    sin(1.7 + uTime*0.001+3.0*100.0*TexCoord.y)
+    cos(1.7 + aTime*0.0012+3.2*100.0*TexCoord.x),
+    sin(1.7 + aTime*0.001+3.0*100.0*TexCoord.y)
   )
 ).rgb;
 
@@ -160,9 +161,6 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     depthValue = 60* LinearizeDepth(depthValue) / far_plane;
 
     //texcoordss.y +=0.03;
-
-    float refValue = texture(foamTexture, texcoordss).r;
-    refValue = 60* LinearizeDepth(refValue) / far_plane;
 
     float worldDepth = getLinearDepth(WorldPosition);
     float screenDepth = getLinearScreenDepth();
@@ -183,11 +181,11 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     vec4 gg = vec4(ambient + (diffuse + specular), 1.0);
 
-    float foamLine = clamp( (-screenPosition.w/2 + depthValue)/10, 0, 1);
-    float refrline = clamp( (-screenPosition.w/2 + refValue)/20, 0, 1);
+    //float foamLine = clamp( (-screenPosition.w/2 + depthValue)/20, 0, 1);
+    float refrline = clamp( (-screenPosition.w/2 + depthValue)/20, 0, 1);
     vec3 scolor = vec3(refrline);
 
-    if (refrline < 0.5)
+    if (refrline < 0.45)
     {
         gg = mix(gg, refrColor , 0.5);
 
@@ -197,7 +195,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
 
     }
 
-    if(foamLine < 0.3){
+    if((refrline < 0.18) && (refrline > 0.09)){
         gg.rgb = vec3(0.8, 0.8, 0.75);
         //gg.a += 0.1;
     }
