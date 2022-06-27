@@ -417,7 +417,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="src\Utils\IndexBuffer.cpp" />
     <ClCompile Include="src\Shaders\BasicShader.cpp" />
     <ClCompile Include="src\Texture\BasicTexture.cpp" />
-    <ClCompile Include="src\Utils\FileUtil.cpp" />
     <ClCompile Include="src\Rendering\Frustum.cpp" />
     <ClCompile Include="src\Physics\Collisions\PlaneCollider.cpp" />
     <ClCompile Include="src\Physics\RayCasting\MousePicker.cpp" />
@@ -493,10 +492,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="include\Audio\SoundBuffer.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="include\Texture\BasicTexture.h" />
-    <ClInclude Include="include\Utils\FileUtil.h" />
-    <ClInclude Include="include\Utils\NonCopyable.h" />
-    <ClInclude Include="include\Utils\NonMovable.h" />
-    <ClInclude Include="include\Utils\Singleton.h" />
     <ClInclude Include="include\Rendering\Frustum.h" />
     <ClInclude Include="include\Physics\Collisions\AABB.h" />
     <ClInclude Include="include\Audio\AudioManager.h" />
